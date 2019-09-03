@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    android:background="@color/lightgray"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingBottom="16.699982dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.699982dip">
+
+            <!-- <LinearLayout android:orientation="horizontal"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="16.699982dip">
+                 <ImageView android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="15.0dip"
+                     android:src="@drawable/orange_money" />
+
+                 <TextView
+                     android:id="@+id/wallet"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center"
+                     android:layout_marginLeft="14.0dip"
+                     android:layout_weight="1.0"
+                     android:fontFamily="@font/sfpro_display_regular"
+                     android:letterSpacing="0.0525"
+                     android:text="Wallet"
+                     android:textColor="@color/black"
+                     android:textSize="17.0sp" />
+                 <TextView android:textSize="12.0sp"
+                     android:textColor="@color/skyblue"
+                     android:layout_gravity="center"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="15.0dip"
+                     android:text="@string/link_account"
+                     android:fontFamily="@font/sfpro_display_regular"
+                     android:letterSpacing="0.0525" />
+             </LinearLayout>-->
+
+            <View android:background="@color/viewline"
+                android:layout_width="fill_parent"
+                android:layout_height="0.8000001dip"
+                android:layout_marginLeft="16.699982dip"
+                android:layout_marginTop="16.699982dip"
+                android:layout_marginRight="16.699982dip" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.699982dip">
+
+                <ImageView android:layout_width="wrap_content"
+                    android:layout_height="47dip"
+                    android:layout_marginLeft="15.0dip"
+                    android:src="@drawable/cashondelivery" />
+
+                <TextView
+                    android:id="@+id/cashOndelivery"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14.0dip"
+                    android:text="Cash On Delivery"
+                    android:layout_weight="1.0"
+                    android:fontFamily="@font/sfpro_display_regular"
+                    android:letterSpacing="0.0525" />
+
+
+            </LinearLayout>
+
+            <!--<View android:background="@color/viewline"
+               android:layout_width="fill_parent"
+               android:layout_height="0.8000001dip"
+               android:layout_marginLeft="16.699982dip"
+               android:layout_marginTop="16.699982dip"
+               android:layout_marginRight="16.699982dip" />
+          <LinearLayout
+               android:orientation="horizontal"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="16.699982dip">
+
+               <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="15.0dip"
+                   android:src="@drawable/creditcard_png" />
+
+               <TextView
+                   android:id="@+id/creditanddebitcard"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:layout_marginLeft="14.0dip"
+                   android:layout_weight="1.0"
+                   android:fontFamily="@font/sfpro_display_regular"
+                   android:letterSpacing="0.0525"
+                   android:text="Credit or debit card"
+                   android:textColor="@color/black"
+                   android:textSize="17.0sp" />
+
+               <RadioButton android:layout_gravity="center"
+                   android:id="@+id/radiocredit"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="12.0dip" />
+           </LinearLayout>-->
+
+            <View android:background="@color/viewline"
+                android:layout_width="fill_parent"
+                android:layout_height="0.8000001dip"
+                android:layout_marginLeft="16.699982dip"
+                android:layout_marginTop="16.699982dip"
+                android:layout_marginRight="16.699982dip" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Payonline2"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:paddingTop="15.0dip"
+            android:paddingBottom="16.699982dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.0dip">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18.0dip"
+                android:src="@drawable/rzp" />
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18.0dip"
+                android:layout_weight="1.0">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView android:textSize="20dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pay Online"
+                        android:fontFamily="@font/sfpro_display_regular"
+                        android:letterSpacing="0.0525" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true">
+
+            <com.airbnb.lottie.LottieAnimationView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="deliveryboy.json"
+                app:lottie_loop="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

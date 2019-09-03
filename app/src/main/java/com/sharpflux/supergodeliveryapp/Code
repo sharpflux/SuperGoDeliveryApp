@@ -1,0 +1,165 @@
+ car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               /* if(buttonState % 2 == 0){
+                    car.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                   // Toast.makeText(getContext(), "Button background color green", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    car.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                   // Toast.makeText(getContext(), "Button background color accent", Toast.LENGTH_SHORT).show();
+                }
+                buttonState++;*/
+
+                //Toast.makeText(getContext(), "You selected car!!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Car");
+                builder.setMessage("Do you want Van as your transport vehical?");
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "No", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "You selected car", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.show();
+            }
+        });
+        van.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Toast.makeText(getContext(), "You selected van!!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Van");
+                builder.setMessage("Do you want Van as your transport vehical?");
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "No", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "You selected van", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.show();
+            }
+        });
+        truck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(getContext(), "You selected truck!!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Truck");
+                builder.setMessage("Do you want Truck as your transport vehical?");
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "No", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "You selected truck", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.show();
+            }
+        });
+        bike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(getContext(), "You selected bike!!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Bike");
+                builder.setMessage("Do you want Bike as your transport vehical?");
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "No", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                Toast.makeText(getContext(), "You selected bike", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.show();
+            }
+        });
+
+
+
+
+
+                   // Toast.makeText(getContext(), textviewPickup.getText().toString().trim(), Toast.LENGTH_SHORT).show();
+                    Bundle args = new Bundle();
+                    args.putString("PickupAddress",textviewPickup.getText().toString().trim());
+                    args.putString("DeliveryAddress",editTextdeliveryaddress.getText().toString().trim());
+                    args.putString("FromLat",   FROMLAT);
+                    args.putString("FromLong",    TOLAT);
+                    args.putString("Vehicle",  checkedVehicle );
+                    args.putString("Product",   edittextProduct.toString() );
+                    //StepOneFragment.setArguments(args);
+
+                            boolean chkBikeChecked = (chkBike).isChecked();
+                            boolean chkCarChecked = (chkCar).isChecked();
+                            boolean chkVanChecked = (chkVan).isChecked();
+                            boolean chkTruckChecked = (chkTruck).isChecked();
+
+
+                            chkBike.setChecked(false);
+                            chkCar.setChecked(false);
+                            chkVan.setChecked(false);
+                            chkTruck.setChecked(false);
+
+
+                            String checkedVehicle = "";
+
+                            if (chkBikeChecked == true) {
+                                checkedVehicle = "Bike";
+                            }
+
+                            if (chkCarChecked == true) {
+                                checkedVehicle = "Car";
+                            }
+                            if (chkVanChecked == true) {
+                                checkedVehicle = "Van";
+                            }
+                            if (chkTruckChecked == true) {
+                                checkedVehicle = "Truck";
+                            }
+
+
+                            Fragment fr = new StepTwoFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            Bundle args = new Bundle();
+                            args.putString("ActivityType", getArguments().getString("ActivityType").toString());
+                            args.putString("Address", getArguments().getString("Address").toString());
+                            args.putString("FlatNo", getArguments().getString("FlatNo").toString());
+                            args.putString("LandMark", getArguments().getString("LandMark").toString());
+                            args.putString("Lat", getArguments().getString("Lat").toString());
+                            args.putString("Long", getArguments().getString("Long").toString());
+                            args.putString("SelectedVehcile", checkedVehicle);
+                            args.putString("Product", edittextProduct.getText().toString());
+                            fr.setArguments(args);

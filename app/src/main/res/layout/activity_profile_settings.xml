@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingBottom="20.0dip"
+            android:clipToPadding="false"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="16.699982dip"
+            android:layout_marginRight="16.699982dip">
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="127dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="0.0dip">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:src="@drawable/person" />
+
+                </FrameLayout>
+
+               <!-- <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom|center"
+                    android:layout_marginBottom="7.0dip"
+                    android:src="@drawable/ic_edit" />-->
+
+            </FrameLayout>
+
+            <TextView
+                android:textSize="13.0sp"
+                android:textColor="@color/silver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.399994dip"
+                android:text="@string/name"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525" />
+
+            <EditText
+                android:textSize="16.0sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/silver"
+                android:background="@color/transferent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.699982dip"
+                android:hint="@string/john_doe"
+                android:inputType="text"
+                android:fontFamily="@font/sfpro_display_regular"
+                android:letterSpacing="0.0525" />
+
+            <View
+                android:background="@color/viewline"
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginTop="10.199982dip" />
+
+            <TextView
+                android:textSize="13.0sp"
+                android:textColor="@color/silver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.799988dip"
+                android:text="@string/email"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525" />
+
+
+            <EditText
+                android:textSize="16.0sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/silver"
+                android:background="@color/transferent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.699982dip"
+                android:hint="@string/john_gmail_com"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/sfpro_display_regular"
+                android:letterSpacing="0.0525" />
+
+            <View
+                android:background="@color/viewline"
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginTop="10.199982dip" />
+
+            <TextView
+                android:textSize="13.0sp"
+                android:textColor="@color/silver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.799988dip"
+                android:text="@string/mobile"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525" />
+
+            <EditText
+                android:textSize="16.0sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/silver"
+                android:background="@color/transferent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.699982dip"
+                android:hint="@string/_1_928324232"
+                android:inputType="number"
+
+                android:fontFamily="@font/sfpro_display_regular" />
+
+            <View android:background="@color/viewline"
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginTop="10.199982dip" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0.5dip"
+                android:layout_marginTop="20.0dip"
+                android:layout_marginRight="0.5dip"
+                app:cardCornerRadius="3.0dip"
+                app:cardElevation="2.0dip">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingTop="10.0dip"
+                    android:paddingBottom="9.0dip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12.099976dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sfpro_display_regular"
+                            android:letterSpacing="0.0525"
+                            android:text="EMAIL"
+                            android:textColorHint="@color/black"
+                            android:textSize="16.5sp" />
+
+                        <EditText
+                            android:textSize="16.0sp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/silver"
+                            android:background="@color/transferent"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10.699982dip"
+                            android:hint="s@gmail.com"
+                            android:inputType="number"
+
+                            android:fontFamily="@font/sfpro_display_regular" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_plain"
+        android:paddingTop="15.0dip"
+        android:paddingBottom="15.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16.699982dip"
+        android:text="@string/submit"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:textAlignment="center"
+        android:letterSpacing="0.0525" />
+</RelativeLayout>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_whitetop_cure"
+        android:paddingBottom="16.599976dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16.699982dip"
+            android:layout_marginTop="15.0dip"
+            android:layout_marginRight="16.699982dip">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15.0dip"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingTop="10.0dip"
+                            android:paddingBottom="10.0dip">
+
+                <!--            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16.699982dip"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10.0dip"
+                                    android:src="@drawable/circle_red" />
+
+                                <LinearLayout
+                                    android:layout_width="1.0dip"
+                                    android:layout_height="80.0dip"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/dotted_linegray"
+                                    android:layerType="software"
+                                    android:orientation="vertical" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/circle_green" />
+                            </LinearLayout>-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10.0dip"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.0"
+                                        android:orientation="vertical">
+
+                                        <TextView
+
+                                            android:id="@+id/pickup_location"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="8.0dip"
+                                            android:fontFamily="@font/sfpro_display_medium"
+                                            android:letterSpacing="0.0525"
+                                            android:text="Swargate,Pune,411037"
+                                            android:textColor="@color/black"
+                                            android:textSize="15.0sp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5.0dip"
+                                            android:fontFamily="@font/sfpro_display_medium"
+                                            android:letterSpacing="0.0525"
+                                            android:lineSpacingExtra="2.0dip"
+                                            android:text=""
+                                            android:textColor="@color/black"
+                                            android:textSize="14.0sp" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:id="@+id/tvTotalCharges"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10.0dip"
+                                        android:layout_marginRight="16.699982dip"
+                                        android:fontFamily="@font/sfpro_display_medium"
+                                        android:letterSpacing="0.0525"
+                                        android:lineSpacingExtra="5.0dip"
+                                        android:text="11:00 am"
+                                        android:textColor="@color/black"
+                                        android:textSize="14.0sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10.0dip"
+                                    android:layout_marginTop="16.799988dip"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/drop_location"
+                                            android:layout_width="0.0dip"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1.0"
+                                            android:fontFamily="@font/sfpro_display_medium"
+                                            android:letterSpacing="0.0525"
+                                            android:text="Pimpri Chinchwad,411404"
+                                            android:textColor="@color/black"
+                                            android:textSize="17.0sp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginRight="16.699982dip"
+                                            android:fontFamily="@font/sfpro_display_medium"
+                                            android:letterSpacing="0.0525"
+                                            android:lineSpacingExtra="5.0dip"
+                                            android:text="4:00pm"
+                                            android:textColor="@color/black"
+                                            android:textSize="14.0sp" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5.0dip"
+                                        android:fontFamily="@font/sfpro_display_medium"
+                                        android:letterSpacing="0.0525"
+                                        android:lineSpacingExtra="2.0dip"
+                                        android:text=""
+                                        android:textColor="@color/black"
+                                        android:textSize="14.0sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/viewline"
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:layout_marginLeft="16.699982dip"
+            android:layout_marginTop="16.799988dip"
+            android:layout_marginRight="16.699982dip" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:background="@color/colorPrimary"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    app:contentInsetStart="0.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:src="@drawable/back_black" />
+    <TextView android:textSize="20.0sp"
+        android:textColor="@color/white"
+        android:id="@+id/payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14.5dip"
+        android:text="@string/select_payment_method"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:letterSpacing="0.0225" />
+</android.support.v7.widget.Toolbar>

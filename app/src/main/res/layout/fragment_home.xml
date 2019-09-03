@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayoutout   android:layout_height="match_parent" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeholder2"
+    tools:context=".HomeFragment"
+    >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_grey_gradient"
+
+        >
+
+
+        <Button
+            android:id="@+id/send_button"
+            style="@style/ServiceButtonStyle"
+
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="212dp"
+            android:background="@drawable/home_service_button_drawable"
+            android:drawableTop="@drawable/send_button_drawable"
+            android:gravity="center"
+            android:text="SEND"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextStyle.Landing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sell_button"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="140dp"
+            android:layout_height="143dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/home_service_button_drawable"
+            android:drawableTop="@drawable/sell_button_drawable"
+            android:gravity="center"
+            android:text="RECEIVE"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextStyle.Landing"
+            app:layout_constraintBottom_toTopOf="@+id/sell_button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.612"
+            app:layout_constraintStart_toEndOf="@+id/send_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.851" />
+
+        <Button
+            android:id="@+id/sell_button2"
+            style="@style/ServiceButtonStyle"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/home_service_button_drawable"
+            android:drawableTop="@drawable/sell_button_drawable"
+            android:gravity="center"
+            android:text="Order From Merchant"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextStyle.Landing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/send_button"
+            app:layout_constraintVertical_bias="0.182" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayoutout>
+

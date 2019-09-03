@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "447612344786",
+    "firebase_url": "https://deliveryservices-1bf05.firebaseio.com",
+    "project_id": "deliveryservices-1bf05",
+    "storage_bucket": "deliveryservices-1bf05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447612344786:android:cfc99317a5fe9f48",
+        "android_client_info": {
+          "package_name": "com.sharpflux.deliveryboy2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447612344786-m77p907kmtg6vig40rajjrsbtc1hrt7o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharpflux.deliveryboy2",
+            "certificate_hash": "89331209e7cde82aa181abe4200dbcd953de6258"
+          }
+        },
+        {
+          "client_id": "447612344786-im934gg83i4pksbl6n97uhqv1mqio0ob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharpflux.deliveryboy2",
+            "certificate_hash": "ea776b278700c2e160de15494380b1b5e75222a1"
+          }
+        },
+        {
+          "client_id": "447612344786-8b7rdns7m2u9o2tjh5oi55cgt5nh98eh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE_mLi3cLUWBXf3qqigi7976LufUj9K0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447612344786-8b7rdns7m2u9o2tjh5oi55cgt5nh98eh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447612344786:android:be49e9f3ea13d605",
+        "android_client_info": {
+          "package_name": "com.sharpflux.supergodeliveryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447612344786-0dlchrmk4bhl9337nmbg4ukphura8l73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharpflux.supergodeliveryapp",
+            "certificate_hash": "8f90442766c7704399c80e8a4c048aac9d15a722"
+          }
+        },
+        {
+          "client_id": "447612344786-8b7rdns7m2u9o2tjh5oi55cgt5nh98eh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE_mLi3cLUWBXf3qqigi7976LufUj9K0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447612344786-8b7rdns7m2u9o2tjh5oi55cgt5nh98eh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

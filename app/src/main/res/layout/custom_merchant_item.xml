@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/row_cartlist_cvContainer"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageviewMerchant"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/graps" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvFirmname"
+                android:text="Firm Name "
+                android:fontFamily="@font/sfpro_display_bold"
+                style="@style/ganaral_primarystylesale" />
+
+            <TextView
+            android:id="@+id/tvDetails"
+            android:text="Address of firm"
+            android:fontFamily="@font/sfpro_display_medium"
+            android:textColor="#bebebe"
+                android:maxLines="2"
+            android:textSize="15dp"
+            style="@style/ganaral_primarystylesale"/>
+            <TextView
+                android:id="@+id/tvfoodtitle"
+                android:text="Fresh  fruit, veggies, "
+                android:fontFamily="@font/sfpro_display_medium"
+                android:textColor="#8B8B89"
+                android:textSize="15dp"
+                style="@style/ganaral_primarystylesale"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="07dp"
+                android:background="@color/shadow" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=" 2.3"
+                    android:drawableLeft="@drawable/ic_star_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="20-30min"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="From 200₹ "/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

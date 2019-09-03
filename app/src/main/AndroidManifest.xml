@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sharpflux.supergodeliveryapp"
+    android:targetSandboxVersion="1">
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission
+        android:name="org.apache.http.legacy"
+        android:required="false" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:noHistory="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MerchantDescriptionActivity"
+            android:label="Details"
+            android:parentActivityName=".MerchantListActivity"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".MultipleMerchantActivity"
+            android:parentActivityName=".MerchantListActivity"
+            android:theme="@style/DarkAppTheme" />
+        <!--
+          <service android:name=".FirebaseMessagingServices">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        -->
+        <activity android:name=".OtpActivity" />
+        <activity android:name=".OtpRegisterActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".ActivityTrack" />
+        <activity android:name=".TrackDeliveryBoy"
+            android:label="Track Order"
+            android:parentActivityName=".MyOrderListActivity"
+            android:theme="@style/DarkAppTheme"
+            />
+        <activity android:name=".DriverModeActivity" />
+        <activity
+            android:name=".PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileSettingsActivity"
+            android:label="Profile settings"
+            android:parentActivityName=".ChooseActionActivity"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:parentActivityName=".CustomerLoginActivity"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".MyOrderListActivity"
+            android:label="My Order List"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".PreviewActivity"
+            android:label="Order Details"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".PayPalActivity"
+            android:label="Pay"
+            android:parentActivityName=".StepperIndicatorActivity"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".StepperIndicatorActivity"
+            android:parentActivityName=".ChooseActionActivity" />
+        <activity
+            android:name=".OrderSuccessfullyPlaced"
+            android:label="Order Placed"
+            android:parentActivityName=".ChooseActionActivity"
+            android:theme="@style/DarkAppTheme" />
+        <activity
+            android:name=".SendPlaceOrderActivity"
+            android:label=""
+            android:parentActivityName=".MapsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DarkAppTheme" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".MerchantListActivity"
+            android:parentActivityName=".MultipleMerchantActivity"
+            android:theme="@style/DarkAppTheme" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".CustomerRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChooseActionActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CustomerLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ActivityFairDetails" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Firebase Notifications -->
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="@string/razor_pay_test" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>

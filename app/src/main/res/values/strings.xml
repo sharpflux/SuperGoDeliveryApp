@@ -1,0 +1,297 @@
+<resources>
+    <string name="app_name">SuperGoDeliveryApp</string>
+    <string name="title_activity_choose_action">ChooseActionActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_customer_maps">Map</string>
+    <string name="recyclermoredetails">See more details</string>
+    <string name="bottom_sheet_option_camera">Use Camera</string>
+    <string name="bottom_sheet_option_gallery">Upload from Gallery</string>
+    <string name="bottom_sheet_option_heading">Add Photo</string>
+    <string name="bottom_sheet_option_remove_photo">Remove Photo</string>
+
+    <string name="bs_header">Select image source</string>
+    <string name="bs_gallery">Select from gallery</string>
+    <string name="bs_camera">Select from camera</string>
+    <string name="bs_cancel">Cancel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+    <string name="_00_30_sec_wating_for_the_otp" translatable="false">00:30 sec wating for the OTP</string>
+    <string name="_06" translatable="false">06</string>
+    <string name="_10">$10</string>
+    <string name="_10_min_walk">10 min walk</string>
+    <string name="_11_00_am">11:00 AM</string>
+    <string name="_11_20_am">11:20 am</string>
+    <string name="_11_20_amtxt">11:20 AM</string>
+    <string name="_11_sihvam_flat_near_vrajdham_temple_nmanjalpur_vadodara">"11 - Sihvam flat, near vrajdham temple,manjalpur, vadodara."</string>
+    <string name="_13">$13</string>
+    <string name="_1_928324232">+1 928324232</string>
+    <string name="_20_30_min">20:30 min</string>
+    <string name="_20_min">(20 min)</string>
+    <string name="_22nd_street">22nd street</string>
+    <string name="_25_off">25% Off</string>
+    <string name="_2_km_0_5_min">2/km, 0.5/min</string>
+    <string name="_3">$3</string>
+    <string name="_300m_5_min">300m, 5 min</string>
+    <string name="_3234">3234</string>
+    <string name="_33">$33</string>
+    <string name="_3411_xxxx_xxxx_1234">3411 xxxx xxxx 1234</string>
+    <string name="_4132">4132</string>
+    <string name="_5_km">(5 km)</string>
+    <string name="_5_km_0_5_min">5/km 0.5/min</string>
+    <string name="_5_km_0_5_mincomatxt">5/km, 0.5/min</string>
+    <string name="_5_kms">(5 kms)</string>
+    <string name="_5_ride_available">5 Ride Available</string>
+    <string name="_81313212">\#81313212</string>
+    <string name="a_guide_to_wroom_ride">A Guide to Wroom Ride</string>
+    <string name="abc_action_bar_home_description">Navigate home</string>
+    <string name="abc_action_bar_up_description">Navigate up</string>
+    <string name="abc_action_menu_overflow_description">More options</string>
+    <string name="abc_action_mode_done">Done</string>
+    <string name="abc_activity_chooser_view_see_all">See all</string>
+    <string name="abc_activitychooserview_choose_application">Choose an app</string>
+    <string name="abc_capital_off">OFF</string>
+    <string name="abc_capital_on">ON</string>
+    <string name="abc_font_family_body_1_material">sans-serif</string>
+    <string name="abc_font_family_body_2_material">sans-serif-medium</string>
+    <string name="abc_font_family_button_material">sans-serif-medium</string>
+    <string name="abc_font_family_caption_material">sans-serif</string>
+    <string name="abc_font_family_display_1_material">sans-serif</string>
+    <string name="abc_font_family_display_2_material">sans-serif</string>
+    <string name="abc_font_family_display_3_material">sans-serif</string>
+    <string name="abc_font_family_display_4_material">sans-serif-light</string>
+    <string name="abc_font_family_headline_material">sans-serif</string>
+    <string name="abc_font_family_menu_material">sans-serif</string>
+    <string name="abc_font_family_subhead_material">sans-serif</string>
+    <string name="abc_font_family_title_material">sans-serif-medium</string>
+    <string name="abc_search_hint">Search…</string>
+    <string name="abc_searchview_description_clear">Clear query</string>
+    <string name="abc_searchview_description_query">Search query</string>
+    <string name="abc_searchview_description_search">Search</string>
+    <string name="abc_searchview_description_submit">Submit query</string>
+    <string name="abc_searchview_description_voice">Voice search</string>
+    <string name="abc_shareactionprovider_share_with">Share with</string>
+    <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
+    <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="account_and_payment_options">Account and Payment Options</string>
+    <string name="add_license_image">Add License Image</string>
+    <string name="add_new_credit_card">+ ADD NEW CREDIT CARD</string>
+    <string name="akota">Akota</string>
+    <string name="alok_flat_near_main_station_new_ajar_nvadodara">"Alok Flat, near Main station, new ajar
+vadodara"</string>
+    <string name="amazon_pay">Amazon Pay</string>
+
+    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="apply_promocode">Apply Promocode</string>
+    <string name="avl_bl_rp_500">Avl bl. Rp. 500</string>
+    <string name="bank_of_america">Bank of America</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="bill_detail">Bill Detail</string>
+    <string name="booking_canceled">Booking Canceled</string>
+    <string name="booking_expire_in">Booking Expire in</string>
+    <string name="bookings">Bookings</string>
+    <string name="bottom_sheet_behavior">android.support.design.widget.BottomSheetBehavior</string>
+    <string name="by_continue_you_agreed_to">By Continue you agreed to</string>
+    <string name="by_paypal">By PayPal</string>
+    <string name="cancel_booking">Cancel Booking</string>
+    <string name="change_of_mind">Change of Mind?</string>
+    <string name="character_counter_pattern">%1$d / %2$d</string>
+    <string name="common_google_play_services_enable_button">Enable</string>
+    <string name="common_google_play_services_enable_text">"%1$s won't work unless you enable Google Play services."</string>
+    <string name="common_google_play_services_enable_title">Enable Google Play services</string>
+    <string name="common_google_play_services_install_button">Install</string>
+    <string name="common_google_play_services_install_text">"%1$s won't run without Google Play services, which are missing from your device."</string>
+    <string name="common_google_play_services_install_title">Get Google Play services</string>
+    <string name="common_google_play_services_notification_channel_name">Google Play services availability</string>
+    <string name="common_google_play_services_notification_ticker">Google Play services error</string>
+    <string name="common_google_play_services_unknown_issue">%1$s is having trouble with Google Play services. Please try again.</string>
+    <string name="common_google_play_services_unsupported_text">"%1$s won't run without Google Play services, which are not supported by your device."</string>
+    <string name="common_google_play_services_update_button">Update</string>
+    <string name="common_google_play_services_update_text">"%1$s won't run unless you update Google Play services."</string>
+    <string name="common_google_play_services_update_title">Update Google Play services</string>
+    <string name="common_google_play_services_updating_text">"%1$s won't run without Google Play services, which are currently updating."</string>
+    <string name="common_google_play_services_wear_update_text">New version of Google Play services needed. It will update itself shortly.</string>
+    <string name="common_open_on_phone">Open on phone</string>
+    <string name="common_signin_button_text">Sign in</string>
+    <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="confirm_pickup">Confirm Pickup</string>
+    <string name="contact_customer_support">Contact Customer Support</string>
+    <string name="contact_us"><u>Contact Us</u></string>
+    <string name="didn_t_get_the_otp">Didn’t get the OTP?</string>
+    <string name="dinesh_roadtxt">"s02 indiabulls mega mall, dineshmill
+road"</string>
+    <string name="direction">Direction</string>
+    <string name="distance">Distance</string>
+    <string name="drop_address">Drop Address</string>
+    <string name="drop_point">Drop Point</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_10_digit_mobile_number">Enter 10 Digit mobile number</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="enter_otp_on_scooter_keypad_and_npress_end_button_to_end_your_ride">"Enter OTP on scooter keypad and
+press END button to end your ride"</string>
+    <string name="enter_otp_on_vehicle_directly_to_nget_control">"Enter OTP on vehicle directly to
+get control"</string>
+    <string name="enter_otp_to_end_ride">Enter OTP to End Ride</string>
+    <string name="enter_vehicle_number"><u>Enter Vehicle Number</u></string>
+    <string name="exit">Exit</string>
+    <string name="get_20_off_on_your_1st_ride">Get 20% off on your 1st order</string>
+    <string name="gj">GJ</string>
+    <string name="gj_06_1421">GJ 06 1421</string>
+    <string name="google_maps_key">YOUR_KEY_HERE</string>
+    <string name="goride">GoRide</string>
+
+    <string name="help">Help</string>
+    <string name="help_me"><u>Help me</u></string>
+    <string name="honda_activa">Honda Activa</string>
+    <string name="how_can_we_help">How Can We Help?</string>
+    <string name="jetalpur">Jetalpur</string>
+    <string name="john_doe">John Doe</string>
+    <string name="john_gmail_com">John@gmail.com</string>
+    <string name="know_more"><u>know more</u></string>
+    <string name="legal_and_privacy_inquiries">Legal and privacy inquiries</string>
+    <string name="link_account">LINK ACCOUNT</string>
+    <string name="login_signup">Login/Signup</string>
+    <string name="logout">Logout</string>
+    <string name="max_5_mb">Max 5 MB</string>
+    <string name="mobile">MOBILE</string>
+    <string name="mon_dec_26">Mon, Dec 26</string>
+    <string name="mon_dec_26_11_20_am">Mon, Dec 26, 11:20 am</string>
+    <string name="name">NAME</string>
+    <string name="offers">Offers</string>
+    <string name="ok">OK</string>
+    <string name="once_you_reach_at_drop_location_on_scooter_keypad_press_end_button_to_end_your_ride">"Once you reach at drop location, On
+scooter keypad press END button to
+end your ride"</string>
+    <string name="one_way">One Way</string>
+    <string name="one_way_trip">One Way Trip</string>
+    <string name="or">or</string>
+    <string name="orange_money">Orange Money</string>
+    <string name="otp_not_working">OTP not working?</string>
+    <string name="password_toggle_content_description">Toggle password visibility</string>
+    <string name="path_password_eye">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
+    <string name="path_password_eye_mask_strike_through">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
+    <string name="pay_13">Pay $13</string>
+    <string name="pay_online">Pay Online</string>
+    <string name="payable_fare">Payable Fare</string>
+    <string name="payment_modes">Payment Modes</string>
+    <string name="payment_successful_of_n_13">"Payment successful of
+$13"</string>
+    <string name="paypal">Paytm</string>
+    <string name="pickup_address">Pickup Address</string>
+    <string name="pickup_point">Pickup Point</string>
+    <string name="pin_content_desc">PIN input field</string>
+    <string name="press_end_on_scooter">Press End on Scooter</string>
+    <string name="rate_app">Rate App</string>
+    <string name="recentre">Recentre</string>
+    <string name="rent_ride_return">Rent . Ride . Return</string>
+    <string name="request_otp">Request OTP</string>
+    <string name="resendtxt"><u>Resend!</u></string>
+    <string name="ride">Ride</string>
+    <string name="ride_kms">Ride Kms</string>
+    <string name="ride_otp">Ride OTP</string>
+    <string name="ride_time">Ride Time</string>
+    <string name="round_trip">Round Trip</string>
+    <string name="s02_indiabulls_mega_mall_dineshmill_road_njetalpur_rode">"s02 indiabulls mega mall, dineshmill road jetalpur
+road."</string>
+    <string name="s_02_indiabulls_mega_mall_nr_dinesh_mill_njetalpur_roda_vadodara">"S 02 indiabulls mega mall, nr. dinesh mill,
+jetalpur roda. vadodara."</string>
+    <string name="scan_or_enter_vehicle_number">Scan or Enter Vehicle Number</string>
+    <string name="scan_qr_code"><u>Scan QR code</u></string>
+    <string name="scan_qr_code_from_ride">Scan QR Code from Ride</string>
+    <string name="scan_qr_code_to_get_otp_type_otp_non_vehicle_keypad_and_start_the_ride">"Scan QR code to get OTP, type OTP
+on vehicle keypad and start the ride."</string>
+    <string name="scooter_ride_detail">Scooter/Ride Detail</string>
+    <string name="search_menu_title">Search</string>
+    <string name="select_another_trip">Select Another Trip</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="share_app">Share App</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="sub_23">Sub 23</string>
+    <string name="submit">Submit</string>
+    <string name="successful">Successful!</string>
+    <string name="t_amp_c"><u>T &amp; C</u></string>
+    <string name="terms_of_uses">Terms of Uses</string>
+    <string name="title_activity_map_root">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="to_pay">To Pay</string>
+    <string name="total">Total</string>
+    <string name="trip_issues_and_refunds">Trip Issues and Refunds</string>
+    <string name="use">Use</string>
+    <string name="verifytxt">Verify</string>
+    <string name="view">View</string>
+    <string name="view_ride_detail">View Ride Detail</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="wallets">WALLETS</string>
+    <string name="we_have_sent_4_digit_code_non_1_23224232">"We have sent 4 digit codeon +1 23224232"</string>
+    <string name="welcome_to_goride">Welcome to GoRide</string>
+    <string name="with_otp_you_can_get_control_of_scooter">With OTP you can get control of scooter</string>
+    <string name="your_booking_successfully_canceled_nsee_you_next_time">"Your booking successfully canceled
+see you next time!"</string>
+    <string name="your_ride_started">Your Ride Started</string>
+    <string name="your_scooter_key">(Your Scooter Key)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_merchant_description">MerchantDescriptionActivity</string>
+
+
+    <string name="kg"></string>
+    <string name="title">Chaipani</string>
+    <string name="price">Online tea providers in Pune </string>
+    <string name="description_data">We are one of the Best and Trusted Multirecharge company all over in India. We offers you Online and Offline recharge facility for Mobile Recharge, DTH Recharge, Datacard Recharge, Postpaid Bill, Landline Bill, Gas Bill, Electricity and Insurance Premium Payment all over in India. We also provide you with Money Transfer, Gift Cards and Flight Booking services. It is like a value added service for the businesses.
+
+We believe in friendly business because we provide services by themselves is your place.</string>
+
+    <string name="call">Call Now</string>
+
+    <string name="razor_pay_test">rzp_test_vsghhmsETnM91Z</string>
+
+
+    <string name="server_error">Server is taking more time to respond, Please try again</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="verify_otp">VERIFY OTP</string>
+    <string name="reset_password_button">Reset Password</string>
+    <string name="netwrokr_error">No internet connection!</string>
+    <string name="enter_your_registered">Enter your registered mobile number to verify the OTP code</string>
+
+
+    <!-- Change Password -->
+
+    <string name="current_password">CURRENT PASSWORD</string>
+    <string name="confirm_password">CONFIRM PASSWORD</string>
+    <string name="update_password">UPDATE PASSWORD</string>
+    <string name="new_password">NEW PASSWORD</string>
+
+
+    <!-- OTP Verification -->
+
+    <string name="otp_verification">OTP VERIFICATION</string>
+    <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
+    <string name="enter_otp_code">Enter OTP Code</string>
+    <string name="verify">verify</string>
+    <string name="resendOtp">Resend OTP</string>
+
+
+    <string name="permission_rationale">Please grant location permission to start the service</string>
+    <string name="permission_denied_explanation">You have not granted location permission. So the service cannot be started.</string>
+    <string name="settings">settings</string>
+    <string name="title_alert_no_intenet">No internet</string>
+    <string name="msg_alert_no_internet">Please make sure that you have active internet connection.</string>
+    <string name="no_google_playservice_available">No Google Playservice found. Please install it.</string>
+    <string name="msg_location_service_not_started">Location Tracking Not Started</string>
+    <string name="msg_location_service_started">Location Tracking Started</string>
+    <string name="btn_label_refresh">Refresh</string>
+    <string name="Delivery_detail">Delivery Details</string>
+    <string name="enter_place_text">Enter Place</string>
+    <string name="go_button_text">GO</string>
+</resources>
