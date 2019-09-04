@@ -15,7 +15,7 @@ public class URLs {
     public static final String URL_OTP="http://admin.supergo.in/Utilities/OTPGenerate";
     public static final String URL_GETLOCATION="http://admin.supergo.in/api/LocationTrackerGETCustomer";
 
-    public static final String URL_RECYCLER="http://api.supergo.in/api/MerchantType/MerchantTypesGet";
+    public static final String URL_RECYCLER="http://admin.supergo.in/api/MerchantType/MerchantTypesGet";
     public static final String URL_AllMERCHANT="http://admin.supergo.in/api/MerchantsApi/Get_MerchantApi?MerchantTypeId=";
     public static final String URL_MERCHANTDESCRIPTION="http://admin.supergo.in/api/ItemMasterApi/Get_ItemApi?MerchantId=";
     public static final String URL_DESCIMAGES="http://admin.supergo.in/api/MerchantImageApi/Get_MerchantImagesUrlApi?MerchantId=";
