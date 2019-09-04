@@ -170,9 +170,6 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             for (int i = 0; i < obj.length(); i++) {
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject(i);
-
-
-
                                 if (!userJson.getBoolean("error")) {
 
                                     User user = new User(

@@ -1,7 +1,9 @@
 package com.sharpflux.supergodeliveryapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private Button btnResetPassword;
     private EditText etMobileNo;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +34,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         btnResetPassword=findViewById(R.id.btnResetPassword);
         etMobileNo=findViewById(R.id.etMobileNo);
-
+        builder = new AlertDialog.Builder(this);
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 getOtp();
+
             }
         });
     }
@@ -60,13 +64,33 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             //if no error in response
                             if (!obj.getBoolean("error")) {
-                                Intent in = new Intent(ForgotPasswordActivity.this,
+
+                                Intent in = new Intent(ForgotPasswordActivity.this,OtpActivity.class);
+                                in.putExtra("otp",obj.getString("OTP"));
+                                in.putExtra("UserId",obj.getInt("UserId"));
+                                startActivity(in);
+
+
+                              /*  Intent in = new Intent(ForgotPasswordActivity.this,
                                         OtpActivity.class);
                                 in.putExtra("otp",obj.getString("OTP"));
-                                startActivity(in);
+                                startActivity(in);*/
                             }
                             else{
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                builder.setMessage(obj.getString("message"))
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("Error");
+                                alert.show();
                             }
 
                         } catch (JSONException e) {
@@ -77,7 +101,21 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        builder.setMessage(error.getMessage())
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Error");
+                        alert.show();
+                       // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

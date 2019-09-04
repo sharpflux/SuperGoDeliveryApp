@@ -14,6 +14,7 @@ public class OtpActivity extends AppCompatActivity {
     private EditText enterOTPCodeEt;
     private TextView verifyButton;
     String otp = "", enteredOtp = "";
+    Integer UserId;
     AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class OtpActivity extends AppCompatActivity {
 
         if (bundle != null) {
             otp = bundle.getString("otp");
+            UserId = bundle.getInt("UserId");
+
         }
 
             verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +39,7 @@ public class OtpActivity extends AppCompatActivity {
                     enteredOtp = enterOTPCodeEt.getText().toString();
                     if (otp.equals(enteredOtp)) {
                         Intent in = new Intent(OtpActivity.this, ResetPasswordActivity.class);
+                        in.putExtra("UserId", UserId.toString());
                         startActivity(in);
                     }
                     else
