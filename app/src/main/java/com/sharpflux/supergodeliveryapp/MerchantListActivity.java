@@ -23,16 +23,12 @@ import java.util.Map;
 
 
 public class MerchantListActivity extends AppCompatActivity {
-
     private List<MerchantsType> merchantList;
-
     private RecyclerView mRecyclerView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_merchant_list);
 
         setTitle("Our Merchants!");
