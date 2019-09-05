@@ -11,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.sharpflux.supergodeliveryapp.utils.CustomProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,11 @@ import java.util.Map;
 public class MerchantListActivity extends AppCompatActivity {
     private List<MerchantsType> merchantList;
     private RecyclerView mRecyclerView;
+    MyMerchantAdapter myAdapter;
+
+
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +49,10 @@ public class MerchantListActivity extends AppCompatActivity {
         merchantList = new ArrayList<>();
 
         setDynamicFragmentToTabLayout();
-
-
-
     }
     private void setDynamicFragmentToTabLayout() {
 
+        CustomProgressDialog.showSimpleProgressDialog(this, "Loading...", "Fetching data", false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_RECYCLER,
                 new Response.Listener<String>() {
@@ -56,6 +60,7 @@ public class MerchantListActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+
 
                             JSONArray obj = new JSONArray(response);
 
@@ -72,8 +77,9 @@ public class MerchantListActivity extends AppCompatActivity {
                                 merchantList.add(sellOptions);
 
 
-                                MyMerchantAdapter myAdapter = new MyMerchantAdapter(MerchantListActivity.this, merchantList);
-                                mRecyclerView.setAdapter(myAdapter);;
+                                myAdapter = new MyMerchantAdapter(MerchantListActivity.this, merchantList);
+                                mRecyclerView.setAdapter(myAdapter);
+                                CustomProgressDialog.removeSimpleProgressDialog();
                             }
 
                         } catch (JSONException e) {

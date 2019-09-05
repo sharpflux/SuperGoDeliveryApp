@@ -32,6 +32,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     String UserId = "";
     AlertDialog.Builder builder;
     Bundle bundle;
+    String UserType ="OTP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +118,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                     alert.setTitle("Success");
                                     alert.show();
                                 }
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -129,7 +129,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         builder.setMessage(error.getMessage())
                                 .setCancelable(false)
-
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         //  Action for 'NO' Button
@@ -150,6 +149,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 // params.put("UserId", username);
                 params.put("UserId", UserId);
                 params.put("Passwords", newpass);
+                params.put("UserType", UserType);
 
 
                 return params;

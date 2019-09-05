@@ -11,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.sharpflux.supergodeliveryapp.utils.CustomProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,8 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     private List<Merchants> merchantList;
     String merchantId="";
     private RecyclerView mRecyclerView;
+    MultipleMerchantAdapter myAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
     private void setDynamicFragmentToTabLayout() {
 
-        //CustomProgressDialog.showSimpleProgressDialog(this, "Loading...","Fetching data",false);
+
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -63,9 +66,8 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                         //  progressBar.setVisibility(View.GONE);
                         try {
 
-                            // CustomProgressDialog.removeSimpleProgressDialog();
-                            //converting response to json object
-                            //JSONObject obj = new JSONObject(response);
+
+
                             JSONArray obj = new JSONArray(response);
                             //if no error in response
                             //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
@@ -83,8 +85,8 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
                                 merchantList.add(sellOptions);
 
-                                MultipleMerchantAdapter myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
-                                mRecyclerView.setAdapter(myAdapter);;
+                                myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
+                                mRecyclerView.setAdapter(myAdapter);
                             }
 
                         } catch (JSONException e) {
@@ -108,7 +110,6 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(MultipleMerchantActivity.this).addToRequestQueue(stringRequest);
-
 
     }
 }
