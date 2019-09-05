@@ -182,9 +182,10 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
                 tvpickup.setText(extras.getString("FlatNo")+","+extras.getString("LandMark")+"," +
                         ""+extras.getString("Address"));
-
-                editTextdeliveryaddress.setText(extras.getString("PickupFlatNo")+"," +
-                        ""+extras.getString("DeliveryLandMark")+","+extras.getString("DeliveryAddress"));
+                if(extras.getString("PickupFlatNo")!=null && extras.getString("DeliveryLandMark")!=null) {
+                    editTextdeliveryaddress.setText(extras.getString("PickupFlatNo") + "," +
+                            "" + extras.getString("DeliveryLandMark") + "," + extras.getString("DeliveryAddress"));
+                }
 
                 FROMLAT= extras.getString("FromLat")  ;
                 FROMLONG=extras.getString("FromLong");
@@ -197,19 +198,21 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
 
             else {
-                editTextdeliveryaddress.setText(extras.getString("PickupFlatNo")+"," +
-                        ""+extras.getString("DeliveryLandMark")+","+extras.getString("DeliveryAddress"));
+
+                if(extras.getString("PickupFlatNo")!=null && extras.getString("DeliveryLandMark")!=null) {
+                    editTextdeliveryaddress.setText(extras.getString("PickupFlatNo") + "," +
+                            "" + extras.getString("DeliveryLandMark") + "," + extras.getString("DeliveryAddress"));
+                }
 
                 tvpickup.setText(extras.getString("FlatNo")+"," +
                         ""+extras.getString("LandMark")+","+extras.getString("PickupAddress"));
-
                 FROMLAT= extras.getString("FromLat")  ;
                 FROMLONG=extras.getString("FromLong");
                 TOLAT=extras.getString("ToLat")  ;
                 TOLONG=extras.getString("ToLong");
-
                 FlatNoDrop=extras.getString("PickupFlatNo");
                 LandMarkDrop=extras.getString("DeliveryLandMark");
+
 
             }
 
@@ -299,7 +302,8 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                     chkCar.setChecked(false);
                     chkTruck.setChecked(false);
                     chkVan.setChecked(false);
-                    chkEbike.setChecked(false);
+                    chkBike.setChecked(false);
+
                     chkEbike.setTextColor(Color.parseColor("#0A1C8B"));
                     chkBike.setTextColor(Color.parseColor("#4B4B4B"));
                     chkCar.setTextColor(Color.parseColor("#4B4B4B"));
@@ -427,12 +431,12 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                     startActivityForResult(intent, REQUEST_CAMERA);
                 }
 
-                else if(items[i].equals("Gallary")){
+               /* else if(items[i].equals("Gallary")){
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
                     startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }
+                }*/
 
                 else if(items[i].equals("Cancel"))
                 {
@@ -644,7 +648,7 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         chkCar.setChecked(false);
         chkVan.setChecked(false);
         chkTruck.setChecked(false);
-
+        chkEbike.setChecked(false);
         if(Vehicle.equals("Bike")) {
 
             chkCar.setChecked(false);
@@ -679,11 +683,14 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         else  if(Vehicle.equals("Truck")) {
             chkTruck.setChecked(true);
         }
-
+        else  if(Vehicle.equals("E-Bike")) {
+            chkEbike.setChecked(true);
+        }
 
     }
 
     public  String getSelectedCheckBox(){
+        boolean chkEBikeChecked = (chkEbike).isChecked();
         boolean chkBikeChecked = (chkBike).isChecked();
         boolean chkCarChecked = (chkCar).isChecked();
         boolean chkVanChecked = (chkVan).isChecked();
@@ -702,6 +709,9 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
             checkedVehicle = "Bike";
         }
 
+        if (chkEBikeChecked == true) {
+            checkedVehicle = "E-Bike";
+        }
         if (chkCarChecked == true) {
             checkedVehicle = "Car";
         }

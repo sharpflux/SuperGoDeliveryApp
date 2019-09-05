@@ -1,4 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.7dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="16.7dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="16.7dp"
+                android:layout_marginTop="16.7dp"
+                android:layout_marginRight="16.7dp"
+                android:background="@color/viewline" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="16.7dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/mysky" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_regular"
+                    android:letterSpacing="0.0525"
+                    android:text="MySkyStar Money"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/sfpro_display_regular"
+                    android:letterSpacing="0.0525"
+                    android:text="@string/link_account"
+                    android:textColor="@color/skyblue"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="16.7dp"
+                android:layout_marginTop="16.7dp"
+                android:layout_marginRight="16.7dp"
+                android:background="@color/viewline" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.7dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/cod" />
+
+                <TextView
+                    android:id="@+id/cashOndelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_regular"
+                    android:letterSpacing="0.0525"
+                    android:text="Cash on Delivery"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="16.7dp"
+                android:layout_marginTop="16.7dp"
+                android:layout_marginRight="16.7dp"
+                android:background="@color/viewline" />
+            <LinearLayout
+                android:id="@+id/Payonline2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.7dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15.0dip"
+                    android:src="@drawable/creditcard_png" />
+
+                <TextView
+                    android:id="@+id/creditanddebitcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_regular"
+                    android:letterSpacing="0.0525"
+                    android:text="Pay Online"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="16.7dp"
+                android:layout_marginTop="16.7dp"
+                android:layout_marginRight="16.7dp"
+                android:background="@color/viewline" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView android:textSize="19.0sp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_plain"
+        android:paddingTop="15.0dip"
+        android:paddingBottom="15.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15.0dip"
+        android:text="Pay"
+        android:id="@+id/paytv"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:textAlignment="center"
+        android:elevation="0.8000001dip"
+        android:letterSpacing="0.0525" />
+
+</RelativeLayout>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:orientation="vertical"
     android:background="@color/lightgray"
@@ -22,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16.699982dip">
 
-            <!-- <LinearLayout android:orientation="horizontal"
+            &lt;!&ndash; <LinearLayout android:orientation="horizontal"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
                  android:layout_marginTop="16.699982dip">
@@ -52,7 +215,7 @@
                      android:text="@string/link_account"
                      android:fontFamily="@font/sfpro_display_regular"
                      android:letterSpacing="0.0525" />
-             </LinearLayout>-->
+             </LinearLayout>&ndash;&gt;
 
             <View android:background="@color/viewline"
                 android:layout_width="fill_parent"
@@ -87,7 +250,7 @@
 
             </LinearLayout>
 
-            <!--<View android:background="@color/viewline"
+            &lt;!&ndash;<View android:background="@color/viewline"
                android:layout_width="fill_parent"
                android:layout_height="0.8000001dip"
                android:layout_marginLeft="16.699982dip"
@@ -122,7 +285,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_marginRight="12.0dip" />
-           </LinearLayout>-->
+           </LinearLayout>&ndash;&gt;
 
             <View android:background="@color/viewline"
                 android:layout_width="fill_parent"
@@ -189,4 +352,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</RelativeLayout>-->

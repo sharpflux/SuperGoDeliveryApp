@@ -37,14 +37,13 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepTwoFragment extends Fragment implements View.OnClickListener, StepOneFragment.SendMessage
-{
+public class StepTwoFragment extends Fragment implements View.OnClickListener, StepOneFragment.SendMessage {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_BUNDLE = "bundle";
-    public static String  DATEFORMATTED = "";
+    public static String DATEFORMATTED = "";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -61,7 +60,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param PickupAddress Parameter 1.
+     * @param PickupAddress   Parameter 1.
      * @param DeliveryAddress Parameter 2.
      * @return A new instance of fragment BePartnerStepOneFragment.
      */
@@ -86,7 +85,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         if (getArguments() != null) {
             mParam1 = getArguments().getString("PickupAddress");
             mParam2 = getArguments().getString("DeliveryAddress");
-            mBundle=getArguments().getString("FromLat");
+            mBundle = getArguments().getString("FromLat");
         }
     }
 
@@ -104,11 +103,11 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
     private Button prevBT;
     private TextView timeTextview;
     private TextView mDisplayDate;
-    private EditText cpname,cnum,anum;
-    private CardView cvdate,cvtime;
+    private EditText cpname, cnum, anum;
+    private CardView cvdate, cvtime;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private String format="";
+    private String format = "";
 
     public static String PickupAddress;
     public static String DeliveryAddress;
@@ -118,9 +117,10 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
     public static String ToLong;
     public static String Vehicle;
     public static String Product;
-    public  static  String ImageUrl;
+    public static String ImageUrl;
     Date date1;
     DatabaseHelper myDatabase;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
@@ -129,7 +129,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         super.onViewCreated(view, savedInstanceState);
 
         builder = new AlertDialog.Builder(getContext());
-        if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
+        if (myDatabase.GetLastId() != "" && myDatabase.GetLastId() != "0") {
             Cursor res = myDatabase.DeliveryGETById(myDatabase.GetLastId());
             if (res.getCount() == 0) {
 
@@ -172,13 +172,13 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         }
 
 
-        backBT=view.findViewById(R.id.buttonbackTwo);
-       prevBT=view.findViewById(R.id.buttonPreview);
-       timeTextview =view.findViewById(R.id.tvTime);
-        mDisplayDate =view.findViewById(R.id.tvDate);
-        cpname=view.findViewById(R.id.edittextcpname);
-      cnum=view.findViewById(R.id.edittextcnum);
-        anum=view.findViewById(R.id.edittextanum);
+        backBT = view.findViewById(R.id.buttonbackTwo);
+        prevBT = view.findViewById(R.id.buttonPreview);
+        timeTextview = view.findViewById(R.id.tvTime);
+        mDisplayDate = view.findViewById(R.id.tvDate);
+        cpname = view.findViewById(R.id.edittextcpname);
+        cnum = view.findViewById(R.id.edittextcnum);
+        anum = view.findViewById(R.id.edittextanum);
 
         cvdate = view.findViewById(R.id.cardviewdate);
         cvtime = view.findViewById(R.id.cardviewtime);
@@ -189,7 +189,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-                mDisplayDate.setText(extras.getString("Vehicle"));
+            mDisplayDate.setText(extras.getString("Vehicle"));
         }
 
         cvtime.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +205,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mTimeListener,mHour,mMinute,false);
+                        mTimeListener, mHour, mMinute, false);
 
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 timePickerDialog.show();
@@ -213,7 +213,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         });
 
 
-        mTimeListener=new TimePickerDialog.OnTimeSetListener() {
+        mTimeListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hour, int min) {
 
@@ -243,7 +243,6 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         };
 
 
-
         cvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -256,7 +255,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                         getContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -269,11 +268,11 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                 Log.d(getTag(), "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = day + "/" + month + "/" + year;
-                DATEFORMATTED= month + "/" + day + "/" + year;
+                DATEFORMATTED = month + "/" + day + "/" + year;
 
                 //String sDate1="31/12/1998";
                 try {
-                date1=new SimpleDateFormat("MM/dd/yyyy").parse(DATEFORMATTED);
+                    date1 = new SimpleDateFormat("MM/dd/yyyy").parse(DATEFORMATTED);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -301,17 +300,18 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("PickupAddress");
-            PickupAddress=message;
-            DeliveryAddress=intent.getStringExtra("DeliveryAddress");
-            FromLat=intent.getStringExtra("FromLat");
-            FromLong=intent.getStringExtra("FromLong");
-            Vehicle=intent.getStringExtra("Vehicle");
-            Product=intent.getStringExtra("Product");
-            ToLat=intent.getStringExtra("ToLat");
-            ToLong=intent.getStringExtra("ToLong");
-            ImageUrl=intent.getStringExtra("ImageUrl");
+            PickupAddress = message;
+            DeliveryAddress = intent.getStringExtra("DeliveryAddress");
+            FromLat = intent.getStringExtra("FromLat");
+            FromLong = intent.getStringExtra("FromLong");
+            Vehicle = intent.getStringExtra("Vehicle");
+            Product = intent.getStringExtra("Product");
+            ToLat = intent.getStringExtra("ToLat");
+            ToLong = intent.getStringExtra("ToLong");
+            ImageUrl = intent.getStringExtra("ImageUrl");
         }
     };
+
     @Override
     public void onClick(View view) {
 
@@ -326,12 +326,11 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
 
 
                     //first getting the values
-                    final String TimeS =  timeTextview.getText().toString();
+                    final String TimeS = timeTextview.getText().toString();
                     final String DateS = mDisplayDate.getText().toString();
                     final String CustomerName = cpname.getText().toString();
-                    final String NumberCustomer= cnum.getText().toString();
-                    final String AlterName= anum.getText().toString();
-
+                    final String NumberCustomer = cnum.getText().toString();
+                    final String AlterName = anum.getText().toString();
 
 
                     if (TextUtils.isEmpty(DateS)) {
@@ -372,26 +371,23 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                     intent.putExtra("ToLong", ToLong.toString());
                     intent.putExtra("Vehicle", Vehicle.toString());
                     intent.putExtra("Product", Product.toString());
-                    intent.putExtra("PickupDate",DATEFORMATTED.toString());
+                    intent.putExtra("PickupDate", DATEFORMATTED.toString());
                     intent.putExtra("PickupTime", timeTextview.getText());
                     intent.putExtra("ContactPerson", cpname.getText().toString());
                     intent.putExtra("Mobile", cnum.getText().toString());
                     intent.putExtra("AlternateMobile", anum.getText().toString());
-                    intent.putExtra("ImageUrl",ImageUrl);
+                    intent.putExtra("ImageUrl", ImageUrl);
                     LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
 
-                    if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
+                    if (myDatabase.GetLastId() != "" && myDatabase.GetLastId() != "0") {
                         myDatabase.InsertDelivery(PickupAddress.toString().trim(),
                                 FromLat, FromLong, DeliveryAddress.toString().trim(), ToLat, ToLong, Vehicle,
                                 Product.toString().trim(), ImageUrl, DATEFORMATTED.toString(), timeTextview.getText().toString(), cpname.getText().toString(), anum.getText().toString());
-                    }
-                    else {
-                        myDatabase.UpdateDelivery(myDatabase.GetLastId(),PickupAddress.toString().trim(),
+                    } else {
+                        myDatabase.UpdateDelivery(myDatabase.GetLastId(), PickupAddress.toString().trim(),
                                 FromLat, FromLong, DeliveryAddress.toString().trim(), ToLat, ToLong, Vehicle,
                                 Product.toString().trim(), ImageUrl, DATEFORMATTED.toString(), timeTextview.getText().toString(), cpname.getText().toString(), anum.getText().toString());
                     }
-
-
 
 
                     mListener.onNextPressed(this);
@@ -417,13 +413,13 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        backBT=null;
-        prevBT=null;
+        backBT = null;
+        prevBT = null;
     }
 
     @Override
     public void PickupAddress(String PickupAddress) {
-        Toast.makeText(getContext(), "Hello From Interface :::::"+PickupAddress, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Hello From Interface :::::" + PickupAddress, Toast.LENGTH_SHORT).show();
         //mDisplayDate.setText(PickupAddress);
     }
 
