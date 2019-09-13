@@ -168,7 +168,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
             AlertDialog alert = builder.create();
             //Setting the title manually
             alert.setTitle("AlertDialogExample");
-            alert.show();
+            alert.hide();
         }
 
 
@@ -208,6 +208,7 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                         mTimeListener, mHour, mMinute, false);
 
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+
                 timePickerDialog.show();
             }
         });
@@ -251,12 +252,18 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
+                cal.add(Calendar.MONTH,1);
+                long afterTwoMonthsinMilli=cal.getTimeInMillis();
+
+
                 DatePickerDialog dialog = new DatePickerDialog(
                         getContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                dialog.getDatePicker().setMaxDate(afterTwoMonthsinMilli);
                 dialog.show();
             }
         });
@@ -379,12 +386,13 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                     intent.putExtra("ImageUrl", ImageUrl);
                     LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
 
-                    if (myDatabase.GetLastId() != "" && myDatabase.GetLastId() != "0") {
+                    if (myDatabase.GetLastId() == "0") {
                         myDatabase.InsertDelivery(PickupAddress.toString().trim(),
                                 FromLat, FromLong, DeliveryAddress.toString().trim(), ToLat, ToLong, Vehicle,
                                 Product.toString().trim(), ImageUrl, DATEFORMATTED.toString(), timeTextview.getText().toString(), cpname.getText().toString(), anum.getText().toString());
                     } else {
-                        myDatabase.UpdateDelivery(myDatabase.GetLastId(), PickupAddress.toString().trim(),
+
+                      myDatabase.UpdateDelivery(myDatabase.GetLastId(), PickupAddress.toString().trim(),
                                 FromLat, FromLong, DeliveryAddress.toString().trim(), ToLat, ToLong, Vehicle,
                                 Product.toString().trim(), ImageUrl, DATEFORMATTED.toString(), timeTextview.getText().toString(), cpname.getText().toString(), anum.getText().toString());
                     }

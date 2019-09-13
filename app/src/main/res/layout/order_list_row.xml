@@ -72,16 +72,28 @@
                         android:textColor="#95989a"
                         android:textSize="13.5dp" />
 
-                    <Button
-                        android:background="@drawable/btn_plain"
-                        android:id="@+id/btnAddCart"
+                    <ImageView
+                        android:id="@+id/cart_minus_img"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginRight="10dp"
-                        android:padding="5dp"
-                        android:text="Add To Cart"
-                        android:textColor="@color/white"
-                        android:textSize="8sp" />
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_minus" />
+
+                    <TextView
+                        android:id="@+id/cart_product_quantity_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip"
+                        android:text="0"
+                        android:textSize="12dip"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/cart_plus_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_plus" />
 
 
                 </LinearLayout>
@@ -97,58 +109,3 @@
         android:background="#ebeced" />
 </LinearLayout>
 
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        android:id="@+id/row_cartlist_cvContainer"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0.0dip"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-        <LinearLayout
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/imageviewMerchant"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/graps" />
-
-            <LinearLayout
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tvFirmname"
-                    android:text="Firm Name "
-                    android:fontFamily="@font/sfpro_display_bold"
-                    style="@style/ganaral_primarystylesale"
-                    />
-                <TextView
-                    android:id="@+id/tvprice"
-                    android:text="price "
-                    android:fontFamily="@font/sfpro_display_bold"
-                    style="@style/ganaral_primarystylesale"
-                    />
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>-->

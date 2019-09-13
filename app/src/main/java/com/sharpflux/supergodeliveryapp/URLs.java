@@ -6,7 +6,7 @@ public class URLs {
     public static final String URL_LOGIN= "http://api.supergo.in/api/LogIn/CustomerLogin";
     public static final String URL_RATECALCULATOR= "http://api.supergo.in/api/RateCalculator/RateCalculator";
 
-    public static final String URL_DETAILS="http://api.supergo.in/api/DeliveryApi/InsertDelivery";
+    public static final String URL_DETAILS="http://admin.supergo.in/api/DeliveryApi/InsertDelivery";
     public static final String URL_FIREBASE="https://fcm.googleapis.com/fcm/send";
     public static final String URL_FIREBASE_SEND_NOTIFICATION="http://api.supergo.in/api/Notification/ExcutePushNotification";
 

@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/toolbar_products_list"/>
 
     <ScrollView
 
@@ -83,7 +84,7 @@
             android:layout_gravity="center"
             android:height="60dp"
             android:background="@drawable/btn_plain"
-            android:text="@string/call"
+            android:text="@string/CheckOut"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />

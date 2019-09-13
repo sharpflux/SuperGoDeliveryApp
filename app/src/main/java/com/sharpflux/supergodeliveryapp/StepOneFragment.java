@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -152,7 +153,7 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         chkCar.setTextColor(Color.parseColor("#4B4B4B"));
         chkTruck.setTextColor(Color.parseColor("#4B4B4B"));
         chkVan.setTextColor(Color.parseColor("#4B4B4B"));
-
+        Bitmap bitmap;
         if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
             Cursor res = myDatabase.DeliveryGETById(myDatabase.GetLastId());
             if (res.getCount() == 0) {
@@ -172,7 +173,9 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 CheckBoxDynamic(res.getString(7));
                 edittextProduct.setText(res.getString(8));
 
-
+                byte[] imgbytes = Base64.decode(res.getString(9), Base64.DEFAULT);
+                bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
+                product_imageView.setImageBitmap(bitmap);
             }
         }else {
               Bundle extras = getActivity().getIntent().getExtras();
@@ -419,7 +422,7 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
     private void SelecteImages(){
 
-        final CharSequence[] items={"Camera","Gallary","Cancel"};
+        final CharSequence[] items={"Camera","Cancel"};
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         builder.setTitle("Add Image");
 
@@ -436,8 +439,8 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
                     startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }*/
-
+                }
+*/
                 else if(items[i].equals("Cancel"))
                 {
                     hideImageTv.clearComposingText();
@@ -617,8 +620,20 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                         return;
                     }
 
-                    if(ImageUrl.equals("")){
+                   /* if(ImageUrl.equals("")){
 
+                    }*/
+
+
+                    if (myDatabase.GetLastId() == "0") {
+                        myDatabase.InsertDelivery(textviewPickup.getText().toString().trim(),
+                                FROMLAT, FROMLONG, editTextdeliveryaddress.getText().toString().trim(), TOLAT, TOLONG, CheckBoxText,
+                                edittextProduct.getText().toString().trim(), ImageUrl, "", "", "", "");
+                    } else {
+
+                        myDatabase.UpdateDelivery(myDatabase.GetLastId(), textviewPickup.getText().toString().trim(),
+                                FROMLAT, FROMLONG, editTextdeliveryaddress.getText().toString().trim(), TOLAT, TOLONG, CheckBoxText,
+                                edittextProduct.getText().toString().trim(), ImageUrl, "", "", "", "");
                     }
 
                     Intent intent = new Intent("custom-event-name");
