@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -173,9 +174,12 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 CheckBoxDynamic(res.getString(7));
                 edittextProduct.setText(res.getString(8));
 
-                byte[] imgbytes = Base64.decode(res.getString(9), Base64.DEFAULT);
-                bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
-                product_imageView.setImageBitmap(bitmap);
+                if(!res.getString(9).toString().equals("")) {
+                    ImageUrl=res.getString(9).toString();
+                    byte[] imgbytes = Base64.decode(res.getString(9), Base64.DEFAULT);
+                    bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
+                    product_imageView.setImageBitmap(bitmap);
+                }
             }
         }else {
               Bundle extras = getActivity().getIntent().getExtras();
@@ -260,8 +264,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("DeliveryAddress", editTextdeliveryaddress.getText().toString().trim());
                 intent.putExtra("DeliveryFlatNo", FlatNoDrop);
                 intent.putExtra("DeliveryLandMark", LandMarkDrop);
-                intent.putExtra("ToLat",  TOLAT);
-                intent.putExtra("ToLong",  TOLONG);
 
                 Intent i = new Intent(getContext(), MapsActivity.class);
                 i.putExtra("ActivityType", "0");
@@ -495,13 +497,9 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -517,10 +515,8 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        product_imageView.setImageBitmap(thumbnail);
-
-
-
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+        product_imageView.setImageBitmap(imageBitmap);
     }
 
     public void EnableRuntimePermission(){
@@ -564,6 +560,8 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        Bitmap bitmap;
+
         nextBT.setOnClickListener(this);
     }
 
@@ -614,7 +612,7 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                         return;
                     }
 
-                    if (TextUtils.isEmpty(image)) {
+                    if (TextUtils.isEmpty(ImageUrl)) {
                         btn_productimage.setError("Please Upload Product Image");
                         btn_productimage.requestFocus();
                         return;
@@ -657,8 +655,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
 
     public  void CheckBoxDynamic(String Vehicle){
-
-
         chkBike.setChecked(false);
         chkCar.setChecked(false);
         chkVan.setChecked(false);

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -80,7 +81,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
             findViewById(R.id.loginButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    userLogin();
+                    AsyncTaskRunner runner = new AsyncTaskRunner();
+                    String sleepTime = "1";
+                    runner.execute(sleepTime);
 
                 }
             });
@@ -95,6 +98,52 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+               userLogin();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(CustomerLoginActivity.this,
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -300,7 +349,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
             }
         }else {
             // Do something, when permissions are already granted
-            Toast.makeText(mContext,"Permissions already granted", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(mContext,"Permissions already granted", Toast.LENGTH_SHORT).show();
         }
     }
 

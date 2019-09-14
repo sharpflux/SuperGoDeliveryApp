@@ -356,10 +356,29 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                         cpname.requestFocus();
                         return;
                     }
+                    if (TextUtils.isEmpty(CustomerName)) {
+                        cpname.setError("Please enter Contact Person Name");
+                        cpname.requestFocus();
+                        return;
+                    }
+
                     if (TextUtils.isEmpty(NumberCustomer)) {
                         cnum.setError("Please enter Contact Person Number");
                         cnum.requestFocus();
                         return;
+                    }
+
+                    if (NumberCustomer.length() > 10) {
+                        cnum.setError("Please enter valid mobile no");
+                        cnum.requestFocus();
+                        return;
+
+                    }
+                    if (NumberCustomer.length() < 10) {
+                        cnum.setError("Please enter valid mobile no");
+                        cnum.requestFocus();
+                        return;
+
                     }
 
                     if (TextUtils.isEmpty(AlterName)) {
@@ -367,7 +386,18 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                         anum.requestFocus();
                         return;
                     }
+                    if (AlterName.length() > 10) {
+                        cnum.setError("Please enter valid mobile no");
+                        cnum.requestFocus();
+                        return;
 
+                    }
+                    if (AlterName.length() < 10) {
+                        cnum.setError("Please enter valid mobile no");
+                        cnum.requestFocus();
+                        return;
+
+                    }
 
                     Intent intent = new Intent("fragment-three");
                     intent.putExtra("PickupAddress", PickupAddress.toString());

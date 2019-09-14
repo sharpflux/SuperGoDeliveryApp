@@ -6,11 +6,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +54,7 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
     private OnStepThreeListener mListener;
     private TextView editTextdeliveryaddress,textviewPickup;
     DatabaseHelper myDatabase;
+
     public  StepThreeFragment() {
         // Required empty public constructor
     }
@@ -162,8 +166,17 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
     {
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-            String url = getRequestUrl(extras.getString("FromLat") + "," + extras.getString("FromLong"), extras.getString("ToLat") + "," + extras.getString("ToLong"));
-            new DistanceAndDuration(this).execute(url);
+            if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
+                Cursor res = myDatabase.DeliveryGETById(myDatabase.GetLastId());
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()) {
+                    String url = getRequestUrl(res.getString(2) + "," +res.getString(3),res.getString(5)+ "," + res.getString(6));
+                    new DistanceAndDuration(this).execute(url);
+
+                }
+            }
+
+
         }
     }
 

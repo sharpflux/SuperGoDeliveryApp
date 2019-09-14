@@ -2,7 +2,7 @@ package com.sharpflux.supergodeliveryapp;
 
 public class URLs {
 
-    public static final String URL_REGISTER = "http://api.supergo.in/api/CustomerApi/CustomerRegister";
+    public static final String URL_REGISTER = "http://admin.supergo.in/api/CustomerAPI/CustomerRegister";
     public static final String URL_LOGIN= "http://api.supergo.in/api/LogIn/CustomerLogin";
     public static final String URL_RATECALCULATOR= "http://api.supergo.in/api/RateCalculator/RateCalculator";
 

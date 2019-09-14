@@ -1,11 +1,15 @@
 package com.sharpflux.supergodeliveryapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -35,7 +39,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_register);
 
-      //  progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        //  progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         //if the user is already logged in we will directly start the profile activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -55,8 +59,10 @@ public class CustomerRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if user pressed on button register
                 //here we will register the user to server
-                registerUser();
 
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "1";
+                runner.execute(sleepTime);
 
             }
         });
@@ -73,12 +79,78 @@ public class CustomerRegisterActivity extends AppCompatActivity {
 
     }
 
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+        Handler h = new Handler();
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+                registerUser();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+
+
+            h.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+
+
+            }, 100);
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+            h.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    progressDialog = ProgressDialog.show(CustomerRegisterActivity.this,
+                            "Loading...",
+                            "Wait for result..");
+                }
+
+
+            }, 100);
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
     private void registerUser() {
         final String username = editTextUsername.getText().toString().trim();
         final String email = editTextEmail.getText().toString().trim();
         final String mob = editTextMobile.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
-
 
 
         if (TextUtils.isEmpty(username)) {
@@ -121,20 +193,26 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
 
                             //if no error in response
-                            if (!obj.getBoolean("error")) {
+                            if (!obj.getBoolean("Iserror")) {
 
-                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-
-                                User user = new User(
+                               // Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                Log.d("Mess", response);
+                                /*User user = new User(
                                         obj.getInt("CustomerId"),
                                         obj.getString("CustomerFullName"),
                                         obj.getString("Email"),
                                         obj.getString("MobileNo")
 
                                 );
-                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                                finish();
-                                getOtp();
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);*/
+                                //finish();
+                                Intent in = new Intent(CustomerRegisterActivity.this, OtpRegisterActivity.class);
+                                in.putExtra("otp", obj.getString("OTP"));
+                                in.putExtra("CustomerId", obj.getString("CustomerId"));
+                                in.putExtra("CustomerFullName", obj.getString("CustomerFullName"));
+                                in.putExtra("Email", obj.getString("EmailId"));
+                                in.putExtra("MobileNo", obj.getString("MobileNo"));
+                                startActivity(in);
                             } else {
                                 builder.setMessage("Invalid User")
                                         .setCancelable(false)
@@ -180,7 +258,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("CustomerFullName", username);
-                params.put("Email", email);
+                params.put("EmailId", email);
                 params.put("MobileNo", mob);
                 params.put("Password", password);
                 //params.put("gender", gender);
@@ -194,7 +272,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
 
     private void getOtp() {
         //first getting the values
-        final String mobNo =  editTextMobile.getText().toString();
+        final String mobNo = editTextMobile.getText().toString();
 
         if (!CommonUtils.isValidPhone(mobNo)) {
             editTextMobile.setError("Invalid Mobile number");
@@ -212,11 +290,25 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                             if (!obj.getBoolean("error")) {
                                 Intent in = new Intent(CustomerRegisterActivity.this,
                                         OtpRegisterActivity.class);
-                                in.putExtra("otp",obj.getString("OTP"));
+                                in.putExtra("otp", obj.getString("OTP"));
                                 startActivity(in);
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            } else {
+
+                                builder.setMessage("Invalid User")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle(response);
+                                alert.show();
+
                             }
 
                         } catch (JSONException e) {
@@ -227,7 +319,22 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        builder.setMessage("Invalid User")
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle(error.getMessage());
+                        alert.show();
+
                     }
                 }) {
             @Override
@@ -235,7 +342,6 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("OTPMobileNo", mobNo);
                 params.put("OTPType", "OTP");
-
                 return params;
             }
         };
