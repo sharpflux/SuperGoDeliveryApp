@@ -44,6 +44,7 @@
             </intent-filter>
         </service>
         -->
+        <activity android:name=".CheckOutCart" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".OtpRegisterActivity" />
         <activity android:name=".ResetPasswordActivity" />

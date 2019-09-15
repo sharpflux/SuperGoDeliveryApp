@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,12 +46,11 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     String merchantId = "",mobilenum="";
     Bundle bundle;
     RecyclerView recyclerView;
-
+    android.support.v7.widget.Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_description);
-
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
@@ -61,6 +62,9 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
+
+        toolbar= (android.support.v7.widget.Toolbar)this.findViewById(R.id.toolbar);
+
 
         bundle = getIntent().getExtras();
 
@@ -77,7 +81,8 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPhoneNumber();
+                Intent fintent = new Intent(MerchantDescriptionActivity.this,CheckOutCart.class);
+                startActivity(fintent);
 
             }
         });
@@ -190,13 +195,13 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                                 JSONObject userJson = obj.getJSONObject(i);
                                 Description sellOptions =
                                         new Description
-                                                (userJson.getString("MerchantId"),
+                                                (userJson.getString("ItemId"),
                                                         "http://admin.supergo.in/" + userJson.getString("ImgUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getDouble("Price"));
 
                                 merchantList.add(sellOptions);
-                                MerchantDescriptionAdapter myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList);
+                                MerchantDescriptionAdapter myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList,toolbar);
                                 recyclerView.setAdapter(myAdapter);
 
                             }

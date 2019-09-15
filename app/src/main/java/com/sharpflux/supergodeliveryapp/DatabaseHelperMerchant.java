@@ -13,21 +13,11 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "SuperGoDeliveryMerchnat.db";
     public static final String TABLE_NAME = "MerchantsOrder";
     public static final String ID = "ID";
-    public static final String PICKUPADDRESS = "PICKUPADDRESS";
-    public static final String FROMLAT = "FROMLAT";
-    public static final String FROMLONG = "FROMLONG";
-
-    public static final String DELIVERYADDRESS = "DELIVERYADDRESS";
-    public static final String TOLAT = "TOLAT";
-    public static final String TOLONG = "TOLONG";
-
     public static final String ITEMID = "ITEMID";
+    public static final String ITEMNAME = "ITEMNAME";
     public static final String QUANTITY = "QUANTITY";
     public static final String PRICE = "PRICE";
-    public static final String PICKUPDATE = "PICKUPDATE";
-    public static final String PICKUPTIME = "PICKUPTIME";
-    public static final String CONTACTPERSON = "CONTACTPERSON";
-    public static final String RECIEVERNUMBER = "RECIEVERNUMBER";
+    public static final String IMAGEURL = "IMAGEURL";
 
     public DatabaseHelperMerchant(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -35,9 +25,8 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,PICKUPADDRESS TEXT,FROMLAT TEXT," +
-                " FROMLONG TEXT,DELIVERYADDRESS TEXT,TOLAT TEXT,TOLONG TEXT,ITEMID TEXT,QUANTITY " +
-                "TEXT,PRICE TEXT,PICKUPDATE TEXT,PICKUPTIME TEXT,CONTACTPERSON TEXT,RECIEVERNUMBER TEXT )");
+        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,ITEMID INTEGER,ITEMNAME TEXT,QUANTITY TEXT," +
+                " PRICE TEXT,IMAGEURL TEXT )");
     }
 
     @Override
@@ -46,27 +35,14 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean OrderInsert(String pickupaddress, String fromlat, String fromlong, String DeliveryAddress, String toLat, String toLong,
-                                  String ItemId,String Quantity,String Price,String Pickupdate,String PickupTIme,String ContactPerson,String ReciverNo) {
+    public boolean OrderInsert(Integer itemId,String ItemName, String quantity,Double price,String ImageUrl) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PICKUPADDRESS,pickupaddress);
-        contentValues.put(FROMLAT,fromlat);
-        contentValues.put(FROMLONG,fromlong);
-
-        contentValues.put(DELIVERYADDRESS,DeliveryAddress);
-        contentValues.put(TOLAT,toLat);
-        contentValues.put(TOLONG,toLong);
-
-        contentValues.put(ITEMID,ItemId);
-        contentValues.put(QUANTITY,Quantity);
-        contentValues.put(PRICE,Price);
-
-        contentValues.put(PICKUPDATE,Pickupdate);
-        contentValues.put(PICKUPTIME,PickupTIme);
-        contentValues.put(CONTACTPERSON,ContactPerson);
-        contentValues.put(RECIEVERNUMBER,ReciverNo);
-
+        contentValues.put(ITEMID,itemId);
+        contentValues.put(ITEMNAME,ItemName);
+        contentValues.put(QUANTITY,quantity);
+        contentValues.put(PRICE,price);
+        contentValues.put(IMAGEURL,ImageUrl);
         long result = db.insert(TABLE_NAME,null ,contentValues);
         if(result == -1)
             return false;
@@ -87,66 +63,60 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
     }
 
 
-    public boolean UpdatePickupAddress(String id,String pickupaddress, String fromlat, String fromlong) {
+
+
+    public boolean UpdateOrder(Integer itemId,String ItemName, String quantity,Double price) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID,id);
-        contentValues.put(PICKUPADDRESS,pickupaddress);
-        contentValues.put(FROMLAT,fromlat);
-        contentValues.put(FROMLONG,fromlong);
-        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+        contentValues.put(ITEMID,itemId);
+        contentValues.put(ITEMNAME,ItemName);
+        contentValues.put(QUANTITY,quantity);
+        contentValues.put(PRICE,price);
+        db.update(TABLE_NAME, contentValues, "ITEMID = ?",new String[] { String.valueOf( itemId) });
         return true;
     }
 
-    public boolean UpdateDeliveryAddress(String id,String DeliveryAddress, String toLat, String toLong) {
+    public boolean UpdateQty(Integer itemId, String quantity ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID,id);
-        contentValues.put(DELIVERYADDRESS,DeliveryAddress);
-        contentValues.put(TOLAT,toLat);
-        contentValues.put(TOLONG,toLong);
-        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+        contentValues.put(ITEMID,itemId);
+        contentValues.put(QUANTITY,quantity);
+        db.update(TABLE_NAME, contentValues, "ITEMID = ?",new String[] { String.valueOf( itemId) });
         return true;
     }
 
-
-    /*public boolean UpdateDelivery(String id,String pickupaddress, String fromlat, String fromlong, String DeliveryAddress, String toLat, String toLong,
-                              String Vehicletype,String OrderDetails,String Images,String Pickupdate,String PickupTIme,String ContactPerson,String ReciverNo) {
+    public boolean CheckItemIsExists(String ItemId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ID,id);
-        contentValues.put(PICKUPADDRESS,pickupaddress);
-        contentValues.put(FROMLAT,fromlat);
-        contentValues.put(FROMLONG,fromlong);
+        String Query = "Select * from " + TABLE_NAME + " where " + ITEMID + " = " + "" + ItemId + "";
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
 
-        contentValues.put(DELIVERYADDRESS,DeliveryAddress);
-        contentValues.put(TOLAT,toLat);
-        contentValues.put(TOLONG,toLong);
-
-        contentValues.put(VEHICLETYPE,Vehicletype);
-        contentValues.put(ORDERDETAILS,OrderDetails);
-        contentValues.put(IMAGESTRING,Images);
-        contentValues.put(PICKUPDATE,Pickupdate);
-        contentValues.put(PICKUPTIME,PickupTIme);
-        contentValues.put(CONTACTPERSON,ContactPerson);
-        contentValues.put(RECIEVERNUMBER,ReciverNo);
-
-        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
         return true;
-    }*/
+    }
+
+    public Cursor GetCart() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME  ,null);
+        return res;
+    }
 
     public Integer DeleteRecord (String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, "ID = ?",new String[] {id});
+        return db.delete(TABLE_NAME, "ITEMID = ?",new String[] {id});
     }
 
-    public String GetLastId(){
+    public String GETExist(String itemId){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null);
+       // Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME +"WHERE ITEMID", null);
+        String query = "SELECT ITEMID FROM " + TABLE_NAME + " WHERE ITEMID = ?";
+        Cursor cursor =  db.rawQuery(query, new String[] {itemId});
         String Id="0";
-        if(cursor.moveToLast()){
+        if(cursor.moveToFirst()){
             Id = cursor.getString(0);
-            //--get other cols values
         }
         return  Id;
     }
