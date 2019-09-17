@@ -2,6 +2,7 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,13 +24,16 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     int minteger = 0;
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
-    TextView tvTotalCount;
+    TextView tvTotalCount,total_amount;
     Double TotalAmount;
-    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool) {
+    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
+        this.total_amount=total_amount;
+
+
     }
 
     @NonNull
@@ -50,8 +54,9 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         String priceS = String.valueOf(priced);
         holder.price.setText("₹" + priceS);
         TotalAmount=0.0;
+        total_amount.setText("₹" +String.valueOf(  calculateTotal()));
         holder.cart_product_quantity_tv.setText(String.valueOf(mlist.get(position).getQuantity()));
-       holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
+        holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -59,9 +64,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                 if (minteger >= 0) {
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
-                    TotalAmount=(Double.valueOf(priceS)*minteger)-TotalAmount;
-
                 }
+                total_amount.setText("₹" +String.valueOf(  calculateTotal()));
             }
         });
         holder.cart_plus_img.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +76,10 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     CheckOutItems filter = mlist.get(position);
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
-                    TotalAmount=(Double.valueOf(priceS)*minteger)+TotalAmount;
 
                 }
+                //calculateTotal();
+                total_amount.setText("₹" +String.valueOf(  calculateTotal()));
             }
         });
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -85,17 +90,36 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()));
                 }
             }
         });
+
+
 
     }
     public void removeItem(int position) {
         mlist.remove(position);
         notifyItemRemoved(position);
     }
+    public Double total=0.0;
+    public Double calculateTotal(){
+        int i=0;
+        total=0.0;
+        Cursor res = myDatabase.GetCart();
+        if (res.getCount() == 0) {
 
+        }
+        tvTotalCount.setText(res.getCount()+" Items");
+        while (res.moveToNext()) {
+
+            total=total + ( Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)));
+
+        }
+        return  total;
+
+
+    }
     @Override
     public int getItemCount() {
         return mlist.size();
@@ -113,7 +137,7 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mImage,imgDelete;
     TextView mTitle;
-    TextView price, cart_product_quantity_tv;
+    TextView price, cart_product_quantity_tv,total_amount;
     Button btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
@@ -122,7 +146,7 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
 
     CheckOutAdapterViewHolder(View itemView) {
         super(itemView);
-
+        total_amount=itemView.findViewById(R.id.total_amount);
         cart_minus_img = (ImageView) itemView.findViewById(R.id.cart_minus_img);
         cart_plus_img = (ImageView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);

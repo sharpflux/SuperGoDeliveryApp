@@ -44,6 +44,19 @@
             </intent-filter>
         </service>
         -->
+        <activity
+            android:name=".ChooseDeliveryAddressActivity"
+            android:label="Choose Delivery Address"
+            android:parentActivityName=".CheckOutCart"
+            android:theme="@style/DarkAppTheme" />
+
+        <activity
+            android:name=".CartPreviewActivity"
+            android:label="Check"
+            android:parentActivityName=".CheckOutCart"
+            android:theme="@style/DarkAppTheme" />
+
+
         <activity android:name=".CheckOutCart" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".OtpRegisterActivity" />

@@ -62,9 +62,6 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
         return res;
     }
 
-
-
-
     public boolean UpdateOrder(Integer itemId,String ItemName, String quantity,Double price) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,10 +44,13 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private ArrayList<ImageModel> sliderImg;
     private ImageView[] dots;
     Button btnCall;
-    String merchantId = "",mobilenum="";
+    String merchantId = "", mobilenum = "";
     Bundle bundle;
     RecyclerView recyclerView;
+    DatabaseHelperMerchant myDatabase;
+    TextView tvTotalCount;
     android.support.v7.widget.Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +66,9 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
-
-        toolbar= (android.support.v7.widget.Toolbar)this.findViewById(R.id.toolbar);
-
+        myDatabase = new DatabaseHelperMerchant(this);
+        toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+        tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
         bundle = getIntent().getExtras();
 
@@ -72,7 +76,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
         }
-
+        CountItemsInCart();
         //call recycler data
 
         setDynamicFragmentToTabLayout();
@@ -81,7 +85,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent fintent = new Intent(MerchantDescriptionActivity.this,CheckOutCart.class);
+                Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
                 startActivity(fintent);
 
             }
@@ -135,25 +139,26 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
     }
 
+    public void CountItemsInCart() {
+        Cursor res = myDatabase.GetCart();
+        if (res.getCount() == 0) {
+
+        }
+        tvTotalCount.setText(res.getCount() + " Items");
+    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        if(requestCode == 101)
-        {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 101) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 callPhoneNumber();
             }
         }
     }
 
-    public void callPhoneNumber()
-    {
-        try
-        {
-            if(Build.VERSION.SDK_INT > 22)
-            {
+    public void callPhoneNumber() {
+        try {
+            if (Build.VERSION.SDK_INT > 22) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(MerchantDescriptionActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 101);
                     return;
@@ -163,25 +168,21 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                 callIntent.setData(Uri.parse("tel:" + mobilenum));
                 startActivity(callIntent);
 
-            }
-            else {
+            } else {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + mobilenum));
                 startActivity(callIntent);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
 
-
     private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_MERCHANTDESCRIPTION+merchantId,
+                URLs.URL_MERCHANTDESCRIPTION + merchantId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -201,7 +202,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                                                         userJson.getDouble("Price"));
 
                                 merchantList.add(sellOptions);
-                                MerchantDescriptionAdapter myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList,toolbar);
+                                MerchantDescriptionAdapter myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar);
                                 recyclerView.setAdapter(myAdapter);
 
                             }
@@ -232,7 +233,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private void getImages() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_DESCIMAGES+merchantId,
+                URLs.URL_DESCIMAGES + merchantId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -251,7 +252,6 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
                             }
-
 
 
                             ViewpagerAdapterForDescription viewPagerAdapter = new ViewpagerAdapterForDescription(MerchantDescriptionActivity.this, sliderImg);

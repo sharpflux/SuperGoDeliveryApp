@@ -30,7 +30,65 @@
 
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/droplocationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16.7dp"
+            android:orientation="vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16.8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"
+                        android:text="@string/drop_point"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDropAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:letterSpacing="0.0525"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/s_02_indiabulls_mega_mall_nr_dinesh_mill_njetalpur_roda_vadodara"
+                    android:textColor="@color/silver"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="3dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="20dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:text="400"
             android:textColor="@color/white"
@@ -76,6 +134,7 @@
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
 </LinearLayout>

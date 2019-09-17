@@ -2,6 +2,7 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         this.mContext = mContext;
         this.mlist = merchantlist;
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
-
     }
 
     @Override
@@ -43,7 +43,13 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
 
         return new MerchantDescriptionViewHolder(mView);
     }
+    public void CountItemsInCart() {
+        Cursor res = myDatabase.GetCart();
+        if (res.getCount() == 0) {
 
+        }
+        tvTotalCount.setText(res.getCount() + " Items");
+    }
     @Override
     public void onBindViewHolder(final MerchantDescriptionViewHolder holder, final int position) {
         Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
@@ -98,7 +104,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
                     Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
                 }
 
-                tvTotalCount.setText(myDatabase.GETExist(mlist.get(position).getId()));
+                CountItemsInCart();
 
             }
         });
