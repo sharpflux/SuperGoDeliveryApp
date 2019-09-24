@@ -39,9 +39,6 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private static int currentPage = 0;
-    /*Button send,recieve,sell_button2;
-    TextView txtUserGreet;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;*/
     ShimmerFrameLayout shimmerFrameLayout;
     private ArrayList<ImageModel> sliderImg;
     ViewPager viewPager;
