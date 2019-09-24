@@ -276,7 +276,8 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
                             }
 
-                            dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+                            dots[0].setImageDrawable(ContextCompat.getDrawable
+                                    (getApplicationContext(), R.drawable.active_dot));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

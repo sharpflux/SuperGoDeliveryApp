@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
-
+    private static int currentPage = 0;
     /*Button send,recieve,sell_button2;
     TextView txtUserGreet;
     private BroadcastReceiver mRegistrationBroadcastReceiver;*/
@@ -84,9 +84,9 @@ public class HomeFragment extends Fragment {
         shimmerFrameLayout = view.findViewById(R.id.parentShimmerLayout);
         txtUserGreet = view.findViewById(R.id.txtUserGreet);
         //getting the current user
-        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        // User user = SharedPrefManager.getInstance(getContext()).getUser();
 
-        txtUserGreet.setText("Hi " + user.getUsername() + "!" + "What would you like to order today?");
+        txtUserGreet.setText("What would you like to order today?");
 
 
         mRecyclerView = view.findViewById(R.id.rvlistFacilities);
@@ -104,7 +104,32 @@ public class HomeFragment extends Fragment {
 
         getImages();
 
-       // shimmerFrameLayout.stopShimmerAnimation();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                for (int i = 0; i < dotscount; i++) {
+
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.non_active_dot));
+
+                }
+
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.active_dot));
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     private void getImages() {
@@ -127,9 +152,7 @@ public class HomeFragment extends Fragment {
 
                                 sliderImg.add(sellOptions);
 
-
                             }
-
 
                             ViewpagerAdapterForDescription viewPagerAdapter =
                                     new ViewpagerAdapterForDescription(getContext(), sliderImg);
@@ -137,6 +160,28 @@ public class HomeFragment extends Fragment {
                             viewPager.setAdapter(viewPagerAdapter);
 
 
+
+
+                            dotscount = viewPagerAdapter.getCount();
+
+                            dots = new ImageView[dotscount];
+
+                            for (int i = 0; i < dotscount; i++) {
+
+                                dots[i] = new ImageView(getContext());
+
+                                dots[i].setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.non_active_dot));
+
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                                params.setMargins(8, 0, 8, 0);
+
+                                SliderDots.addView(dots[i], params);
+
+                            }
+
+                            dots[0].setImageDrawable(ContextCompat.getDrawable
+                                    (getContext(), R.drawable.active_dot));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -157,7 +202,6 @@ public class HomeFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-
 
     }
 
@@ -186,14 +230,12 @@ public class HomeFragment extends Fragment {
 
                                 merchantList.add(sellOptions);
 
-
                                 myAdapter = new MyMerchantAdapter
                                         (getContext(), merchantList);
                                 mRecyclerView.setAdapter(myAdapter);
 
                                 shimmerFrameLayout.stopShimmerAnimation();
                                 shimmerFrameLayout.setVisibility(View.GONE);
-
 
                             }
 
@@ -217,7 +259,6 @@ public class HomeFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-
 
     }
 
