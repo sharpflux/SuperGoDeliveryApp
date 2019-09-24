@@ -12,6 +12,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="fontFamily">@font/sfpro_display_bold</item>
     </style>
+    <style name="botoombar_textchange">
+        <item name="android:textSize">13dp</item>
+    </style>
     <style name="ganaral_primarystyle">
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/colorPrimary</item>

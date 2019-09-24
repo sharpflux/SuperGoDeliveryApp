@@ -29,17 +29,13 @@ public class MerchantListActivity extends AppCompatActivity {
     MyMerchantAdapter myAdapter;
 
 
-
-
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_list);
 
         setTitle("Our Merchants!");
 
-        mRecyclerView =findViewById(R.id.rvMain);
+        mRecyclerView = findViewById(R.id.rvMain);
 
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
@@ -50,6 +46,7 @@ public class MerchantListActivity extends AppCompatActivity {
 
         setDynamicFragmentToTabLayout();
     }
+
     private void setDynamicFragmentToTabLayout() {
 
         CustomProgressDialog.showSimpleProgressDialog(this, "Loading...", "Fetching data", false);
@@ -68,10 +65,10 @@ public class MerchantListActivity extends AppCompatActivity {
 
                                 JSONObject userJson = obj.getJSONObject(i);
 
-                                MerchantsType sellOptions=
-                                        new  MerchantsType
-                                                ( userJson.getString("MerchantTypeId"),
-                                                        "http://admin.supergo.in/" +  userJson.getString("ImgUrl"),
+                                MerchantsType sellOptions =
+                                        new MerchantsType
+                                                (userJson.getString("MerchantTypeId"),
+                                                        "http://admin.supergo.in/" + userJson.getString("ImgUrl"),
                                                         userJson.getString("TypeName"));
 
                                 merchantList.add(sellOptions);

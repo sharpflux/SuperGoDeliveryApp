@@ -45,7 +45,7 @@
     <color name="background_material_light">@color/material_grey_50</color>
     <color name="black">#ff3e5466</color>
     <color name="blue">#ff2345a5</color>
-
+    <color name="bg_color">#f5f5f5</color>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
@@ -58,7 +58,8 @@
     <color name="cardview_light_background">#ffffffff</color>
     <color name="cardview_shadow_end_color">#03000000</color>
     <color name="cardview_shadow_start_color">#37000000</color>
-
+    <color name="unselected_txt">#5c5e5b</color>
+    <color name="seleted_txt">#43c2af</color>
     <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
     <color name="common_google_signin_btn_text_dark_disabled">#1f000000</color>
     <color name="common_google_signin_btn_text_dark_focused">@android:color/black</color>
@@ -69,6 +70,8 @@
     <color name="common_google_signin_btn_text_light_pressed">#de000000</color>
     <color name="darkblack">#ff454545</color>
     <color name="design_bottom_navigation_shadow_color">#14000000</color>
+    <color name="view_line">#d4d9d5</color>
+    <color name="transperent">#00000000</color>
     <color name="design_fab_shadow_end_color">@android:color/transparent</color>
     <color name="design_fab_shadow_mid_color">#14000000</color>
     <color name="design_fab_shadow_start_color">#44000000</color>

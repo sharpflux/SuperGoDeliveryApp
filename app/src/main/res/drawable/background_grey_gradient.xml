@@ -3,7 +3,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <gradient android:startColor="@color/pale_grey" android:endColor="@color/pale_grey_two" android:angle="90.0" android:type="linear" />
+            <gradient android:startColor="@color/pale_grey"
+                android:endColor="@color/pale_grey_two" android:angle="90.0" android:type="linear" />
         </shape>
     </item>
 </selector>
