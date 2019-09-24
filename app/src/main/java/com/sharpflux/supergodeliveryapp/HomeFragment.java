@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
         //getting the current user
         User user = SharedPrefManager.getInstance(getContext()).getUser();
 
-        txtUserGreet.setText("Hi " + user.getUsername() + "!" + "What would you like to do today?");
+        txtUserGreet.setText("Hi " + user.getUsername() + "!" + "What would you like to order today?");
 
 
         mRecyclerView = view.findViewById(R.id.rvlistFacilities);
