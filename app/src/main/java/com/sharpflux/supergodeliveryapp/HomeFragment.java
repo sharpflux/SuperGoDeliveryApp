@@ -159,9 +159,6 @@ public class HomeFragment extends Fragment {
 
                             viewPager.setAdapter(viewPagerAdapter);
 
-
-
-
                             dotscount = viewPagerAdapter.getCount();
 
                             dots = new ImageView[dotscount];
