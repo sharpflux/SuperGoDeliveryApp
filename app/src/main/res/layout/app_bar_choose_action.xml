@@ -72,16 +72,16 @@
 
 
                     <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:drawableRight="@drawable/dropdown"
                         android:background="@drawable/btn_loc"
                         android:id="@+id/tv_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="2dp"
                         android:fontFamily="@font/sfpro_display_bold"
-                        android:letterSpacing="0.0525"
-                        android:text="Madhusmruti,Swargate"
+                        android:text="Madhusmruti bunglow,Swargate,Pune"
                         android:textColor="@color/white"
                         android:textSize="13sp" />
 
