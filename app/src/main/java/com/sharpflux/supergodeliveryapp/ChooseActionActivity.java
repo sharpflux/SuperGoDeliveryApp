@@ -1,4 +1,5 @@
 package com.sharpflux.supergodeliveryapp;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,7 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 public class ChooseActionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView send,recieve,customerName,navBarName,navMobileNumber;
+    TextView navBarName, navMobileNumber, tv_location, tv_current_loc;
 
 
     @Override
@@ -33,6 +34,7 @@ public class ChooseActionActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_choose_action);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
 
@@ -44,8 +46,7 @@ public class ChooseActionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header =navigationView.getHeaderView(0);
-
+        View header = navigationView.getHeaderView(0);
 
 
         header = navigationView.getHeaderView(0);
@@ -66,17 +67,37 @@ public class ChooseActionActivity extends AppCompatActivity
         //send=findViewById(R.id.textviewSend);
         //recieve=findViewById(R.id.textviewRecieve);
         //customerName=findViewById(R.id.textViewCustomerName);
-        navBarName =header.findViewById(R.id.navheaderName);
-        navMobileNumber=header.findViewById(R.id.navheaderMobile);
+        navBarName = header.findViewById(R.id.navheaderName);
+        navMobileNumber = header.findViewById(R.id.navheaderMobile);
 
 
         //getting the current user
-       User user = SharedPrefManager.getInstance(this).getUser();
+        User user = SharedPrefManager.getInstance(this).getUser();
 
         //customerName.setText("Hey "+user.getUsername()+"!");
-        navBarName.setText("Hey "+user.getUsername()+"!");
-        navMobileNumber.setText("+91"+user.getMobile());
+        navBarName.setText("Hey " + user.getUsername() + "!");
+        navMobileNumber.setText("+91" + user.getMobile());
 
+
+        tv_location = findViewById(R.id.tv_location);
+
+        tv_current_loc = findViewById(R.id.tv_current_loc);
+
+        tv_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(ChooseActionActivity.this, MapsActivity.class);
+                startActivity(sendIntent);
+            }
+        });
+
+        tv_current_loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(ChooseActionActivity.this, MapsActivity.class);
+                startActivity(sendIntent);
+            }
+        });
 
        /* send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +148,7 @@ public class ChooseActionActivity extends AppCompatActivity
             displaySelectedFragment(fragment);
 
             return true;
-        }else if(id == R.id.nav_offers2)
-        {
+        } else if (id == R.id.nav_offers2) {
             Fragment fragment = null;
             fragment = new OffersFragment();
             displaySelectedFragment(fragment);
@@ -159,8 +179,8 @@ public class ChooseActionActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_order) {
 
-           // Intent oin = new Intent(ChooseActionActivity.this,MyOrderListActivity.class);
-           // startActivity(oin);
+            // Intent oin = new Intent(ChooseActionActivity.this,MyOrderListActivity.class);
+            // startActivity(oin);
 
             Fragment fragment = null;
             fragment = new OrderFragment();
@@ -177,7 +197,7 @@ public class ChooseActionActivity extends AppCompatActivity
             Intent urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(NavigationDrawerConstants.SITE_URL));
             startActivity(urlIntent);
 
-        }else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_help) {
 
             //Open URL on click of Visit Us
             Intent urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(NavigationDrawerConstants.SITE_URL));
@@ -194,14 +214,14 @@ public class ChooseActionActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_rate) {
-                appLink();
+            appLink();
 
-        }else if (id==R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             //when the user presses logout button
             //calling the logout method
 
-                    finish();
-                    SharedPrefManager.getInstance(getApplicationContext()).logout();
+            finish();
+            SharedPrefManager.getInstance(getApplicationContext()).logout();
 
         }
 
@@ -211,8 +231,7 @@ public class ChooseActionActivity extends AppCompatActivity
     }
 
 
-    public void appLink()
-    {
+    public void appLink() {
 
        /* String market_uri ="https://play.google.com/store/apps/details?id=com.supergo.customer";
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -221,7 +240,7 @@ public class ChooseActionActivity extends AppCompatActivity
                 .FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);*/
 
-       // final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        // final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.supergo.customer")));
         } catch (android.content.ActivityNotFoundException anfe) {
