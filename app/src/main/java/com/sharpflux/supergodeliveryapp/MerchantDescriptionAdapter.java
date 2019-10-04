@@ -101,7 +101,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
                 }
                 else {
                     myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
-                    Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
                 }
 
                 CountItemsInCart();

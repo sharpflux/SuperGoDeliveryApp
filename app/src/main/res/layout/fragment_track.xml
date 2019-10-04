@@ -23,7 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="533dp" />
 
-        <LinearLayout
+        <include layout="@layout/item_track_order4"/>
+
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16.7dp"
@@ -158,6 +160,6 @@
                 android:layout_marginTop="16.8dp"
                 android:background="@color/viewline" />
 
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </ScrollView>

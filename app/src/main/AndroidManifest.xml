@@ -62,11 +62,11 @@
         <activity android:name=".OtpRegisterActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ActivityTrack" />
-        <activity android:name=".TrackDeliveryBoy"
-            android:label="Track Order"
+        <activity android:name=".TrackDeliveryBoy"  />
+          <!--  android:label="Track Order"
             android:parentActivityName=".MyOrderListActivity"
-            android:theme="@style/DarkAppTheme"
-            />
+            android:theme="@style/DarkAppTheme"-->
+
         <activity android:name=".DriverModeActivity" />
         <activity
             android:name=".PaymentActivity"

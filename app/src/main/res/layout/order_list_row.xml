@@ -80,7 +80,7 @@
                         android:background="@drawable/btn_plain"
                         android:gravity="center"
                         android:padding="@dimen/padding_small"
-                        android:text="Add To Cart"
+                        android:text="+ Add"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="12dp" />

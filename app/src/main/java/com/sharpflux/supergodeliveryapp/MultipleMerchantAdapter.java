@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -30,12 +31,13 @@ public class MultipleMerchantAdapter extends RecyclerView.Adapter<MultipleMercha
     public MultipleMerchantViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_merchant_item, viewGroup, false);
         return new MultipleMerchantViewHolder(mView);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull MultipleMerchantViewHolder holder, int position) {
 
-        Picasso.get().load(multiplemerchantlist.get(position).getImageUrl()).into(holder.mImage);
+       // Picasso.get().load(multiplemerchantlist.get(position).getImageUrl()).into(holder.mImage);
         holder.mTitle.setText(multiplemerchantlist.get(position).getFirmName());
         holder.MerchantId = multiplemerchantlist.get(position).getMerchantId();
         holder.mdetails.setText(multiplemerchantlist.get(position).getFirmName());
@@ -78,6 +80,7 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
         Intent intent;
         intent = new Intent(context, MerchantDescriptionActivity.class);
         intent.putExtra("MerchantId", MerchantId.toString());
+        intent.putExtra("MerchantName", mTitle.getText().toString());
         intent.putExtra("mobilenum", mobilenum.toString());
         context.startActivity(intent);
     }

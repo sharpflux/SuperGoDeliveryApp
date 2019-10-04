@@ -27,26 +27,7 @@
                 android:orientation="horizontal">
 
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:background="@drawable/btn_loc"
-                        android:id="@+id/tv_current_loc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableLeft="@drawable/ic_location"
-                        android:fontFamily="@font/sfpro_display_bold"
-                        android:letterSpacing="0.0525"
-                        android:text=""
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -76,12 +57,16 @@
                         android:maxLines="1"
                         android:drawableRight="@drawable/dropdown"
                         android:background="@drawable/btn_loc"
-                        android:id="@+id/tv_location"
+                        android:id="@+id/tv_current_loc"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:maxLength="50"
                         android:fontFamily="@font/sfpro_display_bold"
-                        android:text="Madhusmruti bunglow,Swargate,Pune"
+                        android:text="Loading..."
                         android:textColor="@color/white"
                         android:textSize="13sp" />
 

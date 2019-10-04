@@ -48,7 +48,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     Bundle bundle;
     RecyclerView recyclerView;
     DatabaseHelperMerchant myDatabase;
-    TextView tvTotalCount;
+    TextView tvTotalCount,tvMerchantName;
     android.support.v7.widget.Toolbar toolbar;
 
     @Override
@@ -56,7 +56,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_description);
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        //viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         btnCall = findViewById(R.id.btnCall);
         recyclerView = findViewById(R.id.rvMenuList);
@@ -70,11 +70,14 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
         tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
+        tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
+
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
+            tvMerchantName.setText(bundle.getString("MerchantName"));
         }
         CountItemsInCart();
         //call recycler data
@@ -104,7 +107,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
         getImages();
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -135,7 +138,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
     }
 
@@ -256,7 +259,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
                             ViewpagerAdapterForDescription viewPagerAdapter = new ViewpagerAdapterForDescription(MerchantDescriptionActivity.this, sliderImg);
 
-                            viewPager.setAdapter(viewPagerAdapter);
+                          /*  viewPager.setAdapter(viewPagerAdapter);
 
                             dotscount = viewPagerAdapter.getCount();
 
@@ -277,7 +280,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                             }
 
                             dots[0].setImageDrawable(ContextCompat.getDrawable
-                                    (getApplicationContext(), R.drawable.active_dot));
+                                    (getApplicationContext(), R.drawable.active_dot));*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -166,7 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         String registrationToken = "YOUR_REGISTRATION_TOKEN";
-
         sendNotification(registrationToken);
 
 

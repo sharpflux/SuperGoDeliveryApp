@@ -64,9 +64,17 @@ class MerchantViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     public void onClick(View v) {
         Context context=v.getContext();
         Intent intent;
-        intent =  new Intent(context,MultipleMerchantActivity.class );
-        intent.putExtra("MerchantTypeId",MerchantId.toString());
-        context.startActivity(intent);
+        if(!mTitle.getText().equals("Send Parcel")&&!mTitle.getText().equals("Order Any")) {
+            intent = new Intent(context, MultipleMerchantActivity.class);
+            intent.putExtra("MerchantTypeId", MerchantId.toString());
+            context.startActivity(intent);
+        }
+        else if (mTitle.getText().equals("Send Parcel"))
+        {
+            Intent sendIntent = new Intent(context,MapsActivity.class);
+            context.startActivity(sendIntent);
+        }
+
     }
 
 

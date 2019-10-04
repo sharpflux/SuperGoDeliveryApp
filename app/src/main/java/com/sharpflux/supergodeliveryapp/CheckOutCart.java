@@ -36,7 +36,7 @@ public class CheckOutCart extends AppCompatActivity  implements PaymentResultLis
     android.support.v7.widget.Toolbar toolbar;
     Bundle bundle;
     LinearLayout linearLayout;
-
+    TextView tvTotalCount,tvMerchantName;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -44,11 +44,14 @@ public class CheckOutCart extends AppCompatActivity  implements PaymentResultLis
         setContentView(R.layout.activity_checkout);
         myDatabase = new DatabaseHelperMerchant(this);
 
+
         recyclerView = findViewById(R.id.rvCheckOutItems);
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+        tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
+        tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
         mImage = findViewById(R.id.imageviewMerchant);
         mTitle = findViewById(R.id.tvFirmname);
         price = findViewById(R.id.tvprice);
@@ -57,6 +60,8 @@ public class CheckOutCart extends AppCompatActivity  implements PaymentResultLis
         btnCall = findViewById(R.id.btnCall);
         linearLayout = (LinearLayout) findViewById(R.id.droplocationView);
         bundle = getIntent().getExtras();
+
+        tvMerchantName.setText("Check Out");
 
         if (bundle != null) {
             if (bundle.getString("DeliveryAddress") != null) {

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.sharpflux.supergodeliveryapp.utils.CustomProgressDialog;
 
 import org.json.JSONArray;
@@ -27,7 +29,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     String merchantId="";
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
-
+    ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +43,14 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         merchantList = new ArrayList<>();
         setTitle("Our Merchants!");
 
+        shimmerFrameLayout = findViewById(R.id.parentShimmerLayout);
 
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
             merchantId=bundle.getString("MerchantTypeId");
         }
-
+        shimmerFrameLayout.startShimmerAnimation();
         setDynamicFragmentToTabLayout();
 
     }
@@ -87,6 +90,9 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
                                 myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
                                 mRecyclerView.setAdapter(myAdapter);
+
+                                shimmerFrameLayout.stopShimmerAnimation();
+                                shimmerFrameLayout.setVisibility(View.GONE);
                             }
 
                         } catch (JSONException e) {

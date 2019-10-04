@@ -199,7 +199,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
     }
 
 
-    public  void   saveOrderDetails() {
+    public  void  saveOrderDetails() {
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -291,7 +291,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                     params.put("cpName", cpName);
                     params.put("mobile", mobile);
                     params.put("alternatemobile", alternatemobile);
-                    params.put("paymenttype", "COD");
+                    params.put("paymenttype", "1");
                     params.put("ToLong", ToLong);
                     params.put("ToLat", ToLat);
                     params.put("Distance", objDistance);

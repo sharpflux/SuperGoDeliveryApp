@@ -1,9 +1,15 @@
 package com.sharpflux.supergodeliveryapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -18,15 +24,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class ChooseActionActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     TextView navBarName, navMobileNumber, tv_location, tv_current_loc;
-
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int LOCATION_REQUEST_CODE =101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +98,27 @@ public class ChooseActionActivity extends AppCompatActivity
         navBarName.setText("Hey " + user.getUsername() + "!");
         navMobileNumber.setText("+91" + user.getMobile());
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return;
+        }
+        fetchLastLocation();
 
-        tv_location = findViewById(R.id.tv_location);
+       // tv_location = findViewById(R.id.tv_location);
 
         tv_current_loc = findViewById(R.id.tv_current_loc);
 
-        tv_location.setOnClickListener(new View.OnClickListener() {
+
+
+      /*  tv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(ChooseActionActivity.this, MapsActivity.class);
                 startActivity(sendIntent);
             }
         });
-
+*/
         tv_current_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +145,27 @@ public class ChooseActionActivity extends AppCompatActivity
             }
         });*/
     }
+    private void fetchLastLocation(){
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    //Toast.makeText(getContext(),currentLocation.getLatitude()+" "+currentLocation.getLongitude(),Toast.LENGTH_SHORT).show();
+                    tv_current_loc.setText(getAddress(getApplicationContext(),currentLocation.getLatitude(),currentLocation.getLongitude()));
 
+                }else{
+                    Toast.makeText(getApplicationContext(),"No Location recorded",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -253,4 +301,28 @@ public class ChooseActionActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
+
+    public String getAddress(Context ctx, double lat, double lng){
+        String fullAdd=null;
+        try{
+            Geocoder geocoder= new Geocoder(ctx, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(lat,lng,1);
+            if(addresses.size()>0){
+                Address address = addresses.get(0);
+                fullAdd = address.getAddressLine(0);
+
+                // if you want only city or pin code use following code //
+                   /* String Location = address.getLocality();
+                    String zip = address.getPostalCode();
+                    String Country = address.getCountryName(); */
+            }
+
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+        return fullAdd;
+    }
+
 }

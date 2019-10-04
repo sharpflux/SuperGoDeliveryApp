@@ -8,10 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -98,7 +95,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_track);
+        setContentView(R.layout.activity_track_order1);
        // setContentView(R.layout.track_order);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -106,9 +103,9 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        tvdeliveryBoyName = findViewById(R.id.tvdeliveryBoyName);
-        tvContact = findViewById(R.id.tvContact);
-        distanceDuration=findViewById(R.id.distanceDuration);
+       // tvdeliveryBoyName = findViewById(R.id.tvdeliveryBoyName);
+       // tvContact = findViewById(R.id.tvContact);
+       // distanceDuration=findViewById(R.id.distanceDuration);
         handler = new Handler();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -117,13 +114,13 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         }
 
 
-       button2 = findViewById(R.id.btnAddMarker);
+        /*button2 = findViewById(R.id.btnAddMarker);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startGettingOnlineDataFromCar();
             }
-        });
+        });*/
 
 
 
@@ -446,7 +443,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onTaskCompleted(String... values) {
-        distanceDuration.setText(values[0].toString());
+       // distanceDuration.setText(values[0].toString());
     }
 
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {

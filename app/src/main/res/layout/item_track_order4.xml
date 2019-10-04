@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheet4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="22.5dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18.7dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19.3dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/slip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rectangle_blue_border"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="2dp"
+                android:text="DONE"
+                android:textColor="@color/blue"
+                android:textSize="8.3sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="21.5dp"
+            android:fontFamily="@font/sfpro_display_regular"
+            android:text="Order Received"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18.7dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19.3dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/cooker" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rectangle_blue_border"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="2dp"
+                android:text="DONE"
+                android:textColor="@color/blue"
+                android:textSize="8.3sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="21.5dp"
+            android:fontFamily="@font/sfpro_display_regular"
+            android:text="Delivery Buy pickedup Order"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18.7dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19.3dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/scooter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rect_green"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:paddingLeft="6.2dp"
+                android:paddingTop="2dp"
+                android:paddingRight="6.2dp"
+                android:paddingBottom="2dp"
+                android:text="LIVE"
+                android:textColor="@color/white"
+                android:textSize="8.3sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22.7dp"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:text="Order Picked"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22.7dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/sfpro_display_regular"
+                android:text="Patel Gulamsavar is on the way, soon her will reach to\10the restaurant"
+                android:textColor="@color/silver"
+                android:textSize="11.7sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

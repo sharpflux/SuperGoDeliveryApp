@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingTop="17.3dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/back" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28.3dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:text="ORDER # 3872868123"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13.3sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:text="03:33 PM  |  2 Items, Rs 123"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10.3sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="16.7dp"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:text="HELP"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.3sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <fragment
+        android:id="@+id/map4"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/item_track_order4" />
+</android.support.design.widget.CoordinatorLayout>

@@ -26,11 +26,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/tvTotalCount"
+            android:id="@+id/tvMerchantName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Merchant Name"
+            android:textColor="@color/white"
+            android:fontFamily="@font/sfpro_display_semibold"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvTotalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="6dp"
             android:layout_weight="1"
             android:gravity="right"
             android:text="2 Items"

@@ -109,7 +109,7 @@
             android:height="60dp"
             android:background="@drawable/btn_plain"
             android:fontFamily="@font/sfui_text_regular"
-            android:text="BACK"
+            android:text="TRACK ORDER"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20dp"
