@@ -41,16 +41,26 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
     private static final String TAG = PaymentActivity.class.getSimpleName();
     TextView PayAmount;
     Bundle bundle;
+    DatabaseHelper myDatabase;
+    String userid;
+    int userId;
     private static String DistanceAndDuration,Distance,Duration,TotalSecond;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        myDatabase = new DatabaseHelper(getBaseContext());
         setContentView(R.layout.activity_payment);
         PayAmount=findViewById(R.id.PayAmount);
         if (bundle != null) {
             PayAmount.setText(bundle.getString("amount")+" Rs.");
         }
+
+        User user = SharedPrefManager.getInstance(PaymentActivity.this).getUser();
+
+        //customerName.setText("Hey "+user.getUsername()+"!");
+        userId=user.getId();
+
+        userid=String.valueOf(userId);
         /*
          To ensure faster loading of the Checkout form,
           call this method as early as possible in your checkout flow.
@@ -116,11 +126,12 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             Toast.makeText(this, "Payment Successful: " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
+            saveOrderDetails(razorpayPaymentID);
         } catch (Exception e) {
             Log.e(TAG, "Exception in onPaymentSuccess", e);
         }
     }
-    public  void   saveOrderDetails() {
+    public  void  saveOrderDetails(String TransactionId) {
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -139,7 +150,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
         final String ToLong =b.getString("ToLong");
         final String ToLat =b.getString("ToLat");
         final String totalCharges =b.getString("totalCharges");
-
+        final String ImageUrl =b.getString("ImageUrl");
         String[] arrOfStr=null;
         if(DistanceAndDuration!="")
         {
@@ -162,31 +173,19 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
 
                         try {
 
-                            //converting response to json object
                             JSONObject obj = new JSONObject(response);
 
-                            //if no error in response
+
                             if (!obj.getBoolean("error")) {
 
-                                // Create custom dialog object
-                                final Dialog dialog = new Dialog(PaymentActivity.this);
-                                // Include dialog.xml file
-                                dialog.setContentView(R.layout.custom_dialog);
 
                                 Notification();
 
-                                dialog.show();
-
-                                ImageView declineButton = (ImageView) dialog.findViewById(R.id.declineButton);
-
-
-                                declineButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(PaymentActivity.this, ChooseActionActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
+                                myDatabase.GetLastId();
+                                myDatabase.DeleteRecord(myDatabase.GetLastId());
+                                Intent intent = new Intent(PaymentActivity.this, OrderSuccessfullyPlaced.class);
+                                intent.putExtra("DeliveryId",obj.getString("DeliveryId"));
+                                startActivity(intent);
 
 
 
@@ -212,28 +211,27 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("DeliveryId","0");
-                params.put("CustomerId","2");
+                params.put("CustomerId",userid);
                 params.put("vehicleType", vehicleType);
                 params.put("pickupAddress", pickupAddress);
                 params.put("deliveryAddress", deliveryAddress);
                 params.put("fromLat", fromLat);
                 params.put("fromLang", fromLang);
-
-
                 params.put("product", product);
                 params.put("pickupDate", pickupDate);
                 params.put("pickuptime", pickuptime);
-
                 params.put("cpName", cpName);
                 params.put("mobile", mobile);
                 params.put("alternatemobile", alternatemobile);
-                params.put("paymenttype", "Online");
+                params.put("paymenttype", "1");
                 params.put("ToLong", ToLong);
                 params.put("ToLat", ToLat);
                 params.put("Distance", objDistance);
                 params.put("Duration", objDuration);
                 params.put("TotalSecond", objTotalSecond);
-                //params.put("gender", gender);
+                params.put("TransactionId", TransactionId);
+                params.put("DeliveryTypeId", "1");
+                params.put("ImageUrl", ImageUrl);
                 return params;
             }
         };

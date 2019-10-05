@@ -297,6 +297,8 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                     params.put("Distance", objDistance);
                     params.put("Duration", objDuration);
                     params.put("TotalSecond", objTotalSecond);
+                    params.put("TransactionId", "0");
+                    params.put("DeliveryTypeId", "1");
                     params.put("ImageUrl", ImageUrl);
                     return params;
                 }
