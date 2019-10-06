@@ -60,6 +60,7 @@ public class OtpActivity extends AppCompatActivity {
                         AlertDialog alert = builder.create();
                         alert.setTitle("Enter valid otp");
                         alert.show();
+                        //
                     }
                 }
             });
