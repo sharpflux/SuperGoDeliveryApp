@@ -42,6 +42,7 @@ public class OtpActivity extends AppCompatActivity {
                         in.putExtra("UserId", UserId.toString());
                         startActivity(in);
                         finish();
+                        //
                     }
                     else
                     {
