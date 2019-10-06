@@ -41,6 +41,7 @@ public class OtpActivity extends AppCompatActivity {
                         Intent in = new Intent(OtpActivity.this, ResetPasswordActivity.class);
                         in.putExtra("UserId", UserId.toString());
                         startActivity(in);
+                        finish();
                     }
                     else
                     {

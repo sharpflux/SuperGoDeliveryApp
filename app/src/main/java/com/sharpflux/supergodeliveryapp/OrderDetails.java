@@ -3,20 +3,26 @@ package com.sharpflux.supergodeliveryapp;
 public class OrderDetails {
 
     private String pickupAddress;
-    private String deliveryAddress, TotalCharges,Distance,Duration,DeliveryStatus,DeliveryId;
+    private String deliveryAddress, TotalCharges,Distance,Duration,DeliveryStatus,DeliveryId,InsertionDate,InsertionTime;
 
     public OrderDetails(String pickupAddress, String TotalCharges) {
         this.pickupAddress = pickupAddress;
         this.TotalCharges = TotalCharges;
     }
-    public OrderDetails(String pickupAddress, String TotalCharges,String Distance,String Duration,String DeliveryStatus,String DeliveryId) {
+
+    public OrderDetails(String pickupAddress,   String totalCharges, String distance, String duration, String deliveryStatus, String deliveryId, String insertionDate, String insertionTime) {
         this.pickupAddress = pickupAddress;
-        this.TotalCharges = TotalCharges;
-        this.Distance = Distance;
-        this.Duration = Duration;
-        this.DeliveryStatus = DeliveryStatus;
-        this.DeliveryId = DeliveryId;
+        this.deliveryAddress = deliveryAddress;
+        TotalCharges = totalCharges;
+        Distance = distance;
+        Duration = duration;
+        DeliveryStatus = deliveryStatus;
+        DeliveryId = deliveryId;
+        InsertionDate = insertionDate;
+        InsertionTime = insertionTime;
     }
+
+
     public String getPickupAddress() {
         return pickupAddress;
     }
@@ -31,6 +37,22 @@ public class OrderDetails {
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getInsertionDate() {
+        return InsertionDate;
+    }
+
+    public void setInsertionDate(String insertionDate) {
+        InsertionDate = insertionDate;
+    }
+
+    public String getInsertionTime() {
+        return InsertionTime;
+    }
+
+    public void setInsertionTime(String insertionTime) {
+        InsertionTime = insertionTime;
     }
 
     public String getTotalCharges() {

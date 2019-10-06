@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,7 +93,9 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
     private Double startLongitude;
     TextView tvdeliveryBoyName, tvContact,distanceDuration;
     public  static  String FromLocation,ToLocation,DriverLoactionLatLong;
-
+    LinearLayout mainLayout ;
+    android.support.v7.widget.Toolbar toolbar;
+    TextView OrderId,tvDeliveryDecription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,16 +107,26 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-       // tvdeliveryBoyName = findViewById(R.id.tvdeliveryBoyName);
+        toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+        OrderId = toolbar.findViewById(R.id.OrderId);
+        tvDeliveryDecription = toolbar.findViewById(R.id.tvDeliveryDecription);
        // tvContact = findViewById(R.id.tvContact);
        // distanceDuration=findViewById(R.id.distanceDuration);
         handler = new Handler();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             DeliveryId = extras.getString("DeliveryId");
+            OrderId.setText("ORDER # "+DeliveryId);
+            tvDeliveryDecription.setText(extras.getString("InsertTime")+" |  , Rs "+extras.getString("Total"));
             startGettingOnlineDataFromCar();
         }
+        mainLayout= (LinearLayout) findViewById(R.id.LinearContainer);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.item_track_order4, null);
 
+        // Clear & set new views:
+         mainLayout.removeAllViews();
+        mainLayout.addView(layout);
 
         /*button2 = findViewById(R.id.btnAddMarker);
         button2.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +260,8 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
 
     private void getDriverLocationUpdate() {
 
+        Log.d("DeliveryId::", DeliveryId);
+
         StringRequest request = new StringRequest(Request.Method.GET,
                 URLs.URL_GETLOCATION + "?DeliveryId=" + DeliveryId, new Response.Listener<String>() {
 
@@ -261,16 +277,33 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                     //if no error in response
                     //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < obj.length(); i++) {
+
+                        // Instantiate & use inflater:
+                        LayoutInflater inflater = (LayoutInflater)getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+                        View layout = inflater.inflate(R.layout.item_track_order1, null);
+                        // View trackView4 = inflater.inflate(R.layout.item_track_order4, null);
+                        // Clear & set new views:
+                        mainLayout.removeAllViews();
+                        mainLayout.addView(layout);
+
+                        tvdeliveryBoyName = layout.findViewById(R.id.tvdeliveryBoyName);
+
                         //getting the user from the response
                         JSONObject userJson = obj.getJSONObject(i);
-                        tvdeliveryBoyName.setText(userJson.getString("FullName"));
-                        tvContact.setText(userJson.getString("MobileNo"));
+                        tvdeliveryBoyName.setText(userJson.getString("FullName")+" is on the way, soon her will reach to the merchant ");
+                       // tvContact.setText(userJson.getString("MobileNo"));
                         String LATLONGDB = userJson.getString("LatLong");
                         FromLocation=userJson.getString("FromLat");
                         ToLocation= userJson.getString("ToLong");
-
+                        Log.d("LATLONG::", LATLONGDB);
 
                         String[] latLng = LATLONGDB.split(",");
+
+                        // Retrieve layout:
+
+
+
+
 
                         startLatitude = Double.valueOf(latLng[0].toString());
                         startLongitude = Double.valueOf(latLng[1].toString());
@@ -281,7 +314,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                             startPosition = new LatLng(startLatitude, startLongitude);
 
                             carMarker = googleMap.addMarker(new MarkerOptions().position(startPosition).
-                                    flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car_marker_front_32)));
+                                    flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car_marker_front)));
                             carMarker.setAnchor(0.5f, 0.5f);
 
                             googleMap.moveCamera(CameraUpdateFactory

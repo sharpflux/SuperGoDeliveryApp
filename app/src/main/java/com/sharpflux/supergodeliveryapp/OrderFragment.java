@@ -114,7 +114,9 @@ public class OrderFragment extends Fragment {
                                         product.getString("Distance"),
                                         product.getString("Duration"),
                                         product.getString("DeliveryStatus"),
-                                        product.getString("DeliveryId")
+                                        product.getString("DeliveryId"),
+                                        product.getString("InsertionDate"),
+                                        product.getString("InsertionTime")
                                 );
                                 //adding the product to product list
                                 productList.add(list);

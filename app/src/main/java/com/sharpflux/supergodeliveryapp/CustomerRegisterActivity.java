@@ -111,7 +111,10 @@ public class CustomerRegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                    progressDialog.dismiss();
+                    if ((progressDialog != null) && progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+
                 }
 
 
@@ -213,6 +216,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                                 in.putExtra("Email", obj.getString("EmailId"));
                                 in.putExtra("MobileNo", obj.getString("MobileNo"));
                                 startActivity(in);
+                                finish();
                             } else {
                                 builder.setMessage("Invalid User")
                                         .setCancelable(false)

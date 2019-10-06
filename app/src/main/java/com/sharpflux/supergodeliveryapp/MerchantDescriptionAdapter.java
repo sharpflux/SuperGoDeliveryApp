@@ -96,11 +96,11 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
             public void onClick(View view) {
 
                 if (myDatabase.CheckItemIsExists(mlist.get(position).getId()) ==false) {
-                    myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice(),mlist.get(position).getImage());
+                    myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(),"1", mlist.get(position).getPrice(),mlist.get(position).getImage());
                     Toast.makeText(mContext,"Inserted", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
+                    myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), "1", mlist.get(position).getPrice());
                    // Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
                 }
 

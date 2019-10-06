@@ -47,6 +47,8 @@ public class OrderListMainAdapter extends RecyclerView.Adapter<OrderListMainAdap
         holder.tvDuration.setText(product.getDuration());
         holder.tvStatus.setText(product.getDeliveryStatus());
         holder.tvOrderId.setText("Order Id : "+product.getDeliveryId());
+        holder.InsertionDate=product.getInsertionDate();
+        holder.InsertionTime=product.getInsertionTime();
     }
 
 
@@ -60,6 +62,7 @@ public class OrderListMainAdapter extends RecyclerView.Adapter<OrderListMainAdap
 
         TextView pickup_location,drop_location,tvTotalCharges,tvDistance,tvDuration,tvStatus,tvOrderId;
         Button buttonGpsTrack;
+        String InsertionDate,InsertionTime;
         public ProductViewHolder(View itemView) {
             super(itemView);
 
@@ -79,6 +82,8 @@ public class OrderListMainAdapter extends RecyclerView.Adapter<OrderListMainAdap
                     String array1[]= str.split(":");
                     Intent in = new Intent(v.getContext(),TrackDeliveryBoy.class);
                     in.putExtra("DeliveryId",array1[1].toString().trim());
+                    in.putExtra("InsertTime",InsertionTime);
+                    in.putExtra("Total",tvTotalCharges.getText());
                     v.getContext().startActivity(in);
                 }
             });

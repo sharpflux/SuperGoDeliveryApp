@@ -21,11 +21,14 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/LinearContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:orientation="vertical"/>
-    <include layout="@layout/item_track_order4" />
+
+
+   <!-- <include layout="@layout/item_track_order4" />-->
 </LinearLayout>
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->

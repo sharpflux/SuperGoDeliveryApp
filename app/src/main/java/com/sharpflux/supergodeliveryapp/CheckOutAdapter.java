@@ -65,6 +65,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
                 }
+                if (minteger == 0) {
+                    myDatabase.DeleteRecord(mlist.get(position).getId());
+                    removeItem(position);
+                    Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()));
+                }
                 total_amount.setText("₹" +String.valueOf(  calculateTotal()));
             }
         });
@@ -76,7 +82,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     CheckOutItems filter = mlist.get(position);
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
-
+                }
+                if (minteger == 0) {
+                    myDatabase.DeleteRecord(mlist.get(position).getId());
+                    removeItem(position);
+                    Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()));
                 }
                 //calculateTotal();
                 total_amount.setText("₹" +String.valueOf(  calculateTotal()));
