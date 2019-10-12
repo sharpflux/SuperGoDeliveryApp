@@ -37,8 +37,10 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
                 }
 
 
-                Intent intent = new Intent(OrderSuccessfullyPlaced.this,ChooseActionActivity.class);
+                Intent intent = new Intent(OrderSuccessfullyPlaced.this,TrackDeliveryBoy.class);
                 intent.putExtra("DeliveryId",DeliveryId);
+                intent.putExtra("InsertTime","");
+                intent.putExtra("Total","");
                 startActivity(intent);
             }
         });

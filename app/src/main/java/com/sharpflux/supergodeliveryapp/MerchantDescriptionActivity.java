@@ -78,6 +78,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
             tvMerchantName.setText(bundle.getString("MerchantName"));
+
         }
         CountItemsInCart();
         //call recycler data
@@ -88,8 +89,23 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
-                startActivity(fintent);
+
+                if (bundle != null) {
+                    merchantId = bundle.getString("MerchantId");
+                    mobilenum = bundle.getString("mobilenum");
+                    tvMerchantName.setText(bundle.getString("MerchantName"));
+
+                    Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
+                    fintent.putExtra("MerchantId",bundle.getString("MerchantId"));
+                    fintent.putExtra("MerchantName",bundle.getString("MerchantName"));
+                    fintent.putExtra("FromLat",bundle.getString("FromLat"));
+                    fintent.putExtra("FromLong",bundle.getString("FromLong"));
+                    fintent.putExtra("MerchantAddress",bundle.getString("MerchantAddress"));
+                    startActivity(fintent);
+
+                }
+
+
 
             }
         });

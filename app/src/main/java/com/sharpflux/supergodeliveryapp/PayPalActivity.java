@@ -76,8 +76,25 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                 Intent iin = getIntent();
                 Bundle b = iin.getExtras();
 
+
                 Intent intent = new Intent(PayPalActivity.this,PaymentActivity.class);
+
+                intent.putExtra("PickupAddress",  b.getString("PickupAddress"));
+                intent.putExtra("DeliveryAddress", b.getString("DeliveryAddress"));
+                intent.putExtra("FromLat", b.getString("FromLat"));
+                intent.putExtra("FromLong", b.getString("FromLong"));
+                intent.putExtra("ToLat", b.getString("ToLat"));
+                intent.putExtra("ToLong", b.getString("ToLong"));
+                intent.putExtra("Vehicle",  b.getString("Vehicle"));
+                intent.putExtra("Product", b.getString("Product"));
+                intent.putExtra("PickupDate",  b.getString("PickupDate"));
+                intent.putExtra("PickupTime",b.getString("PickupTime"));
+                intent.putExtra("ContactPerson", b.getString("ContactPerson"));
+                intent.putExtra("Mobile",b.getString("Mobile"));
+                intent.putExtra("AlternateMobile", b.getString("AlternateMobile"));
                 intent.putExtra("amount",b.getString("totalCharges"));
+                intent.putExtra("ImageUrl",b.getString("ImageUrl"));
+
 
                 startActivity(intent);
             }
@@ -247,7 +264,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                                 if (!obj.getBoolean("error")) {
 
 
-                                    Notification();
+                                   // Notification();
 
                                     myDatabase.GetLastId();
                                     myDatabase.DeleteRecord(myDatabase.GetLastId());
@@ -299,6 +316,8 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                     params.put("TotalSecond", objTotalSecond);
                     params.put("TransactionId", "0");
                     params.put("DeliveryTypeId", "1");
+                    params.put("TotalCharges", totalCharges);
+                    params.put("MerchantId", "0");
                     params.put("ImageUrl", ImageUrl);
                     return params;
                 }
@@ -339,6 +358,40 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
         alert.show();
     }
 
+    private String requestDirection(String reqUrl) throws IOException {
+        String responseString = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        try{
+            URL url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.connect();
+
+            //Get the response result
+            inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+
+            responseString = stringBuffer.toString();
+            bufferedReader.close();
+            inputStreamReader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            httpURLConnection.disconnect();
+        }
+        return responseString;
+    }
     private String getRequestUrl(String fromLatLong,String toLatLong) {
         //Value of origin
    /*  String str_org = "origin=" + origin.latitude +","+origin.longitude;
@@ -378,40 +431,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
         return url;
     }
-    private String requestDirection(String reqUrl) throws IOException {
-        String responseString = "";
-        InputStream inputStream = null;
-        HttpURLConnection httpURLConnection = null;
-        try{
-            URL url = new URL(reqUrl);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.connect();
 
-            //Get the response result
-            inputStream = httpURLConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            StringBuffer stringBuffer = new StringBuffer();
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-
-            responseString = stringBuffer.toString();
-            bufferedReader.close();
-            inputStreamReader.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            httpURLConnection.disconnect();
-        }
-        return responseString;
-    }
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
         @Override

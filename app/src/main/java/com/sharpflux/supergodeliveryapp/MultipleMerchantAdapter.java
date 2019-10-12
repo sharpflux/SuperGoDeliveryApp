@@ -37,12 +37,17 @@ public class MultipleMerchantAdapter extends RecyclerView.Adapter<MultipleMercha
     @Override
     public void onBindViewHolder(@NonNull MultipleMerchantViewHolder holder, int position) {
 
-       // Picasso.get().load(multiplemerchantlist.get(position).getImageUrl()).into(holder.mImage);
+        if(!multiplemerchantlist.get(position).getImageUrl().equals("0"))
+         Picasso.get().load(multiplemerchantlist.get(position).getImageUrl()).into(holder.mImage);
+
         holder.mTitle.setText(multiplemerchantlist.get(position).getFirmName());
         holder.MerchantId = multiplemerchantlist.get(position).getMerchantId();
         holder.mdetails.setText(multiplemerchantlist.get(position).getFirmName());
 
         holder.mobilenum=multiplemerchantlist.get(position).getMobileNum();
+        holder.FromLat=multiplemerchantlist.get(position).getFromLat();
+        holder.FromLong=multiplemerchantlist.get(position).getFromLong();
+        holder.MerchantAddress=multiplemerchantlist.get(position).getMerchantAddress();
 
     }
 
@@ -61,7 +66,7 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
     ImageView mImage;
     TextView mTitle;
     TextView mdetails;
-    String MerchantId,mobilenum;
+    String MerchantId,mobilenum,FromLat,FromLong,MerchantAddress;;
 
     MultipleMerchantViewHolder(View itemView) {
         super(itemView);
@@ -82,6 +87,9 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
         intent.putExtra("MerchantId", MerchantId.toString());
         intent.putExtra("MerchantName", mTitle.getText().toString());
         intent.putExtra("mobilenum", mobilenum.toString());
+        intent.putExtra("FromLat", FromLat.toString());
+        intent.putExtra("FromLong", FromLong.toString());
+        intent.putExtra("MerchantAddress", MerchantAddress.toString());
         context.startActivity(intent);
     }
 

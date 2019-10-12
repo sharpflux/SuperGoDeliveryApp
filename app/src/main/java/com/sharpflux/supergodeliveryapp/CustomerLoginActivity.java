@@ -294,6 +294,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 mActivity,Manifest.permission.CAMERA)
                 + ContextCompat.checkSelfPermission(
                 mActivity,Manifest.permission.ACCESS_COARSE_LOCATION)
+                + ContextCompat.checkSelfPermission(
+                mActivity,Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED){
 
             // Do something, when permissions not granted
@@ -306,12 +308,15 @@ public class CustomerLoginActivity extends AppCompatActivity {
                     || ActivityCompat.shouldShowRequestPermissionRationale(
                     mActivity,Manifest.permission.CAMERA)
                     || ActivityCompat.shouldShowRequestPermissionRationale(
-                    mActivity,Manifest.permission.ACCESS_COARSE_LOCATION)){
+                    mActivity,Manifest.permission.ACCESS_COARSE_LOCATION)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                    mActivity,Manifest.permission.READ_PHONE_STATE)
+            ){
                 // If we should give explanation of requested permissions
 
                 // Show an alert dialog here with request explanation
                 AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setMessage("Location, Camera, Call Phone, Network State and Course Location" +
+                builder.setMessage("Location, Camera,Contact, Call Phone, Network State and Course Location" +
                         " permissions are required to do the task.");
                 builder.setTitle("Please grant those permissions");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -324,7 +329,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                         Manifest.permission.ACCESS_NETWORK_STATE,
                                         Manifest.permission.CALL_PHONE,
                                         Manifest.permission.CAMERA,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.READ_PHONE_STATE
                                 },
                                 MY_PERMISSIONS_REQUEST_CODE
                         );
@@ -342,7 +348,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                 Manifest.permission.ACCESS_NETWORK_STATE,
                                 Manifest.permission.CALL_PHONE,
                                 Manifest.permission.CAMERA,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.READ_PHONE_STATE
                         },
                         MY_PERMISSIONS_REQUEST_CODE
                 );
@@ -360,9 +367,12 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 // When request is cancelled, the results array are empty
                 if(
                         (grantResults.length >0) &&
-                                (grantResults[0]
+                                (       grantResults[0]
                                         + grantResults[1]
                                         + grantResults[2]
+                                        + grantResults[3]
+                                        + grantResults[4]
+                                        + grantResults[5]
                                         == PackageManager.PERMISSION_GRANTED
                                 )
                 ){

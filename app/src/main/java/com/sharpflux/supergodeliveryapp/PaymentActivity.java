@@ -77,9 +77,99 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
             }
         });
 
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null) {
+
+            String fromLat=b.getString("FromLat");
+            String fromLang=b.getString("FromLong");
+
+            String ToLat=b.getString("ToLat");
+            String ToLong=b.getString("ToLong");
+
+
+            String url = getRequestUrl(fromLat + "," +fromLang,ToLat + "," + ToLong);
+            new DistanceAndDuration(this).execute(url);
+            PaymentActivity.TaskRequestDirections taskRequestDirections = new PaymentActivity.TaskRequestDirections();
+            taskRequestDirections.execute(url);
+        }
+    }
+    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String responseString = "";
+            try {
+                responseString = requestDirection(strings[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return  responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //Parse json here
+            TaskParser taskParser = new TaskParser();
+            taskParser.execute(s);
+        }
+    }
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+            JSONObject jsonObject = null;
+            List<List<HashMap<String, String>>> routes = null;
+            try {
+                jsonObject = new JSONObject(strings[0]);
+                DirectionsParser directionsParser = new DirectionsParser();
+                routes = directionsParser.parse(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+            //Get list route and display it into the map
+
+            ArrayList points = null;
+
+            PolylineOptions polylineOptions = null;
+
+
+
+            for (List<HashMap<String, String>> path : lists) {
+                points = new ArrayList();
+                polylineOptions = new PolylineOptions();
+
+                for (HashMap<String, String> point : path) {
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lon = Double.parseDouble(point.get("lon"));
+
+                    points.add(new LatLng(lat,lon));
+                }
+
+
+
+                polylineOptions.addAll(points);
+                polylineOptions.width(8);
+                polylineOptions.color(Color.BLACK);
+                polylineOptions.geodesic(true);
+            }
+
+          /*  if (polylineOptions!=null) {
+                mMap.addPolyline(polylineOptions);
+            } else {
+                Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
+            }*/
+
+        }
+
 
     }
-
     public void startPayment() {
         /*
           You need to pass current activity in order to let Razorpay create CheckoutActivity
@@ -88,10 +178,12 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
 
         final Checkout co = new Checkout();
 
+        User user = SharedPrefManager.getInstance(PaymentActivity.this).getUser();
+
         try {
             JSONObject options = new JSONObject();
-            options.put("name", "Razorpay Corp");
-            options.put("description", "Demoing Charges");
+            options.put("name", "Super Go");
+            options.put("description", "Delivery Services Charges");
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("currency", "INR");
@@ -99,15 +191,13 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
 
             if (bundle != null) {
                 PayAmount.setText(bundle.getString("amount"));
-                double Paise=   Double.parseDouble( bundle.getString("amount"));
+                double Paise=  1.0; //Double.parseDouble( bundle.getString("amount"));
                 options.put("amount",Paise*100);
             }
             JSONObject preFill = new JSONObject();
-            preFill.put("email", "test@razorpay.com");
-            preFill.put("contact", "9527643352");
-
+            preFill.put("email", user.getEmail());
+            preFill.put("contact", user.getMobile());
             options.put("prefill", preFill);
-
             co.open(activity, options);
         } catch (Exception e) {
             Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
@@ -151,6 +241,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
         final String ToLat =b.getString("ToLat");
         final String totalCharges =b.getString("totalCharges");
         final String ImageUrl =b.getString("ImageUrl");
+
         String[] arrOfStr=null;
         if(DistanceAndDuration!="")
         {
@@ -223,7 +314,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
                 params.put("cpName", cpName);
                 params.put("mobile", mobile);
                 params.put("alternatemobile", alternatemobile);
-                params.put("paymenttype", "1");
+                params.put("paymenttype", "4");
                 params.put("ToLong", ToLong);
                 params.put("ToLat", ToLat);
                 params.put("Distance", objDistance);
@@ -231,6 +322,8 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
                 params.put("TotalSecond", objTotalSecond);
                 params.put("TransactionId", TransactionId);
                 params.put("DeliveryTypeId", "1");
+                params.put("TotalCharges", totalCharges);
+                params.put("MerchantId", "0");
                 params.put("ImageUrl", ImageUrl);
                 return params;
             }
@@ -395,80 +488,5 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
         }
         return responseString;
     }
-    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... strings) {
-            String responseString = "";
-            try {
-                responseString = requestDirection(strings[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return  responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            //Parse json here
-            PaymentActivity.TaskParser taskParser = new PaymentActivity.TaskParser();
-            taskParser.execute(s);
-        }
-    }
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-            JSONObject jsonObject = null;
-            List<List<HashMap<String, String>>> routes = null;
-            try {
-                jsonObject = new JSONObject(strings[0]);
-                DirectionsParser directionsParser = new DirectionsParser();
-                routes = directionsParser.parse(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
-            //Get list route and display it into the map
-
-            ArrayList points = null;
-
-            PolylineOptions polylineOptions = null;
-
-
-
-            for (List<HashMap<String, String>> path : lists) {
-                points = new ArrayList();
-                polylineOptions = new PolylineOptions();
-
-                for (HashMap<String, String> point : path) {
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lon = Double.parseDouble(point.get("lon"));
-
-                    points.add(new LatLng(lat,lon));
-                }
-
-
-
-                polylineOptions.addAll(points);
-                polylineOptions.width(8);
-                polylineOptions.color(Color.BLACK);
-                polylineOptions.geodesic(true);
-            }
-
-          /*  if (polylineOptions!=null) {
-                mMap.addPolyline(polylineOptions);
-            } else {
-                Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
-            }*/
-
-        }
-
-
-    }
 }

@@ -80,6 +80,7 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
     String Activityname;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     AlertDialog.Builder builder;
+    String FromLat,FromLong,MerchantId,MerchantAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,18 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
                         .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null) {
+
+            FromLat=b.getString("FromLat");
+            FromLong=b.getString("FromLong");
+            MerchantId=b.getString("MerchantId");
+            MerchantAddress=b.getString("MerchantAddress");
+        }
+
+
 
         //Place Picker Code
 
@@ -157,6 +170,8 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
             @Override
             public void onClick(View v) {
 
+
+
                 LatLng center=mMap.getCameraPosition().target;
                 //Initializing a bottom sheet
                 ChooseDeliveryBottomSheetDialog bottomSheetDialogFragment = new ChooseDeliveryBottomSheetDialog();
@@ -167,7 +182,13 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
                     args.putString("Address",   getAddress(getApplicationContext(),center.latitude,center.longitude).toString());
                     args.putString("Lat",  Double.toString(center.latitude )  );
                     args.putString("Long", Double.toString(center.longitude) );
+                    args.putString("FromLat",  FromLat );
+                    args.putString("FromLong",FromLong );
+                    args.putString("MerchantId",MerchantId );
+                    args.putString("MerchantAddress",   MerchantAddress);
                     args.putString("ActivityType",   "Merchant" );
+
+
                     bottomSheetDialogFragment.setArguments(args);
                     //show it
                     bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());

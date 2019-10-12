@@ -70,26 +70,24 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
                     return;
                 }
 
-
                 Intent i = new Intent(getContext(), CheckOutCart.class);
                 i.putExtra("DeliveryAddress", getArguments().getString("Address").toString());
                 i.putExtra("DeliveryFlatNo", txtflatNoHouse.getText().toString());
                 i.putExtra("DeliveryLandMark", txtLandMark.getText().toString());
                 i.putExtra("ToLat", getArguments().getString("Lat"));
                 i.putExtra("ToLong", getArguments().getString("Long"));
+                i.putExtra("FromLat", getArguments().getString("FromLat"));
+                i.putExtra("FromLong", getArguments().getString("FromLong"));
+                i.putExtra("MerchantId", getArguments().getString("MerchantId"));
+                i.putExtra("MerchantAddress", getArguments().getString("MerchantAddress"));
                 startActivity(i);
-
-
             }
         });
         TextView activitytype = (TextView) v.findViewById(R.id.activitytype);
         if (getArguments() != null) {
-
-
             EditText txtCurrentLocation = (EditText) v.findViewById(R.id.txtCurrentLocation);
             txtCurrentLocation.setText(getArguments().getString("Address").toString());
             if (getArguments().getString("ActivityType").toString().equals("0")) {
-
                 activitytype.setText("Pickup Address");
             } else {
                 activitytype.setText("Delivery Address");
@@ -121,8 +119,6 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
             Product = intent.getStringExtra("Product");
             FlatNo = intent.getStringExtra("FlatNo");
             LandMark2 = intent.getStringExtra("LandMark");
-
-
         }
     };
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {

@@ -5,19 +5,46 @@ public class Merchants {
     public String ImageUrl;
     public String TypeName;
     public String FirmName;
-    public String mobileNum;
+    public String mobileNum,FromLat,FromLong,MerchantAddress;
 
 
-    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum) {
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress) {
         MerchantId = merchantId;
         ImageUrl = imageUrl;
         TypeName = typeName;
         FirmName = firmName;
         this.mobileNum = mobileNum;
+        FromLat = fromLat;
+        FromLong = fromLong;
+        MerchantAddress = merchantAddress;
     }
 
     public String getMerchantId() {
         return MerchantId;
+    }
+
+    public String getFromLat() {
+        return FromLat;
+    }
+
+    public void setFromLat(String fromLat) {
+        FromLat = fromLat;
+    }
+
+    public String getFromLong() {
+        return FromLong;
+    }
+
+    public void setFromLong(String fromLong) {
+        FromLong = fromLong;
+    }
+
+    public String getMerchantAddress() {
+        return MerchantAddress;
+    }
+
+    public void setMerchantAddress(String merchantAddress) {
+        MerchantAddress = merchantAddress;
     }
 
     public void setMerchantId(String merchantId) {

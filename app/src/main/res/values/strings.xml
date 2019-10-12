@@ -255,7 +255,7 @@ We believe in friendly business because we provide services by themselves is you
     <string name="call">Call Now</string>
     <string name="CheckOut">Check Out</string>
     <string name="PlaceOrder">Place Order</string>
-    <string name="razor_pay_test">rzp_test_vsghhmsETnM91Z</string>
+    <string name="razor_pay_test">rzp_live_L1RM7ciJabgrxA</string>
 
 
     <string name="server_error">Server is taking more time to respond, Please try again</string>

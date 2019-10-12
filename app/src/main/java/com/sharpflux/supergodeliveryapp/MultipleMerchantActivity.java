@@ -1,8 +1,7 @@
 package com.sharpflux.supergodeliveryapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.sharpflux.supergodeliveryapp.utils.CustomProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +24,7 @@ import java.util.Map;
 
 public class MultipleMerchantActivity extends AppCompatActivity {
     private List<Merchants> merchantList;
-    String merchantId="";
+    String merchantId = "";
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
@@ -36,7 +34,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiple_merchant);
 
-        mRecyclerView =findViewById(R.id.rvlist);
+        mRecyclerView = findViewById(R.id.rvlist);
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
 
         mRecyclerView.setLayoutManager(mGridLayoutManager);
@@ -48,7 +46,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            merchantId=bundle.getString("MerchantTypeId");
+            merchantId = bundle.getString("MerchantTypeId");
         }
         shimmerFrameLayout.startShimmerAnimation();
         setDynamicFragmentToTabLayout();
@@ -59,16 +57,14 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     private void setDynamicFragmentToTabLayout() {
 
 
-
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_AllMERCHANT+merchantId,
+                URLs.URL_AllMERCHANT + merchantId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //  progressBar.setVisibility(View.GONE);
                         try {
-
 
 
                             JSONArray obj = new JSONArray(response);
@@ -78,13 +74,21 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject(i);
 
-
-                                Merchants sellOptions=
-                                        new  Merchants
-                                                ( userJson.getString("MerchantId"),
-                                                        "http://admin.supergo.in/" +userJson.getString("ImageUrl"),
-                                                        userJson.getString("FirmName"),userJson.getString("FirmName"),
-                                                        userJson.getString("MobileNo"));
+                                String Image;
+                                if (userJson.getString("LogoImgUrl") == null)
+                                    Image = "0";
+                                else
+                                    Image = "http://admin.supergo.in/" + userJson.getString("LogoImgUrl");
+                                Merchants sellOptions =
+                                        new Merchants
+                                                (userJson.getString("MerchantId"),
+                                                        Image,
+                                                        userJson.getString("FirmName"), userJson.getString("FirmName"),
+                                                        userJson.getString("MobileNo"),
+                                                        userJson.getString("FromLat"),
+                                                        userJson.getString("FromLong"),
+                                                        userJson.getString("MerchantAddress")
+                                                        );
 
                                 merchantList.add(sellOptions);
 
