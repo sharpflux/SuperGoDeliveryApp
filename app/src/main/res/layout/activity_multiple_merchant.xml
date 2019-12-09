@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <include layout="@layout/shimmer_merchant_layout" />
+       <!-- <include layout="@layout/shimmer_merchant_layout" />-->
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -21,8 +21,18 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="0dp"
         />
+
+    <TextView
+     android:layout_marginTop="190dp"
+        android:gravity="center"
+        android:id="@+id/txt_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sorry No Data Available."
+        android:textColor="@color/error_color_material"
+        android:textSize="20dp"/>
 
 </FrameLayout>

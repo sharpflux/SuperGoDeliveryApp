@@ -10,7 +10,8 @@ public class Merchants {
     public String GstAmount;
     public String Kilmoter;
 
-    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress) {
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName,
+                     String mobileNum, String fromLat, String fromLong, String merchantAddress) {
         MerchantId = merchantId;
         ImageUrl = imageUrl;
         TypeName = typeName;
