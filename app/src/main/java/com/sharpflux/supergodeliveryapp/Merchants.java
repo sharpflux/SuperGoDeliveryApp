@@ -6,7 +6,9 @@ public class Merchants {
     public String TypeName;
     public String FirmName;
     public String mobileNum,FromLat,FromLong,MerchantAddress;
-
+    public String TotalCharges;
+    public String GstAmount;
+    public String Kilmoter;
 
     public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress) {
         MerchantId = merchantId;
@@ -17,6 +19,33 @@ public class Merchants {
         FromLat = fromLat;
         FromLong = fromLong;
         MerchantAddress = merchantAddress;
+    }
+
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress, String totalCharges, String gstAmount) {
+        MerchantId = merchantId;
+        ImageUrl = imageUrl;
+        TypeName = typeName;
+        FirmName = firmName;
+        this.mobileNum = mobileNum;
+        FromLat = fromLat;
+        FromLong = fromLong;
+        MerchantAddress = merchantAddress;
+        TotalCharges = totalCharges;
+        GstAmount = gstAmount;
+    }
+
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress, String totalCharges, String gstAmount, String kilmoter) {
+        MerchantId = merchantId;
+        ImageUrl = imageUrl;
+        TypeName = typeName;
+        FirmName = firmName;
+        this.mobileNum = mobileNum;
+        FromLat = fromLat;
+        FromLong = fromLong;
+        MerchantAddress = merchantAddress;
+        TotalCharges = totalCharges;
+        GstAmount = gstAmount;
+        Kilmoter = kilmoter;
     }
 
     public String getMerchantId() {
@@ -81,6 +110,30 @@ public class Merchants {
 
     public void setMobileNum(String mobileNum) {
         this.mobileNum = mobileNum;
+    }
+
+    public String getTotalCharges() {
+        return TotalCharges;
+    }
+
+    public String getKilmoter() {
+        return Kilmoter;
+    }
+
+    public void setKilmoter(String kilmoter) {
+        Kilmoter = kilmoter;
+    }
+
+    public void setTotalCharges(String totalCharges) {
+        TotalCharges = totalCharges;
+    }
+
+    public String getGstAmount() {
+        return GstAmount;
+    }
+
+    public void setGstAmount(String gstAmount) {
+        GstAmount = gstAmount;
     }
 }
 

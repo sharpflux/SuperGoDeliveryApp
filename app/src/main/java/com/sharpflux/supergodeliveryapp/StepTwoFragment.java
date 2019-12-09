@@ -336,9 +336,9 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                     final String TimeS = timeTextview.getText().toString();
                     final String DateS = mDisplayDate.getText().toString();
                     final String CustomerName = cpname.getText().toString();
-                    final String NumberCustomer = cnum.getText().toString();
+                    //final String NumberCustomer = cnum.getText().toString();
                     final String AlterName = anum.getText().toString();
-
+                    final String NumberCustomer = AlterName;
 
                     if (TextUtils.isEmpty(DateS)) {
                         mDisplayDate.setError("Please enter Date");
@@ -362,39 +362,27 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
                         return;
                     }
 
-                    if (TextUtils.isEmpty(NumberCustomer)) {
+                   /* if (TextUtils.isEmpty(NumberCustomer)) {
                         cnum.setError("Please enter Contact Person Number");
                         cnum.requestFocus();
                         return;
-                    }
+                    }*/
 
-                    if (NumberCustomer.length() > 10) {
-                        cnum.setError("Please enter valid mobile no");
-                        cnum.requestFocus();
-                        return;
-
-                    }
-                    if (NumberCustomer.length() < 10) {
-                        cnum.setError("Please enter valid mobile no");
-                        cnum.requestFocus();
-                        return;
-
-                    }
 
                     if (TextUtils.isEmpty(AlterName)) {
                         anum.setError("Please enter Altername number");
                         anum.requestFocus();
                         return;
                     }
-                    if (AlterName.length() > 10) {
+                   /* if (AlterName.length() > 10) {
                         cnum.setError("Please enter valid mobile no");
                         cnum.requestFocus();
                         return;
 
-                    }
+                    }*/
                     if (AlterName.length() < 10) {
-                        cnum.setError("Please enter valid mobile no");
-                        cnum.requestFocus();
+                        anum.setError("Please enter valid mobile no");
+                        anum.requestFocus();
                         return;
 
                     }

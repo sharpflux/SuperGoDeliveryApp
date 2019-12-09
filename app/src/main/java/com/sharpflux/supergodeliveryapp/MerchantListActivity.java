@@ -36,14 +36,9 @@ public class MerchantListActivity extends AppCompatActivity {
         setTitle("Our Merchants!");
 
         mRecyclerView = findViewById(R.id.rvMain);
-
-
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
-
         mRecyclerView.setLayoutManager(mGridLayoutManager);
-
         merchantList = new ArrayList<>();
-
         setDynamicFragmentToTabLayout();
     }
 
@@ -67,9 +62,12 @@ public class MerchantListActivity extends AppCompatActivity {
 
                                 MerchantsType sellOptions =
                                         new MerchantsType
-                                                (userJson.getString("MerchantTypeId"),
+                                                (
+                                                        userJson.getString("MerchantTypeId"),
                                                         "http://admin.supergo.in/" + userJson.getString("ImgUrl"),
-                                                        userJson.getString("TypeName"));
+                                                        userJson.getString("TypeName")
+
+                                                );
 
                                 merchantList.add(sellOptions);
 

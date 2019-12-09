@@ -63,6 +63,7 @@
             android:layout_marginRight="16.7dp"
             android:fontFamily="@font/sfpro_display_semibold"
             android:text="HELP"
+            android:visibility="gone"
             android:textColor="@color/orange"
             android:textSize="13.3sp" />
     </LinearLayout>

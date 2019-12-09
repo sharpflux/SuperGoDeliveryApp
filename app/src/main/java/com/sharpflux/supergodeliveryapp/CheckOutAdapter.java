@@ -24,25 +24,25 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     int minteger = 0;
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
-    TextView tvTotalCount,total_amount;
+    TextView tvTotalCount,total_amount,txt_delivery_charge;
     Double TotalAmount;
-    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount) {
+    String DeliveryCharges,GstAmount;
+    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount,String DeliveryCharges,String GstAmount,TextView txt_delivery_charge) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
         this.total_amount=total_amount;
-
-
+        this.DeliveryCharges=DeliveryCharges;
+        this.GstAmount=GstAmount;
+        this.txt_delivery_charge=txt_delivery_charge;
     }
 
     @NonNull
     @Override
     public CheckOutAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_checkout, viewGroup, false);
-
         return new CheckOutAdapterViewHolder(mView);
-
     }
 
     @Override
@@ -55,6 +55,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         holder.price.setText("₹" + priceS);
         TotalAmount=0.0;
         total_amount.setText("₹" +String.valueOf(  calculateTotal()));
+        txt_delivery_charge.setText("₹" +String.valueOf(DeliveryCharges));
         holder.cart_product_quantity_tv.setText(String.valueOf(mlist.get(position).getQuantity()));
         holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,9 +124,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         }
         tvTotalCount.setText(res.getCount()+" Items");
         while (res.moveToNext()) {
-
             total=total + ( Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)));
-
         }
         return  total;
 

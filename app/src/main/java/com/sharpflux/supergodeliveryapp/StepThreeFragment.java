@@ -4,6 +4,7 @@ package com.sharpflux.supergodeliveryapp;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,7 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private String totalCharges="";
-
+    AlertDialog.Builder builder;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static String DistanceAndDuration,ImageUrl;
@@ -159,7 +161,8 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
         txtPerMinCharges= view.findViewById(R.id.txtPerMinCharges);
         gstAmount= view.findViewById(R.id.gstAmount);
         myDatabase = new DatabaseHelper(getContext());
-
+        payBT.setVisibility(View.GONE);
+        builder = new AlertDialog.Builder(getContext());
     }
 
     public void DistanceDuration()
@@ -348,9 +351,6 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
         }
 
     }
-
-
-
     @Override
     public void onTaskCompleted(String... values) {
         DistanceAndDuration=values[0].toString();
@@ -386,6 +386,24 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
                             //converting response to json object
                             //JSONObject obj = new JSONObject(response);
                             JSONArray obj = new JSONArray(response);
+
+                            if(obj.length()==0){
+                                builder.setMessage("Invalid response from server please try again")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("Invalid response");
+                                alert.show();
+                                return;
+                            }
                             //if no error in response
                             //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
                             for (int i = 0; i < obj.length(); i++) {
@@ -401,11 +419,27 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
                                     txtPaybleAmountKm.setText(userJson.getString("KilometerCharges")+" Rs.");
                                     txtPaybleAmount.setText(userJson.getString("TotalCharges")+" Rs.");
                                     gstAmount.setText(userJson.getString("GstAmount")+" Rs.");
-
                                     totalCharges=userJson.getString("TotalCharges");
+                                    payBT.setVisibility(View.VISIBLE);
                                 }
                                 else{
                                    // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
+                                    builder.setMessage("Invalid response from server")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle(response.toString());
+                                    alert.show();
+                                    return;
                                 }
                             }
                         } catch (JSONException e) {

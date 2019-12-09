@@ -59,7 +59,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_AllMERCHANT + merchantId,
+                URLs.URL_AllMERCHANT + merchantId+"&ToLat=18&ToLong=15&StartIndex=1&PageSize=100",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -81,13 +81,18 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                     Image = "http://admin.supergo.in/" + userJson.getString("LogoImgUrl");
                                 Merchants sellOptions =
                                         new Merchants
-                                                (userJson.getString("MerchantId"),
+                                                (
+                                                        userJson.getString("MerchantId"),
                                                         Image,
-                                                        userJson.getString("FirmName"), userJson.getString("FirmName"),
+                                                        userJson.getString("FirmName"),
+                                                        userJson.getString("FirmName"),
                                                         userJson.getString("MobileNo"),
                                                         userJson.getString("FromLat"),
                                                         userJson.getString("FromLong"),
-                                                        userJson.getString("MerchantAddress")
+                                                        userJson.getString("MerchantAddress"),
+                                                        userJson.getString("TotalCharges"),
+                                                        userJson.getString("GstAmount"),
+                                                        userJson.getString("Kilmoter")
                                                         );
 
                                 merchantList.add(sellOptions);

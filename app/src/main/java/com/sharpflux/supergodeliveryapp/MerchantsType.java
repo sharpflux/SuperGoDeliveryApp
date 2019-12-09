@@ -6,6 +6,7 @@ public class MerchantsType {
     public String ImageUrl;
     public String TypeName;
 
+
     public MerchantsType(String merchantId, String imageUrl, String typeName) {
         MerchantId = merchantId;
         ImageUrl = imageUrl;

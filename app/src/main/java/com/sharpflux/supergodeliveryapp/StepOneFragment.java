@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -319,7 +320,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
         chkBike.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -341,8 +341,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
-
         chkCar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -366,7 +364,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
         chkVan.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -390,7 +387,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
         chkTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -422,7 +418,105 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void SelecteImages(){
+
+
+    private void SelecteImages() {
+
+        final CharSequence[] items = {"Camera", "Gallary", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Add Image");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (items[i].equals("Camera")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[i].equals("Gallary")) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);//
+                    startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+                } else if (items[i].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, requestCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+
+    }
+
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
+            Canvas canvas = new Canvas(newBitmap);
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bm, 0, 0, null);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+
+            ImageUrl = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+        }
+        product_imageView.setImageBitmap(bm);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+
+        Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(thumbnail, 0, 0, null);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        ImageUrl = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+
+        /*thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);*/
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // img_banner_profile_placeholder.setImageBitmap(thumbnail);
+
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+        product_imageView.setImageBitmap(imageBitmap);
+
+    }
+
+/*    private void SelecteImages(){
 
         final CharSequence[] items={"Camera","Cancel"};
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
@@ -434,15 +528,16 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 if(items[i].equals("Camera")){
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
+
                 }
 
-               /* else if(items[i].equals("Gallary")){
+               *//* else if(items[i].equals("Gallary")){
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
                     startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
                 }
-*/
+*//*
                 else if(items[i].equals("Cancel"))
                 {
                     hideImageTv.clearComposingText();
@@ -517,7 +612,7 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         }
         Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
         product_imageView.setImageBitmap(imageBitmap);
-    }
+    }*/
 
     public void EnableRuntimePermission(){
 

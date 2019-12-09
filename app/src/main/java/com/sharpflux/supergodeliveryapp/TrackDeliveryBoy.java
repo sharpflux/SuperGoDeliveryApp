@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +93,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
     private Double startLatitude;
     private Double startLongitude;
     TextView tvdeliveryBoyName, tvContact,distanceDuration;
+    ImageView imgcall;
     public  static  String FromLocation,ToLocation,DriverLoactionLatLong;
     LinearLayout mainLayout ;
     android.support.v7.widget.Toolbar toolbar;
@@ -123,9 +125,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         mainLayout= (LinearLayout) findViewById(R.id.LinearContainer);
         LayoutInflater inflater = (LayoutInflater)getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.item_track_order4, null);
-
-        // Clear & set new views:
-         mainLayout.removeAllViews();
+        mainLayout.removeAllViews();
         mainLayout.addView(layout);
 
         /*button2 = findViewById(R.id.btnAddMarker);
@@ -281,12 +281,14 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                         // Instantiate & use inflater:
                         LayoutInflater inflater = (LayoutInflater)getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
                         View layout = inflater.inflate(R.layout.item_track_order1, null);
-                        // View trackView4 = inflater.inflate(R.layout.item_track_order4, null);
-                        // Clear & set new views:
                         mainLayout.removeAllViews();
                         mainLayout.addView(layout);
 
                         tvdeliveryBoyName = layout.findViewById(R.id.tvdeliveryBoyName);
+                        imgcall = layout.findViewById(R.id.imgcall);
+
+
+
 
                         //getting the user from the response
                         JSONObject userJson = obj.getJSONObject(i);
@@ -299,10 +301,16 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
 
                         String[] latLng = LATLONGDB.split(",");
 
-                        // Retrieve layout:
+                        String phone=userJson.getString("MobileNo");
 
+                        imgcall.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                                    startActivity(intent);
 
-
+                            }
+                        });
 
 
                         startLatitude = Double.valueOf(latLng[0].toString());

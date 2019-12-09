@@ -1,5 +1,6 @@
 package com.sharpflux.supergodeliveryapp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -40,8 +41,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 
-public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted {
+public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted,PaymentResultListener {
     int userId;
     String userid;
     Date date1;
@@ -52,6 +55,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
     ProgressDialog progressDialog;
     LinearLayout Payonline2;
     DatabaseHelper myDatabase;
+    AlertDialog.Builder Alertbuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +66,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
         //distance=findViewById(R.id.distance);
         tvcod=findViewById(R.id.cashOndelivery);
         myDatabase = new DatabaseHelper(getBaseContext());
-
+        Alertbuilder = new AlertDialog.Builder(this);
         User user = SharedPrefManager.getInstance(PayPalActivity.this).getUser();
 
         //customerName.setText("Hey "+user.getUsername()+"!");
@@ -75,9 +79,9 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
             public void onClick(View v) {
                 Intent iin = getIntent();
                 Bundle b = iin.getExtras();
+                startPayment();
 
-
-                Intent intent = new Intent(PayPalActivity.this,PaymentActivity.class);
+                /*Intent intent = new Intent(PayPalActivity.this,PaymentActivity.class);
 
                 intent.putExtra("PickupAddress",  b.getString("PickupAddress"));
                 intent.putExtra("DeliveryAddress", b.getString("DeliveryAddress"));
@@ -96,7 +100,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                 intent.putExtra("ImageUrl",b.getString("ImageUrl"));
 
 
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
 
@@ -121,7 +125,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                         progressDialog.dismiss();
                     }
                 }).start();
-                saveOrderDetails();
+                saveOrderDetails("0");
             }
 
         });
@@ -216,10 +220,12 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
     }
 
 
-    public  void  saveOrderDetails() {
+    public  void  saveOrderDetails(String PaymentId) {
 
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
+            Intent iin = getIntent();
+            Bundle b = iin.getExtras();
+
+
 
             final String pickupAddress = b.getString("PickupAddress");
             final String deliveryAddress = b.getString("DeliveryAddress");
@@ -277,7 +283,23 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
                                    // startActivity(new Intent(getApplicationContext(), OrderSuccessfullyPlaced.class));
                                 } else {
-                                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
+                                    Alertbuilder.setMessage("Already order placed")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = Alertbuilder.create();
+                                    alert.setTitle("Already order placed");
+                                    alert.show();
+
                                 }
                             } catch (JSONException e) {
 
@@ -306,7 +328,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                     params.put("pickupDate", pickupDate);
                     params.put("pickuptime", pickuptime);
                     params.put("cpName", cpName);
-                    params.put("mobile", mobile);
+                    params.put("mobile", alternatemobile);
                     params.put("alternatemobile", alternatemobile);
                     params.put("paymenttype", "1");
                     params.put("ToLong", ToLong);
@@ -314,11 +336,12 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                     params.put("Distance", objDistance);
                     params.put("Duration", objDuration);
                     params.put("TotalSecond", objTotalSecond);
-                    params.put("TransactionId", "0");
+                    params.put("TransactionId", PaymentId);
                     params.put("DeliveryTypeId", "1");
                     params.put("TotalCharges", totalCharges);
                     params.put("MerchantId", "0");
                     params.put("ImageUrl", ImageUrl);
+                    params.put("OrderedXml", "0");
                     return params;
                 }
             };
@@ -432,6 +455,83 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
         return url;
     }
 
+    @Override
+    public void onPaymentSuccess(String s) {
+        progressDialog = new ProgressDialog(PayPalActivity.this);
+        progressDialog.setMessage("Saving your data..."); // Setting Message
+        //progressDialog.setTitle("ProgressDialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(4000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }).start();
+        saveOrderDetails(s);
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+
+    }
+
+
+    public void startPayment() {
+        /*
+          You need to pass current activity in order to let Razorpay create CheckoutActivity
+         */
+        final Activity activity = this;
+
+  /*      Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null) {
+
+
+            String ToLat=b.getString("ToLat");
+            String ToLong=b.getString("ToLong");
+
+
+            String url = getRequestUrl(FromLat + "," +FromLong,ToLat + "," + ToLong);
+            new DistanceAndDuration(this).execute(url);
+            CheckOutCart.TaskRequestDirections taskRequestDirections = new CheckOutCart.TaskRequestDirections();
+            taskRequestDirections.execute(url);
+        }*/
+
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        final Checkout co = new Checkout();
+        try {
+
+            Intent iin = getIntent();
+            Bundle b = iin.getExtras();
+
+            if(b!=null)
+                b.getString("totalCharges");
+
+            JSONObject options = new JSONObject();
+            options.put("name", "Super Go");
+            options.put("description", "Order Charges");
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "http://www.supergo.in/assets/images/supergologo.png");
+            options.put("currency", "INR");
+            double Paise = 1;//Double.parseDouble(arrOfStr[1].toString());
+            options.put("amount", Paise * 100);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", user.getEmail());
+            preFill.put("contact", user.getMobile());
+            options.put("prefill", preFill);
+            co.open(activity, options);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+            e.printStackTrace();
+        }
+    }
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
         @Override

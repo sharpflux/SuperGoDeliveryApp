@@ -175,7 +175,6 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
             LandMark2=intent.getStringExtra("LandMark");
 
 
-
         }
     };
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {

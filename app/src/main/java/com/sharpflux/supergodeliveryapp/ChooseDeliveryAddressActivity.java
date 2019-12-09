@@ -80,7 +80,7 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
     String Activityname;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     AlertDialog.Builder builder;
-    String FromLat,FromLong,MerchantId,MerchantAddress;
+    String FromLat,FromLong,MerchantId,MerchantAddress,TotalCharges,GstAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +110,8 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
             FromLong=b.getString("FromLong");
             MerchantId=b.getString("MerchantId");
             MerchantAddress=b.getString("MerchantAddress");
+            TotalCharges = b.getString("TotalCharges");
+            GstAmount=b.getString("GstAmount");
         }
 
 
@@ -186,7 +188,10 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
                     args.putString("FromLong",FromLong );
                     args.putString("MerchantId",MerchantId );
                     args.putString("MerchantAddress",   MerchantAddress);
+                    args.putString("TotalCharges",TotalCharges );
+                    args.putString("GstAmount",   GstAmount);
                     args.putString("ActivityType",   "Merchant" );
+
 
 
                     bottomSheetDialogFragment.setArguments(args);

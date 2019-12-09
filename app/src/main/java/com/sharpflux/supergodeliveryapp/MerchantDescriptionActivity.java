@@ -101,6 +101,8 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                     fintent.putExtra("FromLat",bundle.getString("FromLat"));
                     fintent.putExtra("FromLong",bundle.getString("FromLong"));
                     fintent.putExtra("MerchantAddress",bundle.getString("MerchantAddress"));
+                    fintent.putExtra("TotalCharges",bundle.getString("TotalCharges"));
+                    fintent.putExtra("GstAmount",bundle.getString("GstAmount"));
                     startActivity(fintent);
 
                 }
