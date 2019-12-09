@@ -54,7 +54,6 @@ public class CustomerLoginActivity extends AppCompatActivity {
             mActivity = CustomerLoginActivity.this;
 
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-                finish();
                 startActivity(new Intent(this, ChooseActionActivity.class));
             }
             builder = new AlertDialog.Builder(this);
@@ -296,7 +295,12 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 mActivity,Manifest.permission.ACCESS_COARSE_LOCATION)
                 + ContextCompat.checkSelfPermission(
                 mActivity,Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED){
+                + ContextCompat.checkSelfPermission(
+                mActivity,Manifest.permission.READ_EXTERNAL_STORAGE)
+                + ContextCompat.checkSelfPermission(
+                mActivity,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)
+        {
 
             // Do something, when permissions not granted
             if(ActivityCompat.shouldShowRequestPermissionRationale(
@@ -311,6 +315,10 @@ public class CustomerLoginActivity extends AppCompatActivity {
                     mActivity,Manifest.permission.ACCESS_COARSE_LOCATION)
                     || ActivityCompat.shouldShowRequestPermissionRationale(
                     mActivity,Manifest.permission.READ_PHONE_STATE)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                    mActivity,Manifest.permission.READ_EXTERNAL_STORAGE)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                    mActivity,Manifest.permission.WRITE_EXTERNAL_STORAGE)
             ){
                 // If we should give explanation of requested permissions
 
@@ -330,7 +338,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                         Manifest.permission.CALL_PHONE,
                                         Manifest.permission.CAMERA,
                                         Manifest.permission.ACCESS_COARSE_LOCATION,
-                                        Manifest.permission.READ_PHONE_STATE
+                                        Manifest.permission.READ_PHONE_STATE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
                                 },
                                 MY_PERMISSIONS_REQUEST_CODE
                         );
@@ -349,7 +359,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                 Manifest.permission.CALL_PHONE,
                                 Manifest.permission.CAMERA,
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.READ_PHONE_STATE
+                                Manifest.permission.READ_PHONE_STATE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
                         },
                         MY_PERMISSIONS_REQUEST_CODE
                 );
@@ -373,6 +385,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                         + grantResults[3]
                                         + grantResults[4]
                                         + grantResults[5]
+                                        + grantResults[6]
+                                        + grantResults[7]
                                         == PackageManager.PERMISSION_GRANTED
                                 )
                 ){

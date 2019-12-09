@@ -244,6 +244,7 @@
                         android:fontFamily="@font/sfui_text_regular"
                         android:text="Enter senders Mobile number*"
                         android:textColor="#123"
+                        android:visibility="gone"
                         android:textSize="14sp" />
 
 
@@ -253,6 +254,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
+                        android:visibility="gone"
                         app:cardElevation="5dp">
 
                         <LinearLayout

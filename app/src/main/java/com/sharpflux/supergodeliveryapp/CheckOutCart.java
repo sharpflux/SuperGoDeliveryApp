@@ -2,12 +2,14 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
+import com.sharpflux.supergodeliveryapp.database.dbAddress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,26 +55,28 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     DatabaseHelperMerchant myDatabase;
     DatabaseHelper dbHelper;
     ImageView mImage;
-    TextView mTitle, tvDropAddress;
+    TextView mTitle, tvDropAddress,txt_address;
     TextView price, cart_product_quantity_tv, total_amount;
-    Button btnAddCart, btnCall;
+    Button btnAddCart, tvPlaceOrder;
     RecyclerView recyclerView;
     private List<CheckOutItems> merchantList;
     android.support.v7.widget.Toolbar toolbar;
     Bundle bundle;
     LinearLayout linearLayout;
-    TextView tvTotalCount, tvMerchantName;
+    TextView tvTotalCount, tvMerchantName,txt_delivery_charge;
     ProgressDialog mProgressDialog;
-    private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong, MerchantAddress, MerchantId;
+    private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong, MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong;
     ;
     int userId;
     Cursor cursor;
-
+    dbAddress myAddress;
+    ImageView img_editAddress;
+    AlertDialog.Builder Alertbuilder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        setContentView(R.layout.activity_review__cart);
         myDatabase = new DatabaseHelperMerchant(this);
         dbHelper = new DatabaseHelper(getBaseContext());
 
@@ -82,13 +87,21 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
         tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
         tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
-        mImage = findViewById(R.id.imageviewMerchant);
+        tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
+        total_amount = findViewById(R.id.total_amount);
+        txt_address = findViewById(R.id.txt_address);
+        txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
+
+
+        Alertbuilder = new AlertDialog.Builder(this);
+
+       /* mImage = findViewById(R.id.imageviewMerchant);
         mTitle = findViewById(R.id.tvFirmname);
         price = findViewById(R.id.tvprice);
-        total_amount = findViewById(R.id.total_amount);
+
         tvDropAddress = findViewById(R.id.tvDropAddress);
-        btnCall = findViewById(R.id.btnCall);
-        linearLayout = (LinearLayout) findViewById(R.id.droplocationView);
+        tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
+        linearLayout = (LinearLayout) findViewById(R.id.droplocationView);*/
         bundle = getIntent().getExtras();
         JSONArray array;
         tvMerchantName.setText("Check Out");
@@ -97,15 +110,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         // Initialize the progress dialog
         mProgressDialog = new ProgressDialog(CheckOutCart.this);
         mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
         // Progress dialog horizontal style
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // Progress dialog title
         mProgressDialog.setTitle("Placing Order");
         // Progress dialog message
         mProgressDialog.setMessage("Please wait, we are saving your data...");
-
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
-
+        img_editAddress=findViewById(R.id.img_editAddress);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -115,36 +128,83 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
             MerchantAddress=b.getString("MerchantAddress");
+            TotalCharges = b.getString("TotalCharges");
+            GstAmount=b.getString("GstAmount");
         }
 
-
+        CartItemFetch();
         //customerName.setText("Hey "+user.getUsername()+"!");
         userId = user.getId();
+        myAddress = new dbAddress(getApplicationContext());
+
+        Cursor res = myAddress.GetAddress();
+
+        if(res.getCount()==0){
+
+        }
+
+        while (res.moveToNext()) {
+            txt_address.setText(res.getString(2));
+
+            b.putString("Address",   res.getString(2));
+            b.putString("Lat",  res.getString(9)  );
+            b.putString("Long", res.getString(10) );
+            b.putString("FromLat",  FromLat );
+            b.putString("FromLong",FromLong );
+            b.putString("MerchantId",MerchantId );
+            b.putString("MerchantAddress",   MerchantAddress);
+            b.putString("TotalCharges",TotalCharges );
+            b.putString("GstAmount",   GstAmount);
+            b.putString("ActivityType",   "Merchant" );
+            ToLat=res.getString(9);
+            ToLong=res.getString(10);
+        }
 
 
         if (bundle != null) {
-            if (bundle.getString("DeliveryAddress") != null) {
-                linearLayout.setVisibility(View.VISIBLE);
-                tvDropAddress.setText(bundle.getString("DeliveryAddress"));
-                btnCall.setText("Pay Now");
+         if(!txt_address.getText().equals("")) {
+                //linearLayout.setVisibility(View.VISIBLE);
+               // tvDropAddress.setText(bundle.getString("DeliveryAddress"));
+                tvPlaceOrder.setText("Pay Now");
             } else {
-                linearLayout.setVisibility(View.GONE);
-                btnCall.setText("Place Order");
+               // linearLayout.setVisibility(View.GONE);
+                tvPlaceOrder.setText("Place Order");
             }
         } else {
-            linearLayout.setVisibility(View.GONE);
-            btnCall.setText("Place Order");
+           // linearLayout.setVisibility(View.GONE);
+            tvPlaceOrder.setText("Place Order");
         }
-        btnCall.setOnClickListener(new View.OnClickListener() {
+
+
+        img_editAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
+                fintent.putExtra("FromLat", FromLat);
+                fintent.putExtra("FromLong", FromLong);
+                fintent.putExtra("MerchantId", MerchantId);
+                fintent.putExtra("MerchantAddress", MerchantAddress);
+                fintent.putExtra("TotalCharges", TotalCharges);
+                fintent.putExtra("GstAmount", GstAmount);
+                startActivity(fintent);
+            }
+        });
+      tvPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (bundle != null) {
-                    if (bundle.getString("DeliveryAddress") != null) {
+                    if(!txt_address.getText().equals(""))  {
 
-                        String url = getRequestUrl( bundle.getString("FromLat") + "," +  bundle.getString("FromLong"),  bundle.getString("ToLat") + "," +  bundle.getString("ToLong"));
+
+                        if(ToLat==null &&ToLong==null) {
+                            ToLat=bundle.getString("Lat");
+                            ToLong=bundle.getString("Long");
+                        }
+                        String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
                         new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
                         startPayment();
+
 
 
                     } else {
@@ -153,17 +213,30 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                         fintent.putExtra("FromLong", FromLong);
                         fintent.putExtra("MerchantId", MerchantId);
                         fintent.putExtra("MerchantAddress", MerchantAddress);
+                        fintent.putExtra("TotalCharges", TotalCharges);
+                        fintent.putExtra("GstAmount", GstAmount);
                         startActivity(fintent);
 
                     }
                 } else {
                     Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
+                    fintent.putExtra("FromLat", FromLat);
+                    fintent.putExtra("FromLong", FromLong);
+                    fintent.putExtra("MerchantId", MerchantId);
+                    fintent.putExtra("MerchantAddress", MerchantAddress);
+                    fintent.putExtra("TotalCharges", TotalCharges);
+                    fintent.putExtra("GstAmount", GstAmount);
                     startActivity(fintent);
-
                 }
             }
         });
 
+
+
+    }
+
+    public  void CartItemFetch()
+    {
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
@@ -180,11 +253,10 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     );
 
             merchantList.add(sellOptions);
-            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount);
+            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge);
             recyclerView.setAdapter(myAdapter);
 
         }
-
     }
 
     public void startPayment() {
@@ -315,23 +387,28 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
 
         final String pickupAddress = MerchantAddress;
-        final String deliveryAddress = tvDropAddress.getText().toString();
+        final String deliveryAddress = txt_address.getText().toString();
         final String fromLat = FromLat;
         final String fromLang = FromLong;
         final String vehicleType = "Merchant";
         final String product = "ORDER";
-        final String pickupDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        final String pickupDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
         final String pickuptime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         final String cpName = String.valueOf(user.getUsername());
         final String mobile = user.getMobile().toString();
         final String alternatemobile = user.getMobile().toString();
-        final String ToLong = bundle.getString("ToLong");
-        final String ToLat = bundle.getString("ToLat");
+
+        if(ToLat==null &&ToLong==null) {
+            ToLat=bundle.getString("Lat");
+            ToLong=bundle.getString("Long");
+        }
+
+
+        final String ToLong = ToLat;
+        final String ToLat = ToLong;
         final String totalCharges = calculateTotal().toString();
         final String ImageUrl = "0";
         String[] arrOfStr = null;
-
-
 
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
@@ -391,7 +468,24 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
                                 // startActivity(new Intent(getApplicationContext(), OrderSuccessfullyPlaced.class));
                             } else {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
+                                Alertbuilder.setMessage("Already order placed")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = Alertbuilder.create();
+                                alert.setTitle("Already order placed");
+                                alert.show();
+
+
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
 
@@ -403,7 +497,22 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("ERROR", error.getMessage());
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Alertbuilder.setMessage("Already order placed")
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = Alertbuilder.create();
+                        alert.setTitle("Already order placed");
+                        alert.show();
+
+                       // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

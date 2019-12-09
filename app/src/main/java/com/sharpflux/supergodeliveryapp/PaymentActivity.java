@@ -312,7 +312,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
                 params.put("pickupDate", pickupDate);
                 params.put("pickuptime", pickuptime);
                 params.put("cpName", cpName);
-                params.put("mobile", mobile);
+                params.put("mobile", alternatemobile);
                 params.put("alternatemobile", alternatemobile);
                 params.put("paymenttype", "4");
                 params.put("ToLong", ToLong);
@@ -325,6 +325,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener  
                 params.put("TotalCharges", totalCharges);
                 params.put("MerchantId", "0");
                 params.put("ImageUrl", ImageUrl);
+                params.put("OrderedXml", "0");
                 return params;
             }
         };

@@ -48,7 +48,8 @@ public class MultipleMerchantAdapter extends RecyclerView.Adapter<MultipleMercha
         holder.FromLat=multiplemerchantlist.get(position).getFromLat();
         holder.FromLong=multiplemerchantlist.get(position).getFromLong();
         holder.MerchantAddress=multiplemerchantlist.get(position).getMerchantAddress();
-
+        holder.TotalCharges=multiplemerchantlist.get(position).getTotalCharges();
+        holder.GstAmount=multiplemerchantlist.get(position).getGstAmount();
     }
 
 
@@ -65,8 +66,8 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
 
     ImageView mImage;
     TextView mTitle;
-    TextView mdetails;
-    String MerchantId,mobilenum,FromLat,FromLong,MerchantAddress;;
+    TextView mdetails,tvDistanceinTime;
+    String MerchantId,mobilenum,FromLat,FromLong,MerchantAddress,TotalCharges,GstAmount;
 
     MultipleMerchantViewHolder(View itemView) {
         super(itemView);
@@ -74,7 +75,7 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
         mImage = itemView.findViewById(R.id.imageviewMerchant);
         mTitle = itemView.findViewById(R.id.tvFirmname);
         mdetails = itemView.findViewById(R.id.tvDetails);
-
+        tvDistanceinTime=itemView.findViewById(R.id.tvDistanceinTime);
         itemView.setOnClickListener(this);
     }
 
@@ -90,6 +91,8 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
         intent.putExtra("FromLat", FromLat.toString());
         intent.putExtra("FromLong", FromLong.toString());
         intent.putExtra("MerchantAddress", MerchantAddress.toString());
+        intent.putExtra("TotalCharges", TotalCharges.toString());
+        intent.putExtra("GstAmount", GstAmount.toString());
         context.startActivity(intent);
     }
 
