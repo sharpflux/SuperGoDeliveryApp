@@ -2,10 +2,12 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -83,7 +85,13 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         CountItemsInCart();
         //call recycler data
 
-        setDynamicFragmentToTabLayout();
+
+        MerchantDescriptionActivity.AsyncTaskRunner runner = new MerchantDescriptionActivity.AsyncTaskRunner();
+        String sleepTime = "1";
+        runner.execute(sleepTime);
+
+
+        //setDynamicFragmentToTabLayout();
 
 
         btnCall.setOnClickListener(new View.OnClickListener() {
@@ -250,6 +258,60 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
     }
+
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+
+              /*  setDynamicFragmentToTabLayout();
+                Thread.sleep(100);
+
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                setDynamicFragmentToTabLayout();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(MerchantDescriptionActivity.this,
+                    "Loading...",
+                    "");
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
 
     private void getImages() {
 
