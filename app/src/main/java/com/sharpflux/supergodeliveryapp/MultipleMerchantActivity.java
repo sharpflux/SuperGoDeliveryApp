@@ -1,5 +1,7 @@
 package com.sharpflux.supergodeliveryapp;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,7 +54,12 @@ public class MultipleMerchantActivity extends AppCompatActivity {
             merchantId = bundle.getString("MerchantTypeId");
         }
         //shimmerFrameLayout.startShimmerAnimation();
-        setDynamicFragmentToTabLayout();
+       // setDynamicFragmentToTabLayout();
+
+        MultipleMerchantActivity.AsyncTaskRunner runner = new MultipleMerchantActivity.AsyncTaskRunner();
+        String sleepTime = "1";
+        runner.execute(sleepTime);
+
 
     }
 
@@ -138,5 +145,58 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         VolleySingleton.getInstance(MultipleMerchantActivity.this).addToRequestQueue(stringRequest);
 
     }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+
+              /*  setDynamicFragmentToTabLayout();
+                Thread.sleep(100);
+
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                setDynamicFragmentToTabLayout();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(MultipleMerchantActivity.this,
+                    "Loading...",
+                    "");
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
 }
 
