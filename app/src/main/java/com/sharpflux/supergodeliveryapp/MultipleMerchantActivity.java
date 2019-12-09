@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,11 +29,13 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
+    TextView txt_emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiple_merchant);
+        txt_emptyView = findViewById(R.id.txt_emptyView);
 
         mRecyclerView = findViewById(R.id.rvlist);
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
@@ -48,7 +51,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         if (bundle != null) {
             merchantId = bundle.getString("MerchantTypeId");
         }
-        shimmerFrameLayout.startShimmerAnimation();
+        //shimmerFrameLayout.startShimmerAnimation();
         setDynamicFragmentToTabLayout();
 
     }
@@ -95,8 +98,16 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                 myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
                                 mRecyclerView.setAdapter(myAdapter);
 
-                                shimmerFrameLayout.stopShimmerAnimation();
-                                shimmerFrameLayout.setVisibility(View.GONE);
+                                if(myAdapter.getItemCount()==0);{
+                                    txt_emptyView.setVisibility(View.VISIBLE);
+
+                                }
+                                txt_emptyView.setVisibility(View.GONE);
+
+
+
+                               /* shimmerFrameLayout.stopShimmerAnimation();
+                                shimmerFrameLayout.setVisibility(View.GONE);*/
                             }
 
                         } catch (JSONException e) {
