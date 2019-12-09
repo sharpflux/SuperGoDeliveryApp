@@ -147,6 +147,7 @@ public class ActivityTrack extends FragmentActivity implements OnMapReadyCallbac
                     location.setLatitude(LatLong.latitude);
                     location.setLongitude(LatLong.longitude);
                     animateCamera(location);
+                    //
                 }
 
 
