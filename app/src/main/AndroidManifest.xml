@@ -132,9 +132,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChooseActionActivity"
-            android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".CustomerLoginActivity"
             android:screenOrientation="portrait" />

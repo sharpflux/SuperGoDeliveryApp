@@ -64,6 +64,13 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, CustomerLoginActivity.class));
+
+        Intent myIntent = new Intent(mCtx, com.sharpflux.supergodeliveryapp.CustomerLoginActivity.class);
+
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mCtx.startActivity(myIntent);
+
+
+      //  mCtx.startActivity(new Intent(mCtx, CustomerLoginActivity.class));
     }
 }

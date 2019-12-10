@@ -176,7 +176,7 @@
                             android:textSize="13.3sp" />
 
                         <TextView
-                            android:id="@+id/txt_totalAmt"
+                            android:id="@+id/txt_subTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

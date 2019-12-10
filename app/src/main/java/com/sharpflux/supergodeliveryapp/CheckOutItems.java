@@ -5,6 +5,7 @@ public class CheckOutItems {
     private String image;
     private String name;
     private double price;
+
     private int Quantity;
 
     public CheckOutItems(String id, String image, String name, double price,int Qty) {

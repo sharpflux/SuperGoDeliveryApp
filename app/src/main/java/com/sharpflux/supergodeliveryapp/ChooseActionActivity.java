@@ -94,8 +94,8 @@ public class ChooseActionActivity extends AppCompatActivity
         //if the user is not logged in
         //starting the login activity
         if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
             startActivity(new Intent(this, CustomerLoginActivity.class));
+            finish();
         }
 
 
@@ -186,7 +186,7 @@ public class ChooseActionActivity extends AppCompatActivity
         LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
 
     }
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.choose_action, menu);
@@ -222,17 +222,17 @@ public class ChooseActionActivity extends AppCompatActivity
             displaySelectedFragment(fragment);
 
             return true;
-        }/*else if(id == R.id.nav_settings2)
+        }*//*else if(id == R.id.nav_settings2)
         {
             Intent pin = new Intent(ChooseActionActivity.this,ProfileSettingsActivity.class);
             startActivity(pin);
 
             return true;
-        }*/
+        }*//*
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -441,5 +441,11 @@ public class ChooseActionActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

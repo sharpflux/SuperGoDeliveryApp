@@ -106,6 +106,21 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME, "ITEMID = ?",new String[] {id});
     }
 
+    public Integer DeleteRecordAll () {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, null,null);
+    }
+    public String GetLastId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null);
+        String Id="0";
+        if(cursor.moveToLast()){
+            Id = cursor.getString(0);
+            //--get other cols values
+        }
+        return  Id;
+    }
+
     public String GETExist(String itemId){
         SQLiteDatabase db = this.getWritableDatabase();
        // Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME +"WHERE ITEMID", null);
@@ -117,4 +132,6 @@ public class DatabaseHelperMerchant extends SQLiteOpenHelper {
         }
         return  Id;
     }
+
+
 }

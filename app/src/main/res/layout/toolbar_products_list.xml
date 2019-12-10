@@ -13,11 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp">
+        android:paddingLeft="5dp">
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/img_back"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:src="@drawable/ic_left_arrow" />
     </LinearLayout>
 
@@ -32,9 +33,9 @@
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:gravity="left"
             android:text="Merchant Name"
             android:textColor="@color/white"
+            android:gravity="center"
             android:fontFamily="@font/sfpro_display_semibold"
             android:layout_marginLeft="5dp"
             android:textSize="16sp" />
@@ -50,11 +51,13 @@
             android:textColor="@color/white"
             android:textSize="13sp" />
         <FrameLayout
+            android:id="@+id/cart_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp">
 
             <ImageView
+                android:id="@+id/img_cart"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="8dp"

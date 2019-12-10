@@ -67,7 +67,7 @@
 
         <Button
             android:fontFamily="@font/sfpro_display_bold"
-            android:id="@+id/btnCall"
+            android:id="@+id/btnCheckOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

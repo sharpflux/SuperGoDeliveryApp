@@ -2,7 +2,9 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -45,13 +47,15 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private int dotscount;
     private ArrayList<ImageModel> sliderImg;
     private ImageView[] dots;
-    Button btnCall;
-    String merchantId = "", mobilenum = "";
+    Button btnCheckOut;
+    String merchantId = "", mobilenum = "",MerchantTypeId,MerchantName;
     Bundle bundle;
     RecyclerView recyclerView;
     DatabaseHelperMerchant myDatabase;
     TextView tvTotalCount,tvMerchantName;
     android.support.v7.widget.Toolbar toolbar;
+    AlertDialog.Builder builder;
+    ImageView img_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
         //viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
-        btnCall = findViewById(R.id.btnCall);
+        btnCheckOut = findViewById(R.id.btnCheckOut);
         recyclerView = findViewById(R.id.rvMenuList);
 
         sliderImg = new ArrayList<ImageModel>();
@@ -73,10 +77,28 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
         tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
+        img_back=toolbar.findViewById(R.id.img_back);
+         builder = new AlertDialog.Builder(this);
 
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bundle = getIntent().getExtras();
+
+                if (bundle != null) {
+                    MerchantTypeId=bundle.getString("MerchantTypeId");
+                }
+                Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                i.putExtra("MerchantTypeId",MerchantTypeId);
+
+                startActivity(i);
+            }
+        });
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
+            MerchantTypeId=bundle.getString("MerchantTypeId");
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
             tvMerchantName.setText(bundle.getString("MerchantName"));
@@ -94,7 +116,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         //setDynamicFragmentToTabLayout();
 
 
-        btnCall.setOnClickListener(new View.OnClickListener() {
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -385,5 +407,59 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
     }
 
+   /* @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
+        builder.setCancelable(true);
+        builder.setTitle("Do you want to clear your cart");
+        builder.setMessage("If you leave this page your cart is empty");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                myDatabase.DeleteRecord(myDatabase.GetLastId());
+                Intent intent = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }*/
+
+
+    @Override
+    public void onBackPressed() {
+        if (bundle != null) {
+            merchantId = bundle.getString("MerchantId");
+
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Do you want to clear your cart ?");
+        builder.setMessage("If you leave this page your cart is Empty");
+        builder.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                myDatabase.DeleteRecordAll();
+                Intent intent = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+
+
+            }
+        });
+        builder.show();
+    }
 
 }

@@ -33,6 +33,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     ShimmerFrameLayout shimmerFrameLayout;
     TextView txt_emptyView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,10 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
         if (bundle != null) {
             merchantId = bundle.getString("MerchantTypeId");
+           // merchantId = bundle.getString("MerchantCode");
         }
+
+
         //shimmerFrameLayout.startShimmerAnimation();
        // setDynamicFragmentToTabLayout();
 
@@ -102,7 +106,8 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                                         userJson.getString("MerchantAddress"),
                                                         userJson.getString("TotalCharges"),
                                                         userJson.getString("GstAmount"),
-                                                        userJson.getString("Kilmoter")
+                                                        userJson.getString("Kilmoter"),
+                                                        merchantId
                                                         );
 
                                 merchantList.add(sellOptions);

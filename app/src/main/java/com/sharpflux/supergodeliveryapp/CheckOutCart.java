@@ -54,9 +54,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     DatabaseHelperMerchant myDatabase;
     DatabaseHelper dbHelper;
-    ImageView mImage;
+    ImageView mImage,img_back;
     TextView mTitle, tvDropAddress,txt_address;
-    TextView price, cart_product_quantity_tv, total_amount;
+    TextView price, cart_product_quantity_tv, total_amount,txt_subTotal;
     Button btnAddCart, tvPlaceOrder;
     RecyclerView recyclerView;
     private List<CheckOutItems> merchantList;
@@ -65,13 +65,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     LinearLayout linearLayout;
     TextView tvTotalCount, tvMerchantName,txt_delivery_charge;
     ProgressDialog mProgressDialog;
-    private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong, MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong;
+    private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong,
+            MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName;
     ;
     int userId;
     Cursor cursor;
     dbAddress myAddress;
     ImageView img_editAddress;
     AlertDialog.Builder Alertbuilder;
+    String MerchantTypeId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -91,6 +93,8 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         total_amount = findViewById(R.id.total_amount);
         txt_address = findViewById(R.id.txt_address);
         txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
+        img_back=toolbar.findViewById(R.id.img_back);
+        txt_subTotal=findViewById(R.id.txt_subTotal);
 
 
         Alertbuilder = new AlertDialog.Builder(this);
@@ -120,6 +124,8 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
         img_editAddress=findViewById(R.id.img_editAddress);
 
+
+
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
@@ -127,10 +133,23 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             FromLat = b.getString("FromLat");
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
+            MerchantName = b.getString("MerchantName");
             MerchantAddress=b.getString("MerchantAddress");
             TotalCharges = b.getString("TotalCharges");
             GstAmount=b.getString("GstAmount");
         }
+
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(),MerchantDescriptionActivity.class);
+                i.putExtra("MerchantId",b.getString("MerchantId"));
+                i.putExtra("MerchantName",b.getString("MerchantName"));
+                startActivity(i);
+            }
+        });
 
         CartItemFetch();
         //customerName.setText("Hey "+user.getUsername()+"!");
@@ -253,7 +272,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     );
 
             merchantList.add(sellOptions);
-            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge);
+            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge,txt_subTotal);
             recyclerView.setAdapter(myAdapter);
 
         }

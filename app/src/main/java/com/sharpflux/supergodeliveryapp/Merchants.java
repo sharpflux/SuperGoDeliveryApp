@@ -9,6 +9,7 @@ public class Merchants {
     public String TotalCharges;
     public String GstAmount;
     public String Kilmoter;
+    public  String MerchantTypeId;
 
     public Merchants(String merchantId, String imageUrl, String typeName, String firmName,
                      String mobileNum, String fromLat, String fromLong, String merchantAddress) {
@@ -49,6 +50,21 @@ public class Merchants {
         Kilmoter = kilmoter;
     }
 
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress, String totalCharges, String gstAmount, String kilmoter, String merchantTypeId) {
+        MerchantId = merchantId;
+        ImageUrl = imageUrl;
+        TypeName = typeName;
+        FirmName = firmName;
+        this.mobileNum = mobileNum;
+        FromLat = fromLat;
+        FromLong = fromLong;
+        MerchantAddress = merchantAddress;
+        TotalCharges = totalCharges;
+        GstAmount = gstAmount;
+        Kilmoter = kilmoter;
+        MerchantTypeId = merchantTypeId;
+    }
+
     public String getMerchantId() {
         return MerchantId;
     }
@@ -75,6 +91,14 @@ public class Merchants {
 
     public void setMerchantAddress(String merchantAddress) {
         MerchantAddress = merchantAddress;
+    }
+
+    public String getMerchantTypeId() {
+        return MerchantTypeId;
+    }
+
+    public void setMerchantTypeId(String merchantTypeId) {
+        MerchantTypeId = merchantTypeId;
     }
 
     public void setMerchantId(String merchantId) {
