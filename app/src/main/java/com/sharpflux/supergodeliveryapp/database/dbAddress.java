@@ -41,6 +41,27 @@ public class dbAddress extends SQLiteOpenHelper {
 
     }
 
+    public boolean UpdateAddress(String fullname, String mobNo, String address, String area,
+                             String city, String state, String country, String pincode, String addresstype, String Lat, String Long) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME,fullname);
+        contentValues.put(MOBNO,mobNo);
+        contentValues.put(ADDRESS,address);
+        contentValues.put(AREA,area);
+        contentValues.put(CITY,city);
+        contentValues.put(STATE,state);
+        contentValues.put(COUNTRY,country);
+        contentValues.put(PINCODE,pincode);
+        contentValues.put(ADDRESS_TYPE,addresstype);
+        contentValues.put(LAT,Lat);
+        contentValues.put(LONG,Long);
+        db.update(TABLE_NAME, contentValues, null,null);
+        return true;
+    }
+
+
     public boolean AddressInsert(String fullname, String mobNo, String address, String area,
                                  String city, String state, String country, String pincode, String addresstype, String Lat, String Long) {
 
@@ -65,6 +86,19 @@ public class dbAddress extends SQLiteOpenHelper {
     }
 
     public boolean CheckAddressIsExit() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query ="Select * from " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+
+        return true;
+    }
+
+    public boolean CheckAddressIsExit2() {
         SQLiteDatabase db = this.getWritableDatabase();
         String Query ="Select * from " + TABLE_NAME;
         // String Query = "Select * from " + TABLE_NAME + " where " + ADDRESS_TYPE + " = " + "" + addresstype + "";

@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.sharpflux.supergodeliveryapp.database.dbAddress;
+
 public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
 
     //SendMessage SM;
@@ -36,7 +38,7 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
     public static String FlatNo;
     public static String LandMark2;
     DatabaseHelper myDatabase;
-
+    dbAddress myDatabaseAddress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bottom_sheet_2, container, false);
@@ -48,6 +50,7 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
                 new IntentFilter("maps-get-delivery"));
 
         myDatabase = new DatabaseHelper(getContext());
+        myDatabaseAddress= new dbAddress(getContext());
 
         confirmLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +72,19 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
                     txtLandMark.requestFocus();
                     return;
                 }
+
+                if(myDatabaseAddress.CheckAddressIsExit()==true) {
+                    boolean result = myDatabaseAddress.UpdateAddress("", "", getArguments().getString("Address").toString()+","+txtflatNoHouse.getText().toString()+","+ txtLandMark.getText().toString(), "", "", "", "India", "", "Home",
+                            String.valueOf(  getArguments().getString("Lat")),
+                            String.valueOf(  getArguments().getString("Long")));
+                }
+                else {
+                    boolean result = myDatabaseAddress.AddressInsert("", "", getArguments().getString("Address").toString()+","+txtflatNoHouse.getText().toString()+","+ txtLandMark.getText().toString(), "", "", "", "India", "", "Home",
+                            String.valueOf(  getArguments().getString("Lat")),
+                            String.valueOf(  getArguments().getString("Long")));
+                }
+
+
 
                 Intent i = new Intent(getContext(), CheckOutCart.class);
                 i.putExtra("DeliveryAddress", getArguments().getString("Address").toString());

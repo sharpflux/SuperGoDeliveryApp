@@ -66,14 +66,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     TextView tvTotalCount, tvMerchantName,txt_delivery_charge;
     ProgressDialog mProgressDialog;
     private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong,
-            MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName,MerchantTypeId;
+            MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName;
     ;
     int userId;
     Cursor cursor;
     dbAddress myAddress;
     ImageView img_editAddress;
     AlertDialog.Builder Alertbuilder;
-
+    String MerchantTypeId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -133,7 +133,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             FromLat = b.getString("FromLat");
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
-            MerchantTypeId = b.getString("MerchantTypeId");
+            MerchantId = b.getString("MerchantId");
             MerchantName = b.getString("MerchantName");
             MerchantAddress=b.getString("MerchantAddress");
             TotalCharges = b.getString("TotalCharges");
@@ -148,7 +148,6 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                 Intent i = new Intent(getApplicationContext(),MerchantDescriptionActivity.class);
                 i.putExtra("MerchantId",b.getString("MerchantId"));
                 i.putExtra("MerchantName",b.getString("MerchantName"));
-                i.putExtra("MerchantTypeId",b.getString("MerchantTypeId"));
                 startActivity(i);
             }
         });
