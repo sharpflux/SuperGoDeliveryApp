@@ -54,6 +54,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
             mActivity = CustomerLoginActivity.this;
 
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+                finish();
                 startActivity(new Intent(this, ChooseActionActivity.class));
             }
             builder = new AlertDialog.Builder(this);

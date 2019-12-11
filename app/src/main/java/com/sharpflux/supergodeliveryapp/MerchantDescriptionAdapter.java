@@ -27,11 +27,13 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
     TextView tvTotalCount;
+    ImageView img_dot;
 
-    public MerchantDescriptionAdapter(Context mContext, List<Description> merchantlist,android.support.v7.widget.Toolbar tool) {
+    public MerchantDescriptionAdapter(Context mContext, List<Description> merchantlist,android.support.v7.widget.Toolbar tool, ImageView img_dot) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
+        this.img_dot = img_dot;
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
     }
 
@@ -97,6 +99,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
 
                 if (myDatabase.CheckItemIsExists(mlist.get(position).getId()) ==false) {
                     myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(),"1", mlist.get(position).getPrice(),mlist.get(position).getImage());
+                    img_dot.setVisibility(View.VISIBLE);
                     Toast.makeText(mContext,"Inserted", Toast.LENGTH_SHORT).show();
                 }
                 else {

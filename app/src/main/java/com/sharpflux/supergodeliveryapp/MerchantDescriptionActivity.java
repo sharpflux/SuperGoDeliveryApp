@@ -57,9 +57,10 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     AlertDialog.Builder builder;
     AlertDialog.Builder builder1;
-    ImageView img_back_desc,img_cart_desc;
+    ImageView img_back_desc,img_cart_desc,img_dot;
     MerchantDescriptionAdapter myAdapter;
     boolean isLoading = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
         img_back_desc=toolbar.findViewById(R.id.img_back_desc);
         img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
+        img_dot=toolbar.findViewById(R.id.img_dot);
          builder = new AlertDialog.Builder(this);
          builder1 = new AlertDialog.Builder(this);
 
@@ -98,43 +100,62 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             tvMerchantName.setText(bundle.getString("MerchantName"));
 
         }
+
         CountItemsInCart();
         //call recycler data
 
         img_back_desc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Cursor res = myDatabase.GetCart();
+
+                if (res.getCount() == 0) {
+
+                    Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                    i.putExtra("MerchantTypeId",MerchantTypeId);
+                    startActivity(i);
+
+                }else{
+                    builder1.setTitle("Do you want to clear your cart ?");
+                    builder1.setMessage("If you leave this page your cart is Empty");
+                    builder1.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            myDatabase.DeleteRecordAll();
+                            bundle = getIntent().getExtras();
+
+                            if (bundle != null) {
+                                MerchantTypeId=bundle.getString("MerchantTypeId");
+                            }
+                            Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                            i.putExtra("MerchantTypeId",MerchantTypeId);
+                            startActivity(i);
+                        }
+                    });
+                    builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+
+
+                        }
+                    });
+                    builder1.show();
+                }
+
+
+
+
+
+
+
+
+
+                }
 
              //   AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
-                builder1.setTitle("Do you want to clear your cart ?");
-                builder1.setMessage("If you leave this page your cart is Empty");
-                builder1.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        myDatabase.DeleteRecordAll();
-                        bundle = getIntent().getExtras();
-
-                        if (bundle != null) {
-                            MerchantTypeId=bundle.getString("MerchantTypeId");
-                        }
-                        Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
-                        i.putExtra("MerchantTypeId",MerchantTypeId);
-                        startActivity(i);
-                    }
-                });
-                builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-
-
-                    }
-                });
-                builder1.show();
 
 
 
 
-
-            }
         });
 
 
@@ -260,15 +281,17 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
     public void CountItemsInCart() {
         Cursor res = myDatabase.GetCart();
+
         if (res.getCount() == 0) {
 
         }
         tvTotalCount.setText(res.getCount() + " Items");
+
     }
 
 
     private void initAdapter() {
-        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar);
+        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot);
         recyclerView.setAdapter(myAdapter);
         //myAdapter.notifyDataSetChanged();
     }
@@ -523,29 +546,42 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (bundle != null) {
-            merchantId = bundle.getString("MerchantId");
 
+        Cursor res = myDatabase.GetCart();
+        if (res.getCount() == 0) {
+
+            Intent i = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
+            i.putExtra("MerchantTypeId", MerchantTypeId);
+            startActivity(i);
+
+        } else {
+
+
+            if (bundle != null) {
+                merchantId = bundle.getString("MerchantId");
+
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Do you want to clear your cart ?");
+            builder.setMessage("If you leave this page your cart is Empty");
+            builder.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    myDatabase.DeleteRecordAll();
+                    Intent intent = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
+                    intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+
+
+                }
+            });
+            builder.show();
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Do you want to clear your cart ?");
-        builder.setMessage("If you leave this page your cart is Empty");
-        builder.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                myDatabase.DeleteRecordAll();
-                Intent intent = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
-                intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-
-
-            }
-        });
-        builder.show();
     }
+
 
 }

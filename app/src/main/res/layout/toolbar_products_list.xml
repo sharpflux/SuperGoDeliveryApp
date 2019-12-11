@@ -66,6 +66,8 @@
                 android:background="@drawable/ic_cart" />
 
             <ImageView
+                android:id="@+id/img_dot"
+                android:visibility="gone"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="top|right|center_vertical|center_horizontal|center"
