@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MultipleMerchantActivity"
-            android:parentActivityName=".MerchantListActivity"
+            android:parentActivityName=".ChooseActionActivity"
             android:theme="@style/DarkAppTheme" />
         <!--
           <service android:name=".FirebaseMessagingServices">

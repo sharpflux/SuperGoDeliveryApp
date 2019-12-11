@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,7 +56,10 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     TextView tvTotalCount,tvMerchantName;
     android.support.v7.widget.Toolbar toolbar;
     AlertDialog.Builder builder;
-    ImageView img_back;
+    AlertDialog.Builder builder1;
+    ImageView img_back_desc,img_cart_desc;
+    MerchantDescriptionAdapter myAdapter;
+    boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
         sliderImg = new ArrayList<ImageModel>();
 
+
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
@@ -77,24 +82,13 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
         tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
-        img_back=toolbar.findViewById(R.id.img_back);
+        img_back_desc=toolbar.findViewById(R.id.img_back_desc);
+        img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
          builder = new AlertDialog.Builder(this);
+         builder1 = new AlertDialog.Builder(this);
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                bundle = getIntent().getExtras();
 
-                if (bundle != null) {
-                    MerchantTypeId=bundle.getString("MerchantTypeId");
-                }
-                Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
-                i.putExtra("MerchantTypeId",MerchantTypeId);
-
-                startActivity(i);
-            }
-        });
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
@@ -107,13 +101,86 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         CountItemsInCart();
         //call recycler data
 
+        img_back_desc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+             //   AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
+                builder1.setTitle("Do you want to clear your cart ?");
+                builder1.setMessage("If you leave this page your cart is Empty");
+                builder1.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        myDatabase.DeleteRecordAll();
+                        bundle = getIntent().getExtras();
+
+                        if (bundle != null) {
+                            MerchantTypeId=bundle.getString("MerchantTypeId");
+                        }
+                        Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                        i.putExtra("MerchantTypeId",MerchantTypeId);
+                        startActivity(i);
+                    }
+                });
+                builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+
+                    }
+                });
+                builder1.show();
+
+
+
+
+
+            }
+        });
+
+
+
+
+        img_cart_desc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bundle = getIntent().getExtras();
+
+                if (bundle != null) {
+                    MerchantTypeId=bundle.getString("MerchantTypeId");
+                }
+                Intent i = new Intent(getApplicationContext(),CheckOutCart.class);
+                i.putExtra("MerchantTypeId",MerchantTypeId);
+                i.putExtra("MerchantName",tvMerchantName.getText().toString());
+                i.putExtra("MerchantId",merchantId.toString());
+                startActivity(i);
+            }
+        });
+        initAdapter();
 
         MerchantDescriptionActivity.AsyncTaskRunner runner = new MerchantDescriptionActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
 
 
-        //setDynamicFragmentToTabLayout();
+
+        /*recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                isLoading = true;
+                initAdapter();
+                int currentSize = myAdapter.getItemCount();
+
+
+                MerchantDescriptionActivity.AsyncTaskRunner runner = new MerchantDescriptionActivity.AsyncTaskRunner();
+                String sleepTime =String.valueOf(page+1);
+                runner.execute(sleepTime);
+
+            }
+        });*/
+
+
+
 
 
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +194,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
                     Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
                     fintent.putExtra("MerchantId",bundle.getString("MerchantId"));
+                    fintent.putExtra("MerchantTypeId",MerchantTypeId);
                     fintent.putExtra("MerchantName",bundle.getString("MerchantName"));
                     fintent.putExtra("FromLat",bundle.getString("FromLat"));
                     fintent.putExtra("FromLong",bundle.getString("FromLong"));
@@ -198,6 +266,15 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         tvTotalCount.setText(res.getCount() + " Items");
     }
 
+
+    private void initAdapter() {
+        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar);
+        recyclerView.setAdapter(myAdapter);
+        //myAdapter.notifyDataSetChanged();
+    }
+
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 101) {
@@ -230,7 +307,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     }
 
 
-    private void setDynamicFragmentToTabLayout() {
+    private void setDynamicFragmentToTabLayout(String PageIndex) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_MERCHANTDESCRIPTION + merchantId,
@@ -253,10 +330,12 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                                                         userJson.getDouble("Price"));
 
                                 merchantList.add(sellOptions);
-                                MerchantDescriptionAdapter myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar);
-                                recyclerView.setAdapter(myAdapter);
+
 
                             }
+
+                            myAdapter.notifyDataSetChanged();
+                            isLoading = false;
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -287,6 +366,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         private String resp;
         ProgressDialog progressDialog;
 
+
         @Override
         protected String doInBackground(String... params) {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
@@ -299,9 +379,14 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                 resp = "Slept for " + params[0] + " seconds";*/
 
 
-                int time = Integer.parseInt(params[0]) * 1000;
+               /* int time = Integer.parseInt(params[0]) * 1000;
                 setDynamicFragmentToTabLayout();
                 Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                setDynamicFragmentToTabLayout(params[0]);
+                Thread.sleep(2000);
                 resp = "Slept for " + params[0] + " seconds";
 
 
@@ -317,6 +402,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             // execution of result of Long time consuming operation
             progressDialog.dismiss();
             // finalResult.setText(result);
+
         }
 
         @Override

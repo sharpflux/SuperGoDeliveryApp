@@ -54,7 +54,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     DatabaseHelperMerchant myDatabase;
     DatabaseHelper dbHelper;
-    ImageView mImage,img_back;
+    ImageView mImage,img_back_cart;
     TextView mTitle, tvDropAddress,txt_address;
     TextView price, cart_product_quantity_tv, total_amount,txt_subTotal;
     Button btnAddCart, tvPlaceOrder;
@@ -66,14 +66,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     TextView tvTotalCount, tvMerchantName,txt_delivery_charge;
     ProgressDialog mProgressDialog;
     private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong,
-            MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName;
+            MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName,MerchantTypeId;
     ;
     int userId;
     Cursor cursor;
     dbAddress myAddress;
     ImageView img_editAddress;
     AlertDialog.Builder Alertbuilder;
-    String MerchantTypeId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -93,7 +93,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         total_amount = findViewById(R.id.total_amount);
         txt_address = findViewById(R.id.txt_address);
         txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
-        img_back=toolbar.findViewById(R.id.img_back);
+        img_back_cart=toolbar.findViewById(R.id.img_back_cart);
         txt_subTotal=findViewById(R.id.txt_subTotal);
 
 
@@ -133,6 +133,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             FromLat = b.getString("FromLat");
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
+            MerchantTypeId = b.getString("MerchantTypeId");
             MerchantName = b.getString("MerchantName");
             MerchantAddress=b.getString("MerchantAddress");
             TotalCharges = b.getString("TotalCharges");
@@ -140,13 +141,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
 
-        img_back.setOnClickListener(new View.OnClickListener() {
+        img_back_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(getApplicationContext(),MerchantDescriptionActivity.class);
                 i.putExtra("MerchantId",b.getString("MerchantId"));
                 i.putExtra("MerchantName",b.getString("MerchantName"));
+                i.putExtra("MerchantTypeId",b.getString("MerchantTypeId"));
                 startActivity(i);
             }
         });
