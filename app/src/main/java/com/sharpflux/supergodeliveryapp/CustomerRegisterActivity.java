@@ -150,6 +150,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        String MobilePattern = "[0-9]{10}";
         final String username = editTextUsername.getText().toString().trim();
         final String email = editTextEmail.getText().toString().trim();
         final String mob = editTextMobile.getText().toString().trim();
@@ -175,8 +176,10 @@ public class CustomerRegisterActivity extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(mob)) {
+            if(!mob.toString().matches(MobilePattern)){
             editTextMobile.setError("Please enter your mobile number");
             editTextMobile.requestFocus();
+            }
             return;
         }
         if (TextUtils.isEmpty(password)) {

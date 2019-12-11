@@ -119,6 +119,7 @@
                 android:background="@null"
                 android:hint="Mobile number"
                 android:inputType="phone"
+                android:maxLength="10"
                 android:paddingLeft="08dp"
                 android:textColor="@color/text_grey"
                 android:textColorHint="@color/lightgrey"
