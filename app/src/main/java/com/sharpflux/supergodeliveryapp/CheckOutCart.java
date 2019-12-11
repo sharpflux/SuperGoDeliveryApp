@@ -63,7 +63,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     android.support.v7.widget.Toolbar toolbar;
     Bundle bundle;
     LinearLayout linearLayout;
-    TextView tvTotalCount, tvMerchantName,txt_delivery_charge;
+    TextView tvTotalCount, tvMerchantName,txt_delivery_charge,txtItemCount;
     ProgressDialog mProgressDialog;
     private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong,
             MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName;
@@ -95,7 +95,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
         img_back_cart=toolbar.findViewById(R.id.img_back_cart);
         txt_subTotal=findViewById(R.id.txt_subTotal);
-
+        txtItemCount=findViewById(R.id.txtItemCount);
 
         Alertbuilder = new AlertDialog.Builder(this);
 
@@ -262,6 +262,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         }
 
+
         while (res.moveToNext()) {
 
             CheckOutItems sellOptions = new CheckOutItems
@@ -273,7 +274,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     );
 
             merchantList.add(sellOptions);
-            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge,txt_subTotal);
+            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount);
             recyclerView.setAdapter(myAdapter);
 
         }

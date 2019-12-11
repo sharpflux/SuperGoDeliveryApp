@@ -24,11 +24,11 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     int minteger = 0;
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
-    TextView tvTotalCount,total_amount,txt_delivery_charge,txt_subTotal;
+    TextView tvTotalCount,total_amount,txt_delivery_charge,txt_subTotal,txtItemCount;
     Double TotalAmount;
-    String DeliveryCharges,GstAmount;
+    String DeliveryCharges="40",GstAmount;
     public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount,String DeliveryCharges,
-                           String GstAmount,TextView txt_delivery_charge,TextView txt_subTotal) {
+                           String GstAmount,TextView txt_delivery_charge,TextView txt_subTotal,TextView txtItemCount) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
@@ -38,6 +38,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         this.DeliveryCharges=DeliveryCharges;
         this.GstAmount=GstAmount;
         this.txt_delivery_charge=txt_delivery_charge;
+        this.txtItemCount=txtItemCount;
     }
 
     @NonNull
@@ -49,6 +50,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
     @Override
     public void onBindViewHolder(@NonNull CheckOutAdapterViewHolder holder, int position) {
+
+        String DeliveryCharges="40";
         Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
         holder.mTitle.setText(mlist.get(position).getName());
         myDatabase = new DatabaseHelperMerchant(mContext);
@@ -58,6 +61,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         TotalAmount=0.0;
         txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
         txt_delivery_charge.setText("₹" +String.valueOf(DeliveryCharges));
+        total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
         holder.cart_product_quantity_tv.setText(String.valueOf(mlist.get(position).getQuantity()));
         holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +77,10 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
                     txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
                 }
                 txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-
+                total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
             }
         });
         holder.cart_plus_img.setOnClickListener(new View.OnClickListener() {
@@ -92,11 +97,11 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
                     txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                    total_amount.setText("₹" +String.valueOf(  calculateTotal()));
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
                 }
                 //calculateTotal();
-                txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-               // txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
+                txt_subTotal.setText("₹" +String.valueOf( calculateTotal()));
+                total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
             }
         });
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +113,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
                     txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                    //txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
+                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
+
 
                 }
             }
@@ -125,11 +131,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     public Double calculateTotal(){
         int i=0;
         total=0.0;
+
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
         }
-        txt_subTotal.setText(res.getCount()+" Items");
+        txtItemCount.setText(res.getCount()+" Items");
         while (res.moveToNext()) {
             total=total + ( Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)));
         }
@@ -154,7 +161,7 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mImage,imgDelete;
     TextView mTitle;
-    TextView price, cart_product_quantity_tv,total_amount;
+    TextView price, cart_product_quantity_tv,total_amount,txtItemCount;
     Button btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
@@ -164,6 +171,7 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
     CheckOutAdapterViewHolder(View itemView) {
         super(itemView);
         total_amount=itemView.findViewById(R.id.total_amount);
+       // txtItemCount=itemView.findViewById(R.id.txtItemCount);
         cart_minus_img = (ImageView) itemView.findViewById(R.id.cart_minus_img);
         cart_plus_img = (ImageView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);
