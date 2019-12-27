@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -45,8 +46,12 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.sharpflux.supergodeliveryapp.database.dbAddress;
 
 import java.io.IOException;
@@ -98,7 +103,7 @@ public class ChooseActionActivity extends AppCompatActivity
             finish();
         }
 
-
+        FireBaseRegisters();
         //send=findViewById(R.id.textviewSend);
         //recieve=findViewById(R.id.textviewRecieve);
         //customerName=findViewById(R.id.textViewCustomerName);
@@ -447,5 +452,51 @@ public class ChooseActionActivity extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public  void  FireBaseRegisters(){
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    String subs="";
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()) {
+                            subs="Sucess";
+                        }
+
+                        // Toast.makeText(MapsActivity.this, subs, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( ChooseActionActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String mToken = instanceIdResult.getToken();
+                Log.e("Token",mToken);
+                //  Toast.makeText(getApplicationContext(), "Token : " + mToken, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(user.getId()))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()) {
+
+                        }
+
+                    }
+                });
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( ChooseActionActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String mToken = instanceIdResult.getToken();
+                Log.e("Token",mToken);
+            }
+        });
     }
 }
