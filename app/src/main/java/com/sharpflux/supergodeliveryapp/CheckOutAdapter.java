@@ -3,6 +3,8 @@ package com.sharpflux.supergodeliveryapp;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +17,11 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
-public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHolder> implements View.OnClickListener {
+public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHolder> implements View.OnClickListener{
 
     private Context mContext;
     private List<CheckOutItems> mlist;
@@ -25,10 +29,16 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
     TextView tvTotalCount,total_amount,txt_delivery_charge,txt_subTotal,txtItemCount;
-    Double TotalAmount;
+    Double TotalAmount,deliveryCharges;
     String DeliveryCharges="40",GstAmount;
-    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount,String DeliveryCharges,
-                           String GstAmount,TextView txt_delivery_charge,TextView txt_subTotal,TextView txtItemCount) {
+    String FromLat,FromLong,ToLat,ToLong,MerchantId;
+    private static String DistanceAndDuration,totalChargesfinal;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
+
+    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount,
+                           String DeliveryCharges,
+                           String GstAmount,TextView txt_delivery_charge,TextView txt_subTotal,TextView txtItemCount,
+                           String FromLat,String FromLong,String ToLat,String ToLong, String totalChargesfinal,String MerchantId) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
@@ -36,11 +46,18 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         this.total_amount=total_amount;
         this.txt_subTotal=txt_subTotal;
         this.DeliveryCharges=DeliveryCharges;
+        this.FromLat=FromLat;
+        this.FromLong=FromLong;
+        this.ToLat=ToLat;
+        this.ToLong=ToLong;
         this.GstAmount=GstAmount;
         this.txt_delivery_charge=txt_delivery_charge;
         this.txtItemCount=txtItemCount;
+        this.totalChargesfinal=totalChargesfinal;
+        this.deliveryCharges= Double.valueOf(totalChargesfinal);
+        this.MerchantId=MerchantId;
     }
-//
+
     @NonNull
     @Override
     public CheckOutAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -59,29 +76,37 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         String priceS = String.valueOf(priced);
         holder.price.setText("₹" + priceS);
         TotalAmount=0.0;
-        txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-        txt_delivery_charge.setText("₹" +String.valueOf(DeliveryCharges));
-        total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
+
+
+
+        txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+
+        txt_delivery_charge.setText("₹" +totalChargesfinal);
+        total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
         holder.cart_product_quantity_tv.setText(String.valueOf(mlist.get(position).getQuantity()));
         holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 minteger = Integer.valueOf(holder.cart_product_quantity_tv.getText().toString()) - 1;
-                if (minteger >= 0) {
-                    myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
-                    holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+
+                    if (minteger >= 0) {
+
+                        myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()), String.valueOf(minteger));
+                        holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                    }
+                    if (minteger == 0) {
+                        myDatabase.DeleteRecord(mlist.get(position).getId());
+                        removeItem(position);
+                        Toast.makeText(mContext, "DELETED", Toast.LENGTH_SHORT).show();
+                        txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                        total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                    }
+
+                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
-                if (minteger == 0) {
-                    myDatabase.DeleteRecord(mlist.get(position).getId());
-                    removeItem(position);
-                    Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
-                }
-                txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
-            }
+
         });
         holder.cart_plus_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +121,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
+                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
                 //calculateTotal();
-                txt_subTotal.setText("₹" +String.valueOf( calculateTotal()));
-                total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
+                txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
             }
         });
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +137,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    txt_subTotal.setText("₹" +String.valueOf(  calculateTotal()));
-                    total_amount.setText("₹" +String.valueOf(  calculateTotal()+40));
+                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
 
 
                 }
@@ -132,13 +157,24 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         int i=0;
         total=0.0;
 
+
+
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
-
+            Intent inte = new Intent(mContext,MerchantDescriptionActivity.class);
+            inte.putExtra("FromLat", FromLat);
+            inte.putExtra("FromLong", FromLong);
+            inte.putExtra("MerchantId", MerchantId);
+            inte.putExtra("MerchantAddress", "Add");
+            //inte.putExtra("TotalCharges", TotalCharges);
+           // inte.putExtra("GstAmount", GstAmount);
+            mContext.startActivity(inte);
         }
         txtItemCount.setText(res.getCount()+" Items");
         while (res.moveToNext()) {
-            total=total + ( Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)));
+
+            total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)))+Double.valueOf(totalChargesfinal));
+
         }
         return  total;
 

@@ -74,6 +74,10 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     ImageView img_editAddress;
     AlertDialog.Builder Alertbuilder;
     String MerchantTypeId;
+
+    AlertDialog.Builder builder;
+    String totalCharges="0.00";
+    CheckOutAdapter myAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -152,7 +156,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             }
         });
 
-        CartItemFetch();
+
         //customerName.setText("Hey "+user.getUsername()+"!");
         userId = user.getId();
         myAddress = new dbAddress(getApplicationContext());
@@ -194,6 +198,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
            // linearLayout.setVisibility(View.GONE);
             tvPlaceOrder.setText("Place Order");
         }
+
+        CheckOutCart.AsyncTaskRunner1 runner = new CheckOutCart.AsyncTaskRunner1();
+        String sleepTime = "1";
+        runner.execute(sleepTime);
+
+        /*String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
+        new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
+*/
+
 
 
         img_editAddress.setOnClickListener(new View.OnClickListener() {
@@ -255,8 +268,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     }
 
-    public  void CartItemFetch()
+    public  void CartItemFetch(String FromLat, String FromLong, String ToLat, String ToLong,String totalCharges)
     {
+        ProgressDialog progressDialog;
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
@@ -274,7 +288,10 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     );
 
             merchantList.add(sellOptions);
-            CheckOutAdapter myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount);
+
+            myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,
+                    GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount,FromLat,FromLong,ToLat,ToLong,totalCharges,MerchantId);
+
             recyclerView.setAdapter(myAdapter);
 
         }
@@ -349,7 +366,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-
+        ProgressDialog progressDialog;
         private String resp;
 
 
@@ -369,20 +386,24 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            // mProgressDialog.dismiss();
-
-            // finalResult.setText(result);
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
 
         @Override
         protected void onPreExecute() {
-            mProgressDialog.show();
+
+            if ((progressDialog != null) && !progressDialog.isShowing()) {
+                progressDialog = ProgressDialog.show(CheckOutCart.this,
+                        "Loading...",
+                        "Wait for result..");
+            }
         }
 
         @Override
         protected void onProgressUpdate(String... text) {
-            mProgressDialog.setProgress(92);
+           // mProgressDialog.setProgress(92);
 
         }
 
@@ -575,6 +596,23 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     @Override
     public void onTaskCompleted(String... values) {
         DistanceAndDuration = values[0].toString();
+
+
+        String[] arrOfStr=null;
+        if(DistanceAndDuration!="")
+        {
+            String str = DistanceAndDuration;
+            arrOfStr = str.split(":");
+        }
+
+        if (arrOfStr != null || arrOfStr.length != 0) {
+
+
+            CheckOutCart.RateCalculatorAsynchTask runner = new CheckOutCart.RateCalculatorAsynchTask();
+                runner.execute("Merchant", arrOfStr[0], arrOfStr[2]);
+
+            //  GetPayableAmount(Vehicle,arrOfStr[0],arrOfStr[1]);
+        }
     }
 
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
@@ -597,6 +635,216 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             CheckOutCart.TaskParser taskParser = new CheckOutCart.TaskParser();
             taskParser.execute(s);
         }
+    }
+
+
+    public void DistanceDuration()
+    {
+        /*Bundle extras = getApplicationContext().getIntent().getExtras();
+        if (extras != null) {
+            if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
+                Cursor res = myDatabase.DeliveryGETById(myDatabase.GetLastId());
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()) {
+                    String url = getRequestUrl(res.getString(2) + "," +res.getString(3),res.getString(5)+ "," + res.getString(6));
+                    new DistanceAndDuration(this).execute(url);
+
+                }
+            }
+
+
+        }*/
+
+        String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
+        new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
+    }
+
+
+    private class AsyncTaskRunner1 extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+           // publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+                DistanceDuration();
+
+            }
+
+            catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+                progressDialog = ProgressDialog.show(CheckOutCart.this,
+                        "Loading...",
+                        "Wait for result..");
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
+    private class RateCalculatorAsynchTask extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog3;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+                GetPayableAmount(params[0],params[1],params[2]);
+
+            }
+
+            catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            if ((progressDialog3 != null) && progressDialog3.isShowing()) {
+                progressDialog3.dismiss();
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog3 = ProgressDialog.show(CheckOutCart.this,
+                        "Loading...",
+                        "Wait for result..");
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
+
+    private void GetPayableAmount(final String vehicleType, final String Distance,final  String Duration) {
+
+        //if everything is fine
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_RATECALCULATOR,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //  progressBar.setVisibility(View.GONE);
+                        try {
+                            //converting response to json object
+                            //JSONObject obj = new JSONObject(response);
+                            JSONArray obj = new JSONArray(response);
+
+                            if(obj.length()==0){
+                                builder.setMessage("Invalid response from server please try again")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("Invalid response");
+                                alert.show();
+                                return;
+                            }
+                            //if no error in response
+                            //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
+                            for (int i = 0; i < obj.length(); i++) {
+                                //getting the user from the response
+                                JSONObject userJson = obj.getJSONObject(i);
+
+                                if (!userJson.getBoolean("error")) {
+
+
+
+                                    totalCharges=userJson.getString("TotalCharges");
+
+                                    CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
+                                    myAdapter.notifyDataSetChanged();
+
+                                }
+                                else{
+                                    // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
+                                    builder.setMessage("Invalid response from server")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle(response.toString());
+                                    alert.show();
+                                    return;
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("vehicleType", vehicleType);
+                params.put("Distance", Distance);
+                params.put("Duration", Duration);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
     public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {

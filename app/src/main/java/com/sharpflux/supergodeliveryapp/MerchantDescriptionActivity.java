@@ -550,9 +550,10 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
-            Intent i = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
+           /* Intent i = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
             i.putExtra("MerchantTypeId", MerchantTypeId);
-            startActivity(i);
+            startActivity(i);*/
+           finish();
 
         } else {
 
