@@ -40,7 +40,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         this.txt_delivery_charge=txt_delivery_charge;
         this.txtItemCount=txtItemCount;
     }
-
+//
     @NonNull
     @Override
     public CheckOutAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
