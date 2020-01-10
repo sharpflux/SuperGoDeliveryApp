@@ -26,12 +26,14 @@
                 android:layout_marginLeft="16.7dp"
                 android:layout_marginTop="16.7dp"
                 android:layout_marginRight="16.7dp"
+                android:visibility="gone"
                 android:background="@color/viewline" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="16.7dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="70dp"
@@ -156,7 +158,8 @@
         android:fontFamily="@font/sfpro_display_medium"
         android:textAlignment="center"
         android:elevation="0.8000001dip"
-        android:letterSpacing="0.0525" />
+        android:letterSpacing="0.0525"
+        android:visibility="gone"/>
 
 </RelativeLayout>
 

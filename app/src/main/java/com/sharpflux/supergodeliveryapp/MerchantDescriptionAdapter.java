@@ -28,12 +28,15 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
     android.support.v7.widget.Toolbar  toolbar;
     TextView tvTotalCount;
     ImageView img_dot;
+    Button btnCheckOut;
 
-    public MerchantDescriptionAdapter(Context mContext, List<Description> merchantlist,android.support.v7.widget.Toolbar tool, ImageView img_dot) {
+    public MerchantDescriptionAdapter(Context mContext, List<Description> merchantlist,android.support.v7.widget.Toolbar tool,
+                                      ImageView img_dot, Button btnCheckOut) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
         this.img_dot = img_dot;
+        this.btnCheckOut= btnCheckOut;
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
     }
 
@@ -51,6 +54,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
 
         }
         tvTotalCount.setText(res.getCount() + " Items");
+        btnCheckOut.setVisibility(View.VISIBLE);
     }
     @Override
     public void onBindViewHolder(final MerchantDescriptionViewHolder holder, final int position) {
@@ -96,7 +100,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         holder.btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                    boolean flag=true;
                 if (myDatabase.CheckItemIsExists(mlist.get(position).getId()) ==false) {
                     myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(),"1", mlist.get(position).getPrice(),mlist.get(position).getImage());
                     img_dot.setVisibility(View.VISIBLE);

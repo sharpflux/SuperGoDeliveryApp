@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:height="60dp"
+            android:visibility="gone"
             android:background="@drawable/btn_plain"
             android:text="@string/CheckOut"
             android:textColor="@android:color/white"

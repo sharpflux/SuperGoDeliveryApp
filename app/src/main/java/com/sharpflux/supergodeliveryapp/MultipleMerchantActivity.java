@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class MultipleMerchantActivity extends AppCompatActivity {
     private List<Merchants> merchantList;
-    String merchantId = "";
+    String MerchantTypeId = "";
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
@@ -53,7 +53,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            merchantId = bundle.getString("MerchantTypeId");
+            MerchantTypeId = bundle.getString("MerchantTypeId");
            // merchantId = bundle.getString("MerchantCode");
         }
 
@@ -74,7 +74,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_AllMERCHANT + merchantId+"&ToLat=18&ToLong=15&StartIndex=1&PageSize=100",
+                URLs.URL_AllMERCHANT + MerchantTypeId+"&ToLat=18&ToLong=15&StartIndex=1&PageSize=100",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -108,7 +108,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                                         userJson.getString("TotalCharges"),
                                                         userJson.getString("GstAmount"),
                                                         userJson.getString("Kilmoter"),
-                                                        merchantId
+                                                        MerchantTypeId
                                                         );
 
                                 merchantList.add(sellOptions);

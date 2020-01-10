@@ -36,10 +36,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MerchantDescriptionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".MultipleMerchantActivity"
-            android:parentActivityName=".ChooseActionActivity"
+            android:parentActivityName=".ChooseActionActivity"         android:noHistory="true"
+
             android:theme="@style/DarkAppTheme" />
         <!--
           <service android:name=".FirebaseMessagingServices">

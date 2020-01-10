@@ -48,7 +48,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private int dotscount;
     private ArrayList<ImageModel> sliderImg;
     private ImageView[] dots;
-    Button btnCheckOut;
+    Button btnCheckOut,btnAddCart;
     String merchantId = "", mobilenum = "",MerchantTypeId,MerchantName;
     Bundle bundle;
     RecyclerView recyclerView;
@@ -70,6 +70,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         //viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         btnCheckOut = findViewById(R.id.btnCheckOut);
+        btnAddCart = findViewById(R.id.btnAddCart);
         recyclerView = findViewById(R.id.rvMenuList);
 
         sliderImg = new ArrayList<ImageModel>();
@@ -113,6 +114,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
                     Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
                     i.putExtra("MerchantTypeId",MerchantTypeId);
+                    i.putExtra("MerchantId",merchantId);
                     startActivity(i);
 
                 }else{
@@ -139,6 +141,8 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                         }
                     });
                     builder1.show();
+
+
                 }
 
 
@@ -291,7 +295,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
     private void initAdapter() {
-        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot);
+        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot,btnCheckOut);
         recyclerView.setAdapter(myAdapter);
         //myAdapter.notifyDataSetChanged();
     }

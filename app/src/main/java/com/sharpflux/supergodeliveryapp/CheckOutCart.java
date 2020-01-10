@@ -78,6 +78,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     AlertDialog.Builder builder;
     String totalCharges="0.00";
     CheckOutAdapter myAdapter;
+    LinearLayout lr_back;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -100,6 +108,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         img_back_cart=toolbar.findViewById(R.id.img_back_cart);
         txt_subTotal=findViewById(R.id.txt_subTotal);
         txtItemCount=findViewById(R.id.txtItemCount);
+        lr_back = findViewById(R.id.lr_back);
 
         Alertbuilder = new AlertDialog.Builder(this);
 
@@ -137,7 +146,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             FromLat = b.getString("FromLat");
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
-            MerchantId = b.getString("MerchantId");
+            MerchantTypeId = b.getString("MerchantTypeId");
             MerchantName = b.getString("MerchantName");
             MerchantAddress=b.getString("MerchantAddress");
             TotalCharges = b.getString("TotalCharges");
@@ -145,12 +154,13 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
 
-        img_back_cart.setOnClickListener(new View.OnClickListener() {
+        lr_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(getApplicationContext(),MerchantDescriptionActivity.class);
                 i.putExtra("MerchantId",b.getString("MerchantId"));
+                i.putExtra("MerchantTypeId",b.getString("MerchantTypeId"));
                 i.putExtra("MerchantName",b.getString("MerchantName"));
                 startActivity(i);
             }
@@ -800,7 +810,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                                     totalCharges=userJson.getString("TotalCharges");
 
                                     CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
-                                    myAdapter.notifyDataSetChanged();
+                                    //myAdapter.notifyDataSetChanged();
 
                                 }
                                 else{
@@ -995,4 +1005,5 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         return url;
     }
+
 }
