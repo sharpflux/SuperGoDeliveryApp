@@ -2,7 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9c1d974-eeb8-4132-8e57-10a0c1fce45c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dotted.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dotted_line_rect_pink.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ic_cart_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ic_home_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ic_offer_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ic_veg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/more_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rectangle_gray_border.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rectangle_silver_border.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search_blue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/activity_all_merchants.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/item_content.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/restaurant_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/CheckOutCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/CheckOutCart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantDescriptionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantDescriptionActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantDescriptionAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantDescriptionAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MerchantListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/Merchants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/Merchants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MultipleMerchantActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MultipleMerchantActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MultipleMerchantAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/sharpflux/supergodeliveryapp/MultipleMerchantAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotted_linegray.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dotted_linegray.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/custom_merchant_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/custom_merchant_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/order_list_row.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/order_list_row.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,22 +104,22 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <layout>
-      <window_info id="Capture Tool" />
-      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.329296" />
-      <window_info id="Structure" side_tool="true" />
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="Resources Explorer" />
-      <window_info id="Favorites" side_tool="true" />
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Android WiFi ADB" />
-      <window_info anchor="right" id="Palette&#9;" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.334595" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="Resources Explorer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="TODO" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="2" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Theme Preview" order="1" />
+      <window_info anchor="right" id="Android WiFi ADB" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
     </layout>
   </component>
 </project>

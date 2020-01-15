@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/parentShimmerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+    </com.facebook.shimmer.ShimmerFrameLayout>
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.7dp"
+        android:layout_marginRight="16.3dp">
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:background="@drawable/rectangle_gray"
+            android:paddingLeft="13.7dp"
+            android:paddingTop="13.3dp"
+            android:paddingRight="23.3dp"
+            android:paddingBottom="13.3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:srcCompat="@drawable/search"/>
+            <EditText android:textSize="16sp"
+                android:textColor="@color/lightGrey"
+                android:textColorHint="@color/lightGrey"
+                android:background="@color/transferent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15.3dp"
+                android:hint="Search Merchant"
+                android:inputType="text"
+                android:fontFamily="@font/sfpro_display_semibold"/>
+        </LinearLayout>
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="192 Merchants"
+            android:id="@+id/tvMerchantCount"
+            android:fontFamily="@font/sfpro_display_bold"/>
+        <View
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1.3dp"
+            android:visibility="gone"
+            android:layout_marginTop="21.5dp"/>
+        <android.support.v7.widget.RecyclerView android:paddingTop="10dp" android:id="@+id/rvlist" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="190dp"
+        android:gravity="center"
+        android:id="@+id/txt_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sorry No Data Available."
+        android:textColor="@color/error_color_material"
+        android:textSize="20dp"/>
+</RelativeLayout>

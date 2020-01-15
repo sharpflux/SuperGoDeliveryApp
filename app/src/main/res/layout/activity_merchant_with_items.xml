@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <LinearLayout android:orientation="vertical" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentScrim="@color/blue"
+                app:expandedTitleMarginStart="15dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:titleEnabled="true">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="179dp"
+                android:background="@drawable/dal">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="28dp"
+                    android:layout_height="23dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="30dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/back" />
+            </FrameLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <TextView android:textSize="18.3sp" android:id="@+id/tvMerchantName2" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="23.5dp"  android:fontFamily="@font/sfpro_display_semibold"/>
+            <TextView android:textSize="13.3sp" android:textColor="@color/silver" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="2.5dp"  android:lineSpacingExtra="2.5dp" android:fontFamily="@font/sfpro_display_regular" android:letterSpacing="0.0525"/>
+            <ImageView android:layout_width="match_parent" android:layout_height="5dp" android:layout_marginLeft="16.7dp" android:layout_marginTop="21.3dp" android:layout_marginRight="16.7dp" app:srcCompat="@drawable/dotted" android:layerType="software"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:tag="sticky"
+                android:background="@color/white"
+                android:paddingTop="25dp"
+                android:paddingBottom="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="16.7dp">
+
+                <TextView android:textSize="13.3sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="7dp"
+                    app:srcCompat="@drawable/ic_filter_black"/>
+
+                <TextView android:textSize="12.7sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Filter"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:letterSpacing="0.0525"/>
+            </LinearLayout>
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+            <android.support.v7.widget.RecyclerView android:id="@+id/rvMenuList" android:paddingLeft="16.7dp" android:paddingRight="16.7dp" android:clipToPadding="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false"/>
+            </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
+
+</LinearLayout>

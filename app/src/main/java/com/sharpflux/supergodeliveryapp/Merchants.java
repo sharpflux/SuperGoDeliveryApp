@@ -10,6 +10,8 @@ public class Merchants {
     public String GstAmount;
     public String Kilmoter;
     public  String MerchantTypeId;
+    public String Speciality;
+    public String EstimateTime;
 
     public Merchants(String merchantId, String imageUrl, String typeName, String firmName,
                      String mobileNum, String fromLat, String fromLong, String merchantAddress) {
@@ -63,6 +65,23 @@ public class Merchants {
         GstAmount = gstAmount;
         Kilmoter = kilmoter;
         MerchantTypeId = merchantTypeId;
+    }
+
+    public Merchants(String merchantId, String imageUrl, String typeName, String firmName, String mobileNum, String fromLat, String fromLong, String merchantAddress, String totalCharges, String gstAmount, String kilmoter, String merchantTypeId, String speciality,String  estimateTime) {
+        MerchantId = merchantId;
+        ImageUrl = imageUrl;
+        TypeName = typeName;
+        FirmName = firmName;
+        this.mobileNum = mobileNum;
+        FromLat = fromLat;
+        FromLong = fromLong;
+        MerchantAddress = merchantAddress;
+        TotalCharges = totalCharges;
+        GstAmount = gstAmount;
+        Kilmoter = kilmoter;
+        MerchantTypeId = merchantTypeId;
+        Speciality = speciality;
+        EstimateTime=estimateTime;
     }
 
     public String getMerchantId() {
@@ -159,6 +178,22 @@ public class Merchants {
 
     public void setGstAmount(String gstAmount) {
         GstAmount = gstAmount;
+    }
+
+    public String getSpeciality() {
+        return Speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        Speciality = speciality;
+    }
+
+    public String getEstimateTime() {
+        return EstimateTime;
+    }
+
+    public void setEstimateTime(String estimateTime) {
+        EstimateTime = estimateTime;
     }
 }
 

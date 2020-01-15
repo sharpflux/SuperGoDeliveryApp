@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="horizontal" android:background="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="25dp">
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" app:srcCompat="@drawable/ic_veg"/>
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1">
+        <TextView android:textSize="14.7sp" android:textColor="@color/black" android:id="@+id/dosa_txt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="-4dp" android:text="Sada Dosa" android:fontFamily="@font/sfpro_display_medium" android:letterSpacing="0.0525"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3dp">
+            <TextView android:textSize="13.3sp" android:textColor="@color/blue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹" android:fontFamily="@font/sfpro_display_semibold" android:letterSpacing="0.0525"/>
+            <TextView android:textSize="13.3sp" android:textColor="@color/blue" android:id="@+id/total" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:text="220" android:fontFamily="@font/sfpro_display_semibold" android:letterSpacing="0.0525"/>
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView android:textSize="14sp" android:textColor="@color/orange" android:id="@+id/add_item_txt" android:background="@drawable/rectangle_gray_border" android:paddingLeft="25dp" android:paddingTop="6dp" android:paddingRight="25dp" android:paddingBottom="8dp" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+ Add" android:fontFamily="@font/sfpro_display_medium"/>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/add_cart_linear" android:background="@drawable/rectangle_silver_border" android:paddingTop="6dp" android:paddingBottom="8dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textSize="14sp" android:textColor="@color/black" android:id="@+id/minus_txt" android:paddingLeft="16dp" android:paddingRight="16dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:fontFamily="@font/sfpro_display_medium"/>
+            <TextView android:textSize="14sp" android:textColor="@color/black" android:id="@+id/increase_txt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" android:fontFamily="@font/sfpro_display_medium"/>
+            <TextView android:textSize="14sp" android:textColor="@color/black" android:id="@+id/plus_text" android:paddingLeft="16dp" android:paddingRight="16dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:fontFamily="@font/sfpro_display_medium"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

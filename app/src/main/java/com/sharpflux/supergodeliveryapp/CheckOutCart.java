@@ -286,7 +286,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         }
 
-
+        merchantList.clear();
         while (res.moveToNext()) {
 
             CheckOutItems sellOptions = new CheckOutItems

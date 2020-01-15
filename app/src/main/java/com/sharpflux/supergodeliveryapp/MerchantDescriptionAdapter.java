@@ -37,7 +37,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         this.mlist = merchantlist;
         this.img_dot = img_dot;
         this.btnCheckOut= btnCheckOut;
-        tvTotalCount=tool.findViewById(R.id.tvTotalCount);
+       // tvTotalCount=tool.findViewById(R.id.tvTotalCount);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
     }
     @Override
     public void onBindViewHolder(final MerchantDescriptionViewHolder holder, final int position) {
-        Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
+       // Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
         holder.mTitle.setText(mlist.get(position).getName());
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
@@ -135,19 +135,19 @@ class MerchantDescriptionViewHolder extends RecyclerView.ViewHolder {
     ImageView mImage;
     TextView mTitle;
     TextView price, cart_product_quantity_tv;
-    Button btnAddCart;
+    TextView btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
-    ImageView cart_minus_img, cart_plus_img, img_deleteitem;
+    TextView cart_minus_img, cart_plus_img, img_deleteitem;
 
 
     MerchantDescriptionViewHolder(View itemView) {
         super(itemView);
 
-        cart_minus_img = (ImageView) itemView.findViewById(R.id.cart_minus_img);
-        cart_plus_img = (ImageView) itemView.findViewById(R.id.cart_plus_img);
+        cart_minus_img = (TextView) itemView.findViewById(R.id.cart_minus_img);
+        cart_plus_img = (TextView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);
-        mImage = itemView.findViewById(R.id.imageviewMerchant);
+       // mImage = itemView.findViewById(R.id.imageviewMerchant);
         mTitle = itemView.findViewById(R.id.tvFirmname);
         price = itemView.findViewById(R.id.tvprice);
         btnAddCart = itemView.findViewById(R.id.btnAddCart);

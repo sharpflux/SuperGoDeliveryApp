@@ -2,6 +2,7 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.sharpflux.supergodeliveryapp.database.dbAddress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,21 +34,24 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
-    TextView txt_emptyView;
-
-
+    TextView txt_emptyView,tvMerchantCount;
+    boolean isLoading = false;
+    dbAddress myAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multiple_merchant);
+        setContentView(R.layout.activity_all_merchants);
         txt_emptyView = findViewById(R.id.txt_emptyView);
-
+        tvMerchantCount=findViewById(R.id.tvMerchantCount);
         mRecyclerView = findViewById(R.id.rvlist);
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
 
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         setTitle("Our Merchants!");
+
+        myAddress = new dbAddress(getApplicationContext());
+
 
         shimmerFrameLayout = findViewById(R.id.parentShimmerLayout);
 
@@ -58,23 +63,54 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         }
 
 
-        //shimmerFrameLayout.startShimmerAnimation();
-       // setDynamicFragmentToTabLayout();
-
         MultipleMerchantActivity.AsyncTaskRunner runner = new MultipleMerchantActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
+
+        initAdapter();
+
+
+
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                isLoading = true;
+                initAdapter();
+                int currentSize = myAdapter.getItemCount();
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = String.valueOf(page+1);
+                runner.execute(sleepTime);
+
+            }
+        });
+
+        //shimmerFrameLayout.startShimmerAnimation();
+       // setDynamicFragmentToTabLayout();
+
+
 
 
     }
 
 
-    private void setDynamicFragmentToTabLayout() {
+    private void setDynamicFragmentToTabLayout(String PageIndex) {
 
+        Cursor res = myAddress.GetAddress();
+        String ToLat="",ToLong="";
+
+        if(res.getCount()==0){
+
+        }
+
+        while (res.moveToNext()) {
+
+            ToLat=res.getString(9);
+            ToLong=res.getString(10);
+        }
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_AllMERCHANT + MerchantTypeId+"&ToLat=18&ToLong=15&StartIndex=1&PageSize=100",
+                URLs.URL_AllMERCHANT + MerchantTypeId+"&ToLat="+ToLat+"&ToLong="+ToLong+"&StartIndex="+PageIndex+"&PageSize=10",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -89,6 +125,9 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject(i);
 
+                                myAdapter.notifyItemInserted(merchantList.size() - 1);
+
+                                tvMerchantCount.setText(userJson.getString("RCount")+" Merchants");
                                 String Image;
                                 if (userJson.getString("LogoImgUrl") == null)
                                     Image = "0";
@@ -108,13 +147,12 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                                         userJson.getString("TotalCharges"),
                                                         userJson.getString("GstAmount"),
                                                         userJson.getString("Kilmoter"),
-                                                        MerchantTypeId
+                                                        MerchantTypeId,
+                                                        userJson.getString("Speciality"),
+                                                        userJson.getString("EstimateTime")
                                                         );
 
                                 merchantList.add(sellOptions);
-
-                                myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
-                                mRecyclerView.setAdapter(myAdapter);
 
                                 if(myAdapter.getItemCount()==0);{
                                     txt_emptyView.setVisibility(View.VISIBLE);
@@ -127,6 +165,9 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                /* shimmerFrameLayout.stopShimmerAnimation();
                                 shimmerFrameLayout.setVisibility(View.GONE);*/
                             }
+
+                            myAdapter.notifyDataSetChanged();
+                            isLoading = false;
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -152,6 +193,12 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
     }
 
+
+    private void initAdapter() {
+        myAdapter = new MultipleMerchantAdapter(MultipleMerchantActivity.this, merchantList);
+        mRecyclerView.setAdapter(myAdapter);
+    }
+
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -170,8 +217,8 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
 
                 int time = Integer.parseInt(params[0]) * 1000;
-                setDynamicFragmentToTabLayout();
-                Thread.sleep(time);
+                setDynamicFragmentToTabLayout(params[0]);
+                Thread.sleep(1000);
                 resp = "Slept for " + params[0] + " seconds";
 
 

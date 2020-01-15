@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/blue"
+            app:expandedTitleMarginStart="15dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleEnabled="true">
+
+
+
+            <include layout="@layout/toolbar_products_list"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="17.5dp"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16.7dp"
+                android:layerType="software"
+                app:srcCompat="@drawable/dotted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1.5dp"
+                android:fontFamily="@font/sfpro_display_regular"
+                android:letterSpacing="0.0325"
+                android:text="List of all your favourite restaurants "
+                android:textColor="@color/silver"
+                android:textSize="13.3dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMenuList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:paddingTop="15dp"
+                android:layout_marginBottom="50dp"
+                android:paddingRight="16.7dp" />
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <Button
+            android:fontFamily="@font/sfpro_display_bold"
+            android:id="@+id/btnCheckOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:height="60dp"
+            android:visibility="visible"
+            android:background="@drawable/btn_plain"
+            android:text="@string/CheckOut"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

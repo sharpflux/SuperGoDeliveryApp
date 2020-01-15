@@ -53,7 +53,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     Bundle bundle;
     RecyclerView recyclerView;
     DatabaseHelperMerchant myDatabase;
-    TextView tvTotalCount,tvMerchantName;
+    TextView tvTotalCount,tvMerchantName,tvMerchantName2;
     android.support.v7.widget.Toolbar toolbar;
     AlertDialog.Builder builder;
     AlertDialog.Builder builder1;
@@ -65,15 +65,16 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_merchant_description);
+        setContentView(R.layout.activity_merchant_with_items);
 
+        tvMerchantName2=findViewById(R.id.tvMerchantName2);
         //viewPager = (ViewPager) findViewById(R.id.viewPager);
-        SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
-        btnCheckOut = findViewById(R.id.btnCheckOut);
-        btnAddCart = findViewById(R.id.btnAddCart);
+       // SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
+       // btnCheckOut = findViewById(R.id.btnCheckOut);
+      //  btnAddCart = findViewById(R.id.btnAddCart);
         recyclerView = findViewById(R.id.rvMenuList);
 
-        sliderImg = new ArrayList<ImageModel>();
+       // sliderImg = new ArrayList<ImageModel>();
 
 
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
@@ -81,13 +82,13 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         merchantList = new ArrayList<>();
         myDatabase = new DatabaseHelperMerchant(this);
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
-        tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
+        //tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
-        tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
-        img_back_desc=toolbar.findViewById(R.id.img_back_desc);
-        img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
-        img_dot=toolbar.findViewById(R.id.img_dot);
-         builder = new AlertDialog.Builder(this);
+       // tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
+       // img_back_desc=toolbar.findViewById(R.id.img_back_desc);
+       // img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
+      //  img_dot=toolbar.findViewById(R.id.img_dot);
+        builder = new AlertDialog.Builder(this);
          builder1 = new AlertDialog.Builder(this);
 
 
@@ -98,14 +99,14 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             MerchantTypeId=bundle.getString("MerchantTypeId");
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
-            tvMerchantName.setText(bundle.getString("MerchantName"));
+            tvMerchantName2.setText(bundle.getString("MerchantName"));
 
         }
 
-        CountItemsInCart();
+      //  CountItemsInCart();
         //call recycler data
 
-        img_back_desc.setOnClickListener(new View.OnClickListener() {
+  /*      img_back_desc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Cursor res = myDatabase.GetCart();
@@ -180,7 +181,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                 i.putExtra("MerchantId",merchantId.toString());
                 startActivity(i);
             }
-        });
+        });*/
         initAdapter();
 
         MerchantDescriptionActivity.AsyncTaskRunner runner = new MerchantDescriptionActivity.AsyncTaskRunner();
@@ -208,7 +209,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
 
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
+        /*btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -233,7 +234,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
 
         final float startSize = 00; // Size in pixels

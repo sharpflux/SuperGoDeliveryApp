@@ -42,8 +42,8 @@ public class MultipleMerchantAdapter extends RecyclerView.Adapter<MultipleMercha
 
         holder.mTitle.setText(multiplemerchantlist.get(position).getFirmName());
         holder.MerchantId = multiplemerchantlist.get(position).getMerchantId();
-        holder.mdetails.setText(multiplemerchantlist.get(position).getFirmName());
-
+        holder.mdetails.setText(multiplemerchantlist.get(position).getSpeciality());
+        holder.tvDistanceinTime.setText(multiplemerchantlist.get(position).getKilmoter());
         holder.mobilenum=multiplemerchantlist.get(position).getMobileNum();
         holder.FromLat=multiplemerchantlist.get(position).getFromLat();
         holder.FromLong=multiplemerchantlist.get(position).getFromLong();
@@ -51,6 +51,7 @@ public class MultipleMerchantAdapter extends RecyclerView.Adapter<MultipleMercha
         holder.TotalCharges=multiplemerchantlist.get(position).getTotalCharges();
         holder.GstAmount=multiplemerchantlist.get(position).getGstAmount();
         holder.MerchantTypeId=multiplemerchantlist.get(position).getMerchantTypeId();
+        holder.tvTimeToReach.setText(multiplemerchantlist.get(position).getEstimateTime());
     }
 
 
@@ -67,7 +68,7 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
 
     ImageView mImage;
     TextView mTitle;
-    TextView mdetails,tvDistanceinTime;
+    TextView mdetails,tvDistanceinTime,tvTimeToReach;
     String MerchantId,mobilenum,FromLat,FromLong,MerchantAddress,TotalCharges,GstAmount,MerchantTypeId;
 
     MultipleMerchantViewHolder(View itemView) {
@@ -77,6 +78,7 @@ class MultipleMerchantViewHolder extends RecyclerView.ViewHolder implements View
         mTitle = itemView.findViewById(R.id.tvFirmname);
         mdetails = itemView.findViewById(R.id.tvDetails);
         tvDistanceinTime=itemView.findViewById(R.id.tvDistanceinTime);
+        tvTimeToReach=itemView.findViewById(R.id.tvTimeToReach);
         itemView.setOnClickListener(this);
     }
 
