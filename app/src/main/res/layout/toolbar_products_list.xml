@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="Merchant Name"
+            android:text="Our Merchant"
             android:textColor="@color/white"
             android:gravity="center"
             android:fontFamily="@font/sfpro_display_semibold"
@@ -48,7 +48,7 @@
             android:layout_marginRight="6dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="2 Items"
+            android:text="0 Items"
             android:textColor="@color/white"
             android:textSize="13sp" />
         <FrameLayout

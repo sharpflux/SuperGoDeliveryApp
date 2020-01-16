@@ -90,7 +90,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review__cart);
+        setContentView(R.layout.activity_cart);
         myDatabase = new DatabaseHelperMerchant(this);
         dbHelper = new DatabaseHelper(getBaseContext());
 
@@ -99,8 +99,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
-        tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
+
         tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
+        tvMerchantName.setText("CART");
+
+        CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
+
+
+        /*tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
         tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
         total_amount = findViewById(R.id.total_amount);
         txt_address = findViewById(R.id.txt_address);
@@ -108,7 +114,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         img_back_cart=toolbar.findViewById(R.id.img_back_cart);
         txt_subTotal=findViewById(R.id.txt_subTotal);
         txtItemCount=findViewById(R.id.txtItemCount);
-        lr_back = findViewById(R.id.lr_back);
+        lr_back = findViewById(R.id.lr_back);*/
 
         Alertbuilder = new AlertDialog.Builder(this);
 
@@ -121,7 +127,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         linearLayout = (LinearLayout) findViewById(R.id.droplocationView);*/
         bundle = getIntent().getExtras();
         JSONArray array;
-        tvMerchantName.setText("Check Out");
+        //tvMerchantName.setText("Check Out");
 
         // builder.append("<?xml version=\"1.0\" ?>");
         // Initialize the progress dialog
@@ -135,7 +141,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         // Progress dialog message
         mProgressDialog.setMessage("Please wait, we are saving your data...");
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
-        img_editAddress=findViewById(R.id.img_editAddress);
+        //img_editAddress=findViewById(R.id.img_editAddress);
 
 
 
@@ -154,7 +160,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
 
-        lr_back.setOnClickListener(new View.OnClickListener() {
+      /*  lr_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -164,7 +170,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                 i.putExtra("MerchantName",b.getString("MerchantName"));
                 startActivity(i);
             }
-        });
+        });*/
 
 
         //customerName.setText("Hey "+user.getUsername()+"!");
@@ -178,7 +184,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
         while (res.moveToNext()) {
-            txt_address.setText(res.getString(2));
+            //txt_address.setText(res.getString(2));
 
             b.putString("Address",   res.getString(2));
             b.putString("Lat",  res.getString(9)  );
@@ -195,7 +201,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
 
-        if (bundle != null) {
+     /*   if (bundle != null) {
          if(!txt_address.getText().equals("")) {
                 //linearLayout.setVisibility(View.VISIBLE);
                // tvDropAddress.setText(bundle.getString("DeliveryAddress"));
@@ -207,11 +213,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         } else {
            // linearLayout.setVisibility(View.GONE);
             tvPlaceOrder.setText("Place Order");
-        }
+        }*/
 
-        CheckOutCart.AsyncTaskRunner1 runner = new CheckOutCart.AsyncTaskRunner1();
+      /*  CheckOutCart.AsyncTaskRunner1 runner = new CheckOutCart.AsyncTaskRunner1();
         String sleepTime = "1";
-        runner.execute(sleepTime);
+        runner.execute(sleepTime);*/
 
         /*String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
         new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
@@ -219,7 +225,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
 
 
-        img_editAddress.setOnClickListener(new View.OnClickListener() {
+    /*    img_editAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
@@ -272,7 +278,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     startActivity(fintent);
                 }
             }
-        });
+        });*/
 
 
 
@@ -299,8 +305,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
             merchantList.add(sellOptions);
 
-            myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,
+          /*  myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,
                     GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount,FromLat,FromLong,ToLat,ToLong,totalCharges,MerchantId);
+*/
+
+            myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList);
 
             recyclerView.setAdapter(myAdapter);
 

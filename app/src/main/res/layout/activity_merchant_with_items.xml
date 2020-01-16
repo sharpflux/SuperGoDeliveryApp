@@ -1,34 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--<android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title">
 
-        <LinearLayout android:orientation="vertical" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="wrap_content">
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsingToolbarLayout"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="@color/blue"
-                app:expandedTitleMarginStart="15dp"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:titleEnabled="true">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="179dp"
-                android:background="@drawable/dal">
+                android:layout_height="200dp"
+                android:src="@drawable/dal"
+                app:layout_collapseMode="parallax"/>
+            <include layout="@layout/toolbar_products_list"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+-->
+   <!-- <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-                <ImageView
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginStart="15dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:titleEnabled="true">
+            <include layout="@layout/toolbar_products_list" />
+
+            <ImageView
+                android:id="@+id/img_Merchant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/dal"
+                app:layout_collapseMode="parallax"
+
+                />
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>-->
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:expandedTitleMarginEnd="64dp"
+        app:expandedTitleMarginStart="48dp"
+        app:layout_scrollFlags="scroll|enterAlways|snap">
+
+
+
+
+
+        <ImageView
+            android:id="@+id/imgMerchant"
+            android:src="@drawable/dal"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            app:layout_collapseMode="parallax"
+            android:minHeight="100dp" />
+
+        <include layout="@layout/toolbar_products_list"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout android:orientation="vertical"
+            android:focusableInTouchMode="true"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+      <!--      <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="-10dp"
+                android:src="@drawable/dal">
+            </ImageView>-->
+                <!-- <ImageView
                     android:id="@+id/back"
                     android:layout_width="28dp"
                     android:layout_height="23dp"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="30dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/back" />
-            </FrameLayout>
-            </android.support.design.widget.CollapsingToolbarLayout>
+                    app:srcCompat="@drawable/back" />-->
 
-            <TextView android:textSize="18.3sp" android:id="@+id/tvMerchantName2" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="23.5dp"  android:fontFamily="@font/sfpro_display_semibold"/>
-            <TextView android:textSize="13.3sp" android:textColor="@color/silver" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="2.5dp"  android:lineSpacingExtra="2.5dp" android:fontFamily="@font/sfpro_display_regular" android:letterSpacing="0.0525"/>
+
+
+            <TextView android:textSize="18.3sp" android:id="@+id/tvMerchantName2" app:layout_collapseMode="pin" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="23.5dp"  android:fontFamily="@font/sfpro_display_semibold"/>
+            <TextView android:textSize="13.3sp" android:id="@+id/tvSpeciality" android:textColor="@color/silver" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="2.5dp"  android:lineSpacingExtra="2.5dp" android:fontFamily="@font/sfpro_display_regular" android:letterSpacing="0.0525"/>
             <ImageView android:layout_width="match_parent" android:layout_height="5dp" android:layout_marginLeft="16.7dp" android:layout_marginTop="21.3dp" android:layout_marginRight="16.7dp" app:srcCompat="@drawable/dotted" android:layerType="software"/>
 
             <LinearLayout
@@ -50,30 +145,75 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:letterSpacing="0.0525"/>
+                <ImageView android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="7dp" app:srcCompat="@drawable/ic_filter_black"/>
+                <TextView android:textSize="12.7sp" android:textColor="@color/black" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Filter" android:fontFamily="@font/sfpro_display_medium" android:letterSpacing="0.0525"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMenuList"
+                android:paddingLeft="16.7dp"
+                android:paddingRight="16.7dp"
+                android:clipToPadding="false"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="bottom"
+        android:id="@+id/linearCheckOut"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/item_incrementcart_linear"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true">
+            <TextView android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:id="@+id/pri_Txt"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="16.7dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1 Item | ₹220"
+                android:layout_weight="0.8"
+                android:fontFamily="@font/sfpro_display_medium"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:background="@color/blue"
+                android:layout_width="0dp"
+                android:id="@+id/btnCheckOut"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6">
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:paddingLeft="16.7dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:text="View Cart"
+                    android:fontFamily="@font/sfpro_display_medium"/>
                 <ImageView
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="7dp"
-                    app:srcCompat="@drawable/ic_filter_black"/>
-
-                <TextView android:textSize="12.7sp"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Filter"
-                    android:fontFamily="@font/sfpro_display_medium"
-                    android:letterSpacing="0.0525"/>
+                    app:srcCompat="@drawable/ic_shopping_bag"/>
             </LinearLayout>
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-            <android.support.v7.widget.RecyclerView android:id="@+id/rvMenuList" android:paddingLeft="16.7dp" android:paddingRight="16.7dp" android:clipToPadding="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false"/>
-            </android.support.v4.widget.NestedScrollView>
         </LinearLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

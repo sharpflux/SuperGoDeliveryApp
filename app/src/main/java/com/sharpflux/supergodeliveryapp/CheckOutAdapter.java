@@ -58,10 +58,17 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         this.MerchantId=MerchantId;
     }
 
+    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist) {
+        this.mContext = mContext;
+        this.mlist = merchantlist;
+
+    }
+
     @NonNull
     @Override
     public CheckOutAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_checkout, viewGroup, false);
+        //row_checkout
+        View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cart_items, viewGroup, false);
         return new CheckOutAdapterViewHolder(mView);
     }
 
@@ -69,7 +76,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     public void onBindViewHolder(@NonNull CheckOutAdapterViewHolder holder, int position) {
 
         String DeliveryCharges="40";
-        Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
+        //Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
         holder.mTitle.setText(mlist.get(position).getName());
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
@@ -79,10 +86,10 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
 
 
-        txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+        //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
 
-        txt_delivery_charge.setText("₹" +totalChargesfinal);
-        total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+        //txt_delivery_charge.setText("₹" +totalChargesfinal);
+        //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
         holder.cart_product_quantity_tv.setText(String.valueOf(mlist.get(position).getQuantity()));
         holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +106,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                         myDatabase.DeleteRecord(mlist.get(position).getId());
                         removeItem(position);
                         Toast.makeText(mContext, "DELETED", Toast.LENGTH_SHORT).show();
-                        txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                        total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                        //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                        //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                     }
 
-                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                   // txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
 
         });
@@ -121,12 +128,12 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                    //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
                 //calculateTotal();
-                txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
             }
         });
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +144,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                    total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
+                    //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
+                    //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
 
 
                 }
@@ -147,7 +154,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
 
 
-    }
+
+        }
     public void removeItem(int position) {
         mlist.remove(position);
         notifyItemRemoved(position);

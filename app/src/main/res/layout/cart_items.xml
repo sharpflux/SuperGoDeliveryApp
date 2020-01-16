@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginTop="25.3dp">
+
+<!--
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_nonveg_cart"/>-->
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1">
+            <TextView android:textSize="14sp"
+                android:textColor="@color/black"
+                android:id="@+id/tvFirmname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:text="panner_txt"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"/>
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp">
+                <TextView android:textSize="13.3sp"
+                    android:textColor="@color/silver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+                <TextView android:textSize="13.3sp"
+                    android:textColor="@color/silver"
+                    android:id="@+id/tvprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="220"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+            </LinearLayout>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView android:textSize="14sp"
+                android:textColor="@color/orange"
+                android:id="@+id/add_item_txt"
+                android:background="@drawable/rectangle_gray_border"
+                android:paddingLeft="20dp"
+                android:paddingTop="4.5dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="6.5dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ Add"
+                android:fontFamily="@font/sfpro_display_medium"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/add_cart_linear"
+                android:background="@drawable/rectangle_silver_border"
+                android:paddingTop="4.5dp"
+                android:paddingBottom="6.5dp"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/minus_txt"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:fontFamily="@font/sfpro_display_medium"/>
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/cart_product_quantity_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:fontFamily="@font/sfpro_display_medium"/>
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/plus_text"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="11dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+" android:fontFamily="@font/sfpro_display_medium"/>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

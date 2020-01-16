@@ -31,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,16 +49,16 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private int dotscount;
     private ArrayList<ImageModel> sliderImg;
     private ImageView[] dots;
-    Button btnCheckOut,btnAddCart;
+    LinearLayout btnCheckOut,linearCheckOut;
     String merchantId = "", mobilenum = "",MerchantTypeId,MerchantName;
     Bundle bundle;
     RecyclerView recyclerView;
     DatabaseHelperMerchant myDatabase;
-    TextView tvTotalCount,tvMerchantName,tvMerchantName2;
+    TextView tvTotalCount,tvMerchantName,tvMerchantName2,tvSpeciality,pri_Txt;
     android.support.v7.widget.Toolbar toolbar;
     AlertDialog.Builder builder;
     AlertDialog.Builder builder1;
-    ImageView img_back_desc,img_cart_desc,img_dot;
+    ImageView img_back_desc,img_cart_desc,img_dot,imgMerchant;
     MerchantDescriptionAdapter myAdapter;
     boolean isLoading = false;
 
@@ -66,85 +67,86 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_with_items);
-
         tvMerchantName2=findViewById(R.id.tvMerchantName2);
+        imgMerchant=findViewById(R.id.imgMerchant);
+        tvSpeciality=findViewById(R.id.tvSpeciality);
+        pri_Txt=findViewById(R.id.pri_Txt);
+
         //viewPager = (ViewPager) findViewById(R.id.viewPager);
-       // SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
-       // btnCheckOut = findViewById(R.id.btnCheckOut);
-      //  btnAddCart = findViewById(R.id.btnAddCart);
+        //SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
+        btnCheckOut = findViewById(R.id.btnCheckOut);
+        linearCheckOut= findViewById(R.id.linearCheckOut);
+       //btnAddCart = findViewById(R.id.btnAddCart);
         recyclerView = findViewById(R.id.rvMenuList);
-
        // sliderImg = new ArrayList<ImageModel>();
-
-
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         myDatabase = new DatabaseHelperMerchant(this);
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
-        //tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
-
-       // tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
-       // img_back_desc=toolbar.findViewById(R.id.img_back_desc);
-       // img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
-      //  img_dot=toolbar.findViewById(R.id.img_dot);
+        tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
+        //tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
+        img_back_desc=toolbar.findViewById(R.id.img_back_desc);
+        img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
+        img_dot=toolbar.findViewById(R.id.img_dot);
         builder = new AlertDialog.Builder(this);
-         builder1 = new AlertDialog.Builder(this);
-
-
-
+        builder1 = new AlertDialog.Builder(this);
         bundle = getIntent().getExtras();
-
+        btnCheckOut.setVisibility(View.GONE);
+        linearCheckOut.setVisibility(View.GONE);
         if (bundle != null) {
             MerchantTypeId=bundle.getString("MerchantTypeId");
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
             tvMerchantName2.setText(bundle.getString("MerchantName"));
+            tvSpeciality.setText(bundle.getString("Speciality"));
+            Picasso.get().load(bundle.getString("ImageUrl")) .resize(1200,500).fit().centerCrop().into(imgMerchant);
+            //Picasso.get().load(bundle.getString("ImageUrl")).fit().into(imgMerchant);
 
         }
 
       //  CountItemsInCart();
         //call recycler data
 
-  /*      img_back_desc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Cursor res = myDatabase.GetCart();
+        /*      img_back_desc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Cursor res = myDatabase.GetCart();
 
-                if (res.getCount() == 0) {
+                        if (res.getCount() == 0) {
 
-                    Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
-                    i.putExtra("MerchantTypeId",MerchantTypeId);
-                    i.putExtra("MerchantId",merchantId);
-                    startActivity(i);
-
-                }else{
-                    builder1.setTitle("Do you want to clear your cart ?");
-                    builder1.setMessage("If you leave this page your cart is Empty");
-                    builder1.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            myDatabase.DeleteRecordAll();
-                            bundle = getIntent().getExtras();
-
-                            if (bundle != null) {
-                                MerchantTypeId=bundle.getString("MerchantTypeId");
-                            }
                             Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
                             i.putExtra("MerchantTypeId",MerchantTypeId);
+                            i.putExtra("MerchantId",merchantId);
                             startActivity(i);
-                        }
-                    });
-                    builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
+
+                        }else{
+                            builder1.setTitle("Do you want to clear your cart ?");
+                            builder1.setMessage("If you leave this page your cart is Empty");
+                            builder1.setPositiveButton("Cleart cart", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    myDatabase.DeleteRecordAll();
+                                    bundle = getIntent().getExtras();
+
+                                    if (bundle != null) {
+                                        MerchantTypeId=bundle.getString("MerchantTypeId");
+                                    }
+                                    Intent i = new Intent(getApplicationContext(),MultipleMerchantActivity.class);
+                                    i.putExtra("MerchantTypeId",MerchantTypeId);
+                                    startActivity(i);
+                                }
+                            });
+                            builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+
+
+                                }
+                            });
+                            builder1.show();
 
 
                         }
-                    });
-                    builder1.show();
-
-
-                }
 
 
 
@@ -154,41 +156,39 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
 
-                }
+                        }
 
-             //   AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
-
-
-
-
-        });
+                     //   AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
 
 
 
 
-        img_cart_desc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                });
 
-                bundle = getIntent().getExtras();
 
-                if (bundle != null) {
-                    MerchantTypeId=bundle.getString("MerchantTypeId");
-                }
-                Intent i = new Intent(getApplicationContext(),CheckOutCart.class);
-                i.putExtra("MerchantTypeId",MerchantTypeId);
-                i.putExtra("MerchantName",tvMerchantName.getText().toString());
-                i.putExtra("MerchantId",merchantId.toString());
-                startActivity(i);
-            }
-        });*/
+
+
+                img_cart_desc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        bundle = getIntent().getExtras();
+
+                        if (bundle != null) {
+                            MerchantTypeId=bundle.getString("MerchantTypeId");
+                        }
+                        Intent i = new Intent(getApplicationContext(),CheckOutCart.class);
+                        i.putExtra("MerchantTypeId",MerchantTypeId);
+                        i.putExtra("MerchantName",tvMerchantName.getText().toString());
+                        i.putExtra("MerchantId",merchantId.toString());
+                        startActivity(i);
+                    }
+                });*/
         initAdapter();
 
         MerchantDescriptionActivity.AsyncTaskRunner runner = new MerchantDescriptionActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
-
-
 
         /*recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
             @Override
@@ -206,18 +206,14 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         });*/
 
 
-
-
-
-        /*btnCheckOut.setOnClickListener(new View.OnClickListener() {
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (bundle != null) {
                     merchantId = bundle.getString("MerchantId");
                     mobilenum = bundle.getString("mobilenum");
-                    tvMerchantName.setText(bundle.getString("MerchantName"));
-
+                   // tvMerchantName.setText(bundle.getString("MerchantName"));
                     Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
                     fintent.putExtra("MerchantId",bundle.getString("MerchantId"));
                     fintent.putExtra("MerchantTypeId",MerchantTypeId);
@@ -230,11 +226,8 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                     startActivity(fintent);
 
                 }
-
-
-
             }
-        });*/
+        });
 
 
         final float startSize = 00; // Size in pixels
@@ -243,8 +236,6 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
         ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
         animator.setDuration(animationDuration);
-
-
         animator.start();
 
         getImages();
@@ -290,13 +281,15 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         if (res.getCount() == 0) {
 
         }
+
+
         tvTotalCount.setText(res.getCount() + " Items");
 
     }
 
 
     private void initAdapter() {
-        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot,btnCheckOut);
+        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot,btnCheckOut,pri_Txt,linearCheckOut);
         recyclerView.setAdapter(myAdapter);
         //myAdapter.notifyDataSetChanged();
     }

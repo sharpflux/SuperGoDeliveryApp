@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,18 +27,20 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
     int minteger = 0;
     DatabaseHelperMerchant myDatabase;
     android.support.v7.widget.Toolbar  toolbar;
-    TextView tvTotalCount;
+    TextView tvTotalCount,pri_Txt;
     ImageView img_dot;
-    Button btnCheckOut;
+    LinearLayout btnCheckOut,linearCheckOut;
 
     public MerchantDescriptionAdapter(Context mContext, List<Description> merchantlist,android.support.v7.widget.Toolbar tool,
-                                      ImageView img_dot, Button btnCheckOut) {
+                                      ImageView img_dot, LinearLayout btnCheckOut,TextView pri_Txt,LinearLayout linearCheckOut) {
         this.toolbar=tool;
         this.mContext = mContext;
         this.mlist = merchantlist;
         this.img_dot = img_dot;
         this.btnCheckOut= btnCheckOut;
-       // tvTotalCount=tool.findViewById(R.id.tvTotalCount);
+        tvTotalCount=tool.findViewById(R.id.tvTotalCount);
+        this.pri_Txt=pri_Txt;
+        this.linearCheckOut=linearCheckOut;
     }
 
     @Override
@@ -48,71 +51,92 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
 
         return new MerchantDescriptionViewHolder(mView);
     }
-    public void CountItemsInCart() {
+    public Double total=0.0;
+    public void CountItemsInCart(TextView pri_Txt) {
+
+        total=0.0;
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
         }
-        tvTotalCount.setText(res.getCount() + " Items");
-        btnCheckOut.setVisibility(View.VISIBLE);
+        else {
+            while (res.moveToNext()) {
+                total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4))));
+            }
+            tvTotalCount.setText(res.getCount() + " Items");
+            pri_Txt.setText(res.getCount() + " Items | ₹"+total.toString() );
+            btnCheckOut.setVisibility(View.VISIBLE);
+            linearCheckOut.setVisibility(View.VISIBLE);
+        }
+
+
+       // btnCheckOut.setVisibility(View.VISIBLE);
     }
     @Override
     public void onBindViewHolder(final MerchantDescriptionViewHolder holder, final int position) {
-       // Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
+        Picasso.get().load(mlist.get(position).getImage()).resize(200,200).centerCrop().into(holder.mImage);
         holder.mTitle.setText(mlist.get(position).getName());
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
         String priceS = String.valueOf(priced);
         holder.price.setText("₹" + priceS);
-
- /*       holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
+        btnCheckOut.setVisibility(View.GONE);
+        linearCheckOut.setVisibility(View.GONE);
+        holder.cart_product_quantity_tv.setText("1");
+        holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 minteger = Integer.valueOf(holder.cart_product_quantity_tv.getText().toString()) - 1;
-                if (minteger >= 0) {
-                    if (myDatabase.GETExist(mlist.get(position).getId()) != "0")
-                        myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
-                    else
-                        myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
 
+                if (minteger >= 0) {
+
+                    myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()), String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                }
+                if (minteger == 0) {
+                    myDatabase.DeleteRecord(mlist.get(position).getId());
 
                 }
+
+                CountItemsInCart(pri_Txt);
             }
+
         });
         holder.cart_plus_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 minteger = Integer.valueOf(holder.cart_product_quantity_tv.getText().toString()) + 1;
                 if (minteger >= 0) {
-                    if (myDatabase.GETExist(mlist.get(position).getId()) != "0")
-                        myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
-                    else
-                        myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), String.valueOf(minteger), mlist.get(position).getPrice());
-
+                    myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                }
+                if (minteger == 0) {
+                    myDatabase.DeleteRecord(mlist.get(position).getId());
 
                 }
-            }
-        });*/
 
+                CountItemsInCart(pri_Txt);
+            }
+        });
         holder.btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     boolean flag=true;
                 if (myDatabase.CheckItemIsExists(mlist.get(position).getId()) ==false) {
                     myDatabase.OrderInsert(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(),"1", mlist.get(position).getPrice(),mlist.get(position).getImage());
-                    img_dot.setVisibility(View.VISIBLE);
+                    //img_dot.setVisibility(View.VISIBLE);
+                    holder.btnAddCart.setVisibility(view.GONE);
+                    holder.add_cart_linear.setVisibility(View.VISIBLE);
                     Toast.makeText(mContext,"Inserted", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), "1", mlist.get(position).getPrice());
+                    holder.btnAddCart.setVisibility(view.GONE);
+                    holder.add_cart_linear.setVisibility(View.VISIBLE);
                    // Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
                 }
-
-                CountItemsInCart();
-
+                CountItemsInCart(pri_Txt);
             }
         });
     }
@@ -134,12 +158,12 @@ class MerchantDescriptionViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mImage;
     TextView mTitle;
-    TextView price, cart_product_quantity_tv;
+    TextView price, cart_product_quantity_tv,pri_Txt;
     TextView btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
     TextView cart_minus_img, cart_plus_img, img_deleteitem;
-
+        LinearLayout add_cart_linear;
 
     MerchantDescriptionViewHolder(View itemView) {
         super(itemView);
@@ -147,11 +171,12 @@ class MerchantDescriptionViewHolder extends RecyclerView.ViewHolder {
         cart_minus_img = (TextView) itemView.findViewById(R.id.cart_minus_img);
         cart_plus_img = (TextView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);
-       // mImage = itemView.findViewById(R.id.imageviewMerchant);
+        mImage = itemView.findViewById(R.id.imageviewMerchant);
         mTitle = itemView.findViewById(R.id.tvFirmname);
+        pri_Txt=itemView.findViewById(R.id.pri_Txt);
         price = itemView.findViewById(R.id.tvprice);
         btnAddCart = itemView.findViewById(R.id.btnAddCart);
-
+        add_cart_linear=itemView.findViewById(R.id.add_cart_linear);
 
     }
 

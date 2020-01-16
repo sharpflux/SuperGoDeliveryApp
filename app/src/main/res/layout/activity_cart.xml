@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.CoordinatorLayout
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <include layout="@layout/toolbar_cart"
+                    app:layout_scrollFlags="scroll|enterAlways"/>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+            <LinearLayout android:orientation="vertical"
+                android:paddingBottom="40dp"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16.7dp"
+                android:layout_marginRight="16.7dp">
+                <TextView android:textSize="12sp"
+                    android:textColor="@color/orange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="vadiwadi_road"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:letterSpacing="0.0525"/>
+                <View android:background="@color/lightsilver"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="21.7dp"/>
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25.3dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvCheckOutItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="14dp"
+                    app:srcCompat="@drawable/dotted"
+                    android:layerType="software"/>
+                <TextView android:textSize="11sp"
+                    android:textColor="@color/lightGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="21.7dp"
+                    android:text="any_instructions_we_promise_to_pass_them_on"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+                <View android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.3dp"
+                    android:layout_marginTop="21.8dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="21.8dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_discount_1"/>
+                    <TextView
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Apply Coupen"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_semibold"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_height="13dp"
+                        app:srcCompat="@drawable/right_arrow"/>
+                </LinearLayout>
+                <View android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.3dp"
+                    android:layout_marginTop="21.8dp"/>
+                <TextView android:textSize="13.3sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="31.5dp"
+                    android:text="Bill Details"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+                    <TextView
+                        android:textSize="13.3sp"
+                        android:textColor="@color/silver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Item Total"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"/>
+                    <TextView android:textSize="13.3sp"
+                        android:textColor="@color/silver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="220"
+                        android:fontFamily="@font/sfpro_display_medium"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                    <TextView android:textSize="13.3sp"
+                        android:textColor="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Discount"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"/>
+                    <TextView android:textSize="13.3sp"
+                        android:textColor="@color/silver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50"
+                        android:fontFamily="@font/sfpro_display_medium"/>
+                </LinearLayout>
+                <View
+                    android:background="@color/lightsilver"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="12dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+                    <TextView
+                        android:textSize="13.3sp"
+                        android:textColor="@color/silver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery Fee"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"/>
+                    <TextView android:textSize="13.3sp"
+                        android:textColor="@color/silver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_10"
+                        android:fontFamily="@font/sfpro_display_medium"/>
+                </LinearLayout>
+                <View
+                    android:background="@color/lightsilver"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="12dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+                    <TextView
+                        android:textSize="13.3sp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:letterSpacing="0.0525"/>
+                    <TextView android:textSize="13.3sp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="280"
+                        android:fontFamily="@font/sfpro_display_semibold"/>
+                </LinearLayout>
+                <View
+                    android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.3dp"
+                    android:layout_marginTop="25dp"/>
+                <TextView
+                    android:textSize="13.3sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Delivery Address"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_semibold"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.3dp">
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <FrameLayout
+                            android:paddingTop="8dp"
+                            android:paddingRight="7.5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/work"/>
+                        </FrameLayout>
+                        <ImageView
+                            android:layout_gravity="end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_correct"/>
+                    </FrameLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp">
+                        <TextView android:textSize="15sp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Work"
+                            android:fontFamily="@font/sfpro_display_medium"
+                            android:letterSpacing="0.0525"/>
+                        <TextView
+                            android:textSize="13.3sp"
+                            android:textColor="@color/silver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="_393_seventh_street_durga_nagar"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/sfpro_display_medium"
+                            android:letterSpacing="0.0525"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:textSize="13sp"
+                    android:textColor="@color/orange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24.3dp"
+                    android:text="Change Address"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:letterSpacing="0.0525"/>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:background="@drawable/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_above="@+id/pay_linear"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/pay_linear"
+        android:background="@drawable/rectangle_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <LinearLayout android:orientation="vertical"
+            android:background="@drawable/rectangle_blue"
+            android:paddingLeft="15dp" android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+            <TextView android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.7dp"
+                android:text="220"
+                android:fontFamily="@font/sfpro_display_medium"/>
+            <TextView android:textSize="11sp"
+                android:textColor="@color/white"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="view_detailed_bill"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"/>
+        </LinearLayout>
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:background="@drawable/rectangle_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="PROCEED TO PAY"
+            android:fontFamily="@font/sfpro_display_medium"/>
+    </LinearLayout>
+</RelativeLayout>
