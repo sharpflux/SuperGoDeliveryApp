@@ -86,6 +86,8 @@
             app:layout_collapseMode="parallax"
             android:minHeight="100dp" />
 
+        <!--Sharpflux-->
+
         <include layout="@layout/toolbar_products_list"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
