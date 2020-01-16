@@ -136,22 +136,6 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                 //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
             }
         });
-        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                minteger = Integer.valueOf(holder.cart_product_quantity_tv.getText().toString()) + 1;
-                if (minteger >= 0) {
-                    myDatabase.DeleteRecord(mlist.get(position).getId());
-                    removeItem(position);
-                    Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
-                    //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
-                    //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
-
-
-                }
-            }
-        });
-
 
 
 
@@ -209,15 +193,15 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
     Button btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
-    ImageView cart_minus_img, cart_plus_img, img_deleteitem;
+    TextView cart_minus_img, cart_plus_img, img_deleteitem;
 
 
     CheckOutAdapterViewHolder(View itemView) {
         super(itemView);
         total_amount=itemView.findViewById(R.id.total_amount);
        // txtItemCount=itemView.findViewById(R.id.txtItemCount);
-        cart_minus_img = (ImageView) itemView.findViewById(R.id.cart_minus_img);
-        cart_plus_img = (ImageView) itemView.findViewById(R.id.cart_plus_img);
+        cart_minus_img = (TextView) itemView.findViewById(R.id.cart_minus_img);
+        cart_plus_img = (TextView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);
         mImage = itemView.findViewById(R.id.imageviewMerchant);
         mTitle = itemView.findViewById(R.id.tvFirmname);
