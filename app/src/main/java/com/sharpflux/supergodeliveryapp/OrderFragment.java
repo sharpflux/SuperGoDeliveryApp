@@ -2,10 +2,17 @@ package com.sharpflux.supergodeliveryapp;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,6 +53,9 @@ public class OrderFragment extends Fragment {
     RecyclerView recyclerView;
 
     private ProgressBar spinner;
+    OrderListMainAdapter adapter;
+    OrderDetails list;
+    SwipeRefreshLayout swipeRefreshLayout ;
 
     public OrderFragment() {
         // Required empty public constructor
@@ -71,6 +81,7 @@ public class OrderFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recylcerView1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
 
         productList = new ArrayList<>();
 
@@ -83,6 +94,20 @@ public class OrderFragment extends Fragment {
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "1";
+                runner.execute(sleepTime);
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
 
 
         return view;
@@ -108,14 +133,14 @@ public class OrderFragment extends Fragment {
 
 //                                DeliveryList list2 = new DeliveryList(  product.getString("mobile"));
 
-                                OrderDetails list = new OrderDetails(
+                                list = new OrderDetails(
                                         product.getString("pickupAddress"),
                                         product.getString("TotalCharges"),
                                         product.getString("Distance"),
                                         product.getString("Duration"),
                                         product.getString("DeliveryStatus"),
                                         product.getString("DeliveryId"),
-                                        product.getString("InsertionDate"),
+                                        product.getString("DeliveryStatusId"),
                                         product.getString("InsertionTime")
                                 );
                                 //adding the product to product list
@@ -123,8 +148,11 @@ public class OrderFragment extends Fragment {
 
                             }
                             //creating adapter object and setting it to recyclerview
-                            OrderListMainAdapter adapter = new OrderListMainAdapter(getContext(), productList);
+                           adapter = new OrderListMainAdapter(getContext(), productList,OrderFragment.this);
                             recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -193,6 +221,91 @@ public class OrderFragment extends Fragment {
             // finalResult.setText(text[0]);
 
         }
+    }
+
+    public void DECLINEORDER(String OrderId, String DeliveryStatusId) {
+
+        final String deliveryidobj;
+        final String customerIdobj;
+        final String status2;
+        String  deliveryid = OrderId;
+        String  status = DeliveryStatusId;
+
+        User user=   SharedPrefManager.getInstance(getContext()).getUser();
+        String  customerId = String.valueOf(user.getId());
+        deliveryidobj = String.valueOf(deliveryid);
+        status2 = String.valueOf(status);
+
+        customerIdobj = customerId;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_STATUS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // progressBar.setVisibility(View.GONE);
+
+                        try {
+
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(false);
+                                builder.setMessage("Are you sure want to Cancel this Order");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //if user pressed "yes", then he is allowed to exit from application
+
+                                        adapter.notifyDataSetChanged();
+                                       /* AsyncTaskRunner runner = new AsyncTaskRunner();
+                                        String sleepTime = "1";
+                                        runner.execute(sleepTime);*/
+
+
+
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //if user select "No", just cancel this dialog and continue with app
+                                        dialog.cancel();
+                                    }
+                                });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+
+
+
+
+                            } else {
+                                // Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("DeliveryId", deliveryidobj);
+                params.put("CustomerId", customerIdobj);
+                params.put("vehicleType", status2);//DECLINE
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
 }
