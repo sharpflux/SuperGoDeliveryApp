@@ -100,7 +100,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             mobilenum = bundle.getString("mobilenum");
             tvMerchantName2.setText(bundle.getString("MerchantName"));
             tvSpeciality.setText(bundle.getString("Speciality"));
-            Picasso.get().load(bundle.getString("ImageUrl")) .resize(1200,500).fit().centerCrop().into(imgMerchant);
+            Picasso.get().load(bundle.getString("ImageUrl")) .resize(1200,500).centerCrop().into(imgMerchant);
             //Picasso.get().load(bundle.getString("ImageUrl")).fit().into(imgMerchant);
 
         }
