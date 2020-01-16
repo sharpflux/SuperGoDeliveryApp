@@ -3,48 +3,24 @@ package com.sharpflux.supergodeliveryapp;
 public class OrderDetails {
 
     private String pickupAddress;
-    private String deliveryAddress, TotalCharges,Distance,Duration,DeliveryStatus,DeliveryId,InsertionDate,InsertionTime;
+    private String  TotalCharges,Distance,Duration,DeliveryStatus,DeliveryId;
+    private String DeliveryStatusId;
+    private String InsertionTime;
 
-    public OrderDetails(String pickupAddress, String TotalCharges) {
+
+
+
+    public OrderDetails(String pickupAddress, String totalCharges, String distance,
+                        String duration, String deliveryStatus, String deliveryId, String deliveryStatusId,String InsertionTime) {
         this.pickupAddress = pickupAddress;
-        this.TotalCharges = TotalCharges;
-    }
 
-    public OrderDetails(String pickupAddress,   String totalCharges, String distance, String duration, String deliveryStatus, String deliveryId, String insertionDate, String insertionTime) {
-        this.pickupAddress = pickupAddress;
-        this.deliveryAddress = deliveryAddress;
-        TotalCharges = totalCharges;
-        Distance = distance;
-        Duration = duration;
-        DeliveryStatus = deliveryStatus;
-        DeliveryId = deliveryId;
-        InsertionDate = insertionDate;
-        InsertionTime = insertionTime;
-    }
-
-
-    public String getPickupAddress() {
-        return pickupAddress;
-    }
-
-    public void setPickupAddress(String pickupAddress) {
-        this.pickupAddress = pickupAddress;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getInsertionDate() {
-        return InsertionDate;
-    }
-
-    public void setInsertionDate(String insertionDate) {
-        InsertionDate = insertionDate;
+        this.TotalCharges = totalCharges;
+        this.Distance = distance;
+        this.Duration = duration;
+        this.DeliveryStatus = deliveryStatus;
+        this.DeliveryId = deliveryId;
+        this.DeliveryStatusId = deliveryStatusId;
+        this.InsertionTime = InsertionTime;
     }
 
     public String getInsertionTime() {
@@ -54,6 +30,23 @@ public class OrderDetails {
     public void setInsertionTime(String insertionTime) {
         InsertionTime = insertionTime;
     }
+
+    public String getDeliveryStatusId() {
+        return DeliveryStatusId;
+    }
+
+    public void setDeliveryStatusId(String deliveryStatusId) {
+        DeliveryStatusId = deliveryStatusId;
+    }
+
+    public String getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(String pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
 
     public String getTotalCharges() {
         return TotalCharges;

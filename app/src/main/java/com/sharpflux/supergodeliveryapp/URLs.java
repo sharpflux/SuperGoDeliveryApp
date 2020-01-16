@@ -23,4 +23,7 @@ public class URLs {
     public static final String URL_RESETPASS="http://admin.supergo.in/api/User/ChangePassword";
 
 
+    public  static  final String URL_STATUS="http://api.supergo.in/api/DeliveryLog/InsertDelivery";
+
+
 }

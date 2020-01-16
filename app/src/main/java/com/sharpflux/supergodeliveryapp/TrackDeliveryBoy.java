@@ -119,7 +119,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         if (extras != null) {
             DeliveryId = extras.getString("DeliveryId");
             OrderId.setText("ORDER # "+DeliveryId);
-            tvDeliveryDecription.setText(extras.getString("InsertTime")+" |  , Rs "+extras.getString("Total"));
+            tvDeliveryDecription.setText(extras.getString("InsertionTime")+" |  , Rs "+extras.getString("Total"));
             startGettingOnlineDataFromCar();
         }
         mainLayout= (LinearLayout) findViewById(R.id.LinearContainer);
@@ -253,7 +253,8 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         googleMap.setTrafficEnabled(false);
         googleMap.setIndoorEnabled(false);
         googleMap.setBuildingsEnabled(false);
-        //googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+
 
 
     }
@@ -320,17 +321,25 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
 
                         if (isFirstPosition) {
                             startPosition = new LatLng(startLatitude, startLongitude);
-
+                            Log.e(TAG, "FIRST TRACK");
                             carMarker = googleMap.addMarker(new MarkerOptions().position(startPosition).
                                     flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car_marker_front)));
                             carMarker.setAnchor(0.5f, 0.5f);
 
-                            googleMap.moveCamera(CameraUpdateFactory
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .target(startPosition)      // Sets the center of the map to Mountain View
+                                    .zoom(17)                   // Sets the zoom
+                                    .bearing(90)                // Sets the orientation of the camera to east
+                                    .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                                    .build();                   // Creates a CameraPosition from the builder
+                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                           /* googleMap.moveCamera(CameraUpdateFactory
                                     .newCameraPosition
                                             (new CameraPosition.Builder()
                                                     .target(startPosition)
                                                     .zoom(15.5f)
-                                                    .build()));
+                                                    .build()));*/
 
                             isFirstPosition = false;
 
@@ -420,12 +429,20 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
                 carMarker.setAnchor(0.5f, 0.5f);
                 carMarker.setRotation(getBearing(start, end));
 
-                googleMap.moveCamera(CameraUpdateFactory
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(newPos)      // Sets the center of the map to Mountain View
+                        .zoom(17)                   // Sets the zoom
+                        .bearing(90)                // Sets the orientation of the camera to east
+                        .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                        .build();                   // Creates a CameraPosition from the builder
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+               /* googleMap.moveCamera(CameraUpdateFactory
                         .newCameraPosition
                                 (new CameraPosition.Builder()
                                         .target(newPos)
                                         .zoom(15.5f)
-                                        .build()));
+                                        .build()));*/
 
                 startPosition = carMarker.getPosition();
 
@@ -621,7 +638,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         googleMap.addMarker(markerOptions);
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + latlong[0] + "," + latlong[1] + "&destination=" + latlong2[0] + "," + latlong2[1] + "&travelmode=driving&sensor=false&key=AIzaSyD3lPCpXWKTSMLC4wCL4rXmatN3f9M4lt4";
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+       // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
         return url;
     }
 

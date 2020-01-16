@@ -249,7 +249,7 @@
                                 android:text="In Progress"
                                 android:textAlignment="textEnd"
                                 android:textColor="@color/orange"
-                                android:textSize="17.0sp" />
+                                android:textSize="12.0sp" />
 
 
                         </LinearLayout>
@@ -259,6 +259,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lr_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -282,7 +283,7 @@
 
 
                 <Button
-                    android:id="@+id/btnApply"
+                    android:id="@+id/btn_cancel"
                     android:layout_width="150dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
