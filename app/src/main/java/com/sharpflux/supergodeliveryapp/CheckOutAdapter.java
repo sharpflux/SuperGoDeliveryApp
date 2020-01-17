@@ -81,7 +81,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
         String priceS = String.valueOf(priced);
-        holder.price.setText("₹" + priceS);
+
         TotalAmount=0.0;
 
 
@@ -101,6 +101,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
                         myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()), String.valueOf(minteger));
                         holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                        holder.price.setText(priceS);
+
                     }
                     if (minteger == 0) {
                         myDatabase.DeleteRecord(mlist.get(position).getId());

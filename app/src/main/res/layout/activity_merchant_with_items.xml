@@ -128,7 +128,7 @@
             <TextView android:textSize="13.3sp" android:id="@+id/tvSpeciality" android:textColor="@color/silver" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.7dp" android:layout_marginTop="2.5dp"  android:lineSpacingExtra="2.5dp" android:fontFamily="@font/sfpro_display_regular" android:letterSpacing="0.0525"/>
             <ImageView android:layout_width="match_parent" android:layout_height="5dp" android:layout_marginLeft="16.7dp" android:layout_marginTop="21.3dp" android:layout_marginRight="16.7dp" app:srcCompat="@drawable/dotted" android:layerType="software"/>
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:orientation="horizontal"
                 android:tag="sticky"
                 android:background="@color/white"
@@ -149,7 +149,7 @@
                     android:letterSpacing="0.0525"/>
                 <ImageView android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="7dp" app:srcCompat="@drawable/ic_filter_black"/>
                 <TextView android:textSize="12.7sp" android:textColor="@color/black" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Filter" android:fontFamily="@font/sfpro_display_medium" android:letterSpacing="0.0525"/>
-            </LinearLayout>
+            </LinearLayout>-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvMenuList"
                 android:paddingLeft="16.7dp"

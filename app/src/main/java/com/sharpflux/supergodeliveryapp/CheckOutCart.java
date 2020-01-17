@@ -79,6 +79,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     String totalCharges="0.00";
     CheckOutAdapter myAdapter;
     LinearLayout lr_back;
+    TextView txt_itemCount;
 
     @Override
     public void onBackPressed() {
@@ -142,7 +143,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         mProgressDialog.setMessage("Please wait, we are saving your data...");
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
         //img_editAddress=findViewById(R.id.img_editAddress);
-
+        txt_itemCount = findViewById(R.id.txt_itemCount);
 
 
         Intent iin = getIntent();
