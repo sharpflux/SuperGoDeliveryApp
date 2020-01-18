@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +58,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     ImageView mImage,img_back_cart;
     TextView mTitle, tvDropAddress,txt_address;
     TextView price, cart_product_quantity_tv, total_amount,txt_subTotal;
-    Button btnAddCart, tvPlaceOrder;
+    Button btnAddCart;
     RecyclerView recyclerView;
     private List<CheckOutItems> merchantList;
     android.support.v7.widget.Toolbar toolbar;
@@ -79,9 +80,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     String totalCharges="0.00";
     CheckOutAdapter myAdapter;
     LinearLayout lr_back,LinChangeAddress;
-    TextView txt_itemCount,tvTotalAmount,tvGrandTotal,tvAddress,tvDeliveryCharges;
+    TextView txt_itemCount,tvTotalAmount,tvGrandTotal,tvAddress,tvDeliveryCharges,tvPlaceOrder;
 
-
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,12 +99,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
 
         tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
-
         tvMerchantName.setText("CART");
-
+        tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
 
         /*tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
-        tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
+
         total_amount = findViewById(R.id.total_amount);
         txt_address = findViewById(R.id.txt_address);
         txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
@@ -132,10 +132,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         mProgressDialog.setCancelable(false);
         // Progress dialog horizontal style
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // Progress dialog title
-        mProgressDialog.setTitle("Placing Order");
-        // Progress dialog message
-        mProgressDialog.setMessage("Please wait, we are saving your data...");
+
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
         //img_editAddress=findViewById(R.id.img_editAddress);
         txt_itemtotal = findViewById(R.id.txt_itemtotal);
@@ -146,7 +143,13 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         LinChangeAddress=findViewById(R.id.LinChangeAddress);
         tvDeliveryCharges=findViewById(R.id.tvDeliveryCharges);
         tvDeliveryCharges.setText("0");
-        CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges,tvTotalAmount);
+
+        // Progress dialog title
+        mProgressDialog.setTitle("Prepairing Cart");
+        // Progress dialog message
+        mProgressDialog.setMessage("Please wait, we are perpairing your cart...");
+
+        mProgressDialog.show();
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -239,9 +242,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             ToLong=res.getString(10);
         }
 
-
-        CheckOutCart.RateCalculatorAsynchTask runner = new CheckOutCart.RateCalculatorAsynchTask();
-        runner.execute("Merchant", "10 Km", "0 Min");
+        DistanceDuration();
 
      /*   if (bundle != null) {
          if(!txt_address.getText().equals("")) {
@@ -277,24 +278,27 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                 fintent.putExtra("GstAmount", GstAmount);
                 startActivity(fintent);
             }
-        });
+        });*/
       tvPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (bundle != null) {
-                    if(!txt_address.getText().equals(""))  {
-
-
+                    if(!tvAddress.getText().equals(""))  {
                         if(ToLat==null &&ToLong==null) {
                             ToLat=bundle.getString("Lat");
                             ToLong=bundle.getString("Long");
                         }
+                        // Progress dialog title
+                        mProgressDialog.setTitle("Placing Order");
+                        // Progress dialog message
+                        mProgressDialog.setMessage("Please wait, we are saving your data...");
+
                         String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
                         new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
-                        startPayment();
-
-
+                        //startPayment();
+                        AsyncTaskRunner runner = new AsyncTaskRunner();
+                        runner.execute("95235952");
 
                     } else {
                         Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
@@ -318,11 +322,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     startActivity(fintent);
                 }
             }
-        });*/
+        });
 
     }
 
-    public  void CartItemFetch(String FromLat, String FromLong, String ToLat, String ToLong,String totalCharges,TextView tvTotalAmount)
+    public  void CartItemFetch(String FromLat, String FromLong, String ToLat, String ToLong,String totalCharges,TextView tvTotalAmount,Double DeliveryCharges)
     {
         ProgressDialog progressDialog;
         Cursor res = myDatabase.GetCart();
@@ -348,9 +352,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList,tvTotalAmount,tvGrandTotal,txt_itemtotal,tvDeliveryCharges.getText().toString());
             recyclerView.setAdapter(myAdapter);
         }
-        tvGrandTotal.setText("₹"+total.toString());
+        tvGrandTotal.setText("₹"+ df2.format(total + DeliveryCharges));
         txt_itemtotal.setText("₹"+total.toString());
-        tvTotalAmount.setText(res.getCount() + " Items | ₹"+total.toString() );
+        tvTotalAmount.setText(res.getCount() + " Items | ₹"+df2.format(total + DeliveryCharges) );
     }
     @Override
     public void onBackPressed() {
@@ -484,13 +488,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     }
 
-
-
     @Override
     public void onTaskCompleted(String... values) {
         DistanceAndDuration = values[0].toString();
-
-
         String[] arrOfStr=null;
         if(DistanceAndDuration!="")
         {
@@ -499,12 +499,24 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
         if (arrOfStr != null || arrOfStr.length != 0) {
-
-
             CheckOutCart.RateCalculatorAsynchTask runner = new CheckOutCart.RateCalculatorAsynchTask();
-                runner.execute("Merchant", arrOfStr[0], arrOfStr[2]);
+            runner.execute("Merchant", arrOfStr[0], arrOfStr[2]);
+        }
+        else{
+            Alertbuilder.setMessage("Error while getting distance and duration from MAP")
+                    .setCancelable(false)
 
-            //  GetPayableAmount(Vehicle,arrOfStr[0],arrOfStr[1]);
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+
+                        }
+                    });
+
+            AlertDialog alert = Alertbuilder.create();
+            alert.setTitle("MAP Error");
+            alert.show();
         }
     }
 
@@ -530,28 +542,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
     }
 
-
     public void DistanceDuration()
     {
-        /*Bundle extras = getApplicationContext().getIntent().getExtras();
-        if (extras != null) {
-            if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" ) {
-                Cursor res = myDatabase.DeliveryGETById(myDatabase.GetLastId());
-                StringBuffer buffer = new StringBuffer();
-                while (res.moveToNext()) {
-                    String url = getRequestUrl(res.getString(2) + "," +res.getString(3),res.getString(5)+ "," + res.getString(6));
-                    new DistanceAndDuration(this).execute(url);
-
-                }
-            }
-
-
-        }*/
-
         String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
         new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
     }
-
 
     private class AsyncTaskRunner1 extends AsyncTask<String, String, String> {
 
@@ -610,9 +605,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         protected String doInBackground(String... params) {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
-
                 GetPayableAmount(params[0],params[1],params[2]);
-
             }
 
             catch (Exception e) {
@@ -649,7 +642,6 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     }
 
-
     private void GetPayableAmount(final String vehicleType, final String Distance,final  String Duration) {
 
         //if everything is fine
@@ -659,12 +651,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     public void onResponse(String response) {
                         //  progressBar.setVisibility(View.GONE);
                         try {
+
+                            mProgressDialog.dismiss();
                             //converting response to json object
                             //JSONObject obj = new JSONObject(response);
                             JSONArray obj = new JSONArray(response);
 
                             if(obj.length()==0){
-                                Alertbuilder.setMessage("Invalid response from server please try again")
+                                Alertbuilder.setMessage("Rate is not defined please contact to admin")
                                         .setCancelable(false)
 
                                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -676,7 +670,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                                         });
 
                                 AlertDialog alert = Alertbuilder.create();
-                                alert.setTitle("Invalid response");
+                                alert.setTitle("Invalid Rate");
                                 alert.show();
                                 return;
                             }
@@ -690,8 +684,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
                                     totalCharges=userJson.getString("TotalCharges");
                                     tvDeliveryCharges.setText("₹"+totalCharges);
-                                  //  CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
-                                    //myAdapter.notifyDataSetChanged();
+
+                                    CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges,tvTotalAmount,Double.valueOf(totalCharges));
+
                                 }
                                 else{
                                     // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
@@ -715,6 +710,21 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Alertbuilder.setMessage("There is some error please try again")
+                                    .setCancelable(false)
+
+                                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            //  Action for 'NO' Button
+                                            dialog.cancel();
+
+                                        }
+                                    });
+
+                            AlertDialog alert = Alertbuilder.create();
+                            alert.setTitle(response.toString());
+                            alert.show();
+                            return;
                         }
                     }
                 },
@@ -905,7 +915,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
 
         final String pickupAddress = MerchantAddress;
-        final String deliveryAddress = txt_address.getText().toString();
+        final String deliveryAddress = tvAddress.getText().toString();
         final String fromLat = FromLat;
         final String fromLang = FromLong;
         final String vehicleType = "Merchant";
