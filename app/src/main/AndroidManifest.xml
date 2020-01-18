@@ -35,7 +35,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MerchantDescriptionActivity"
+            android:name=".MerchantDescriptionActivity" android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
@@ -63,7 +63,7 @@
             android:theme="@style/DarkAppTheme" />
 
 
-        <activity android:name=".CheckOutCart" />
+        <activity android:name=".CheckOutCart" android:noHistory="true" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".OtpRegisterActivity" />
         <activity android:name=".ResetPasswordActivity" />
@@ -121,7 +121,7 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-            android:name=".MerchantListActivity"
+            android:name=".MerchantListActivity" android:noHistory="true"
             android:parentActivityName=".MultipleMerchantActivity"
             android:theme="@style/DarkAppTheme" />
 

@@ -216,14 +216,17 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                     mobilenum = bundle.getString("mobilenum");
                    // tvMerchantName.setText(bundle.getString("MerchantName"));
                     Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
-                    fintent.putExtra("MerchantId",bundle.getString("MerchantId"));
-                    fintent.putExtra("MerchantTypeId",MerchantTypeId);
+                    fintent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                    fintent.putExtra("MerchantId", bundle.getString("MerchantId"));
                     fintent.putExtra("MerchantName",bundle.getString("MerchantName"));
-                    fintent.putExtra("FromLat",bundle.getString("FromLat"));
-                    fintent.putExtra("FromLong",bundle.getString("FromLong"));
-                    fintent.putExtra("MerchantAddress",bundle.getString("MerchantAddress"));
-                    fintent.putExtra("TotalCharges",bundle.getString("TotalCharges"));
-                    fintent.putExtra("GstAmount",bundle.getString("GstAmount"));
+                    fintent.putExtra("mobilenum", mobilenum.toString());
+                    fintent.putExtra("FromLat", bundle.getString("FromLat"));
+                    fintent.putExtra("FromLong", bundle.getString("FromLong"));
+                    fintent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+                    fintent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+                    fintent.putExtra("GstAmount", bundle.getString("GstAmount"));
+                    fintent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+                    fintent.putExtra("Speciality", bundle.getString("Speciality"));
                     startActivity(fintent);
 
                 }

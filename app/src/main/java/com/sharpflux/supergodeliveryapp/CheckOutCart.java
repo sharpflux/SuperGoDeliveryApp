@@ -63,7 +63,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     android.support.v7.widget.Toolbar toolbar;
     Bundle bundle;
     LinearLayout linearLayout;
-    TextView tvTotalCount, tvMerchantName,txt_delivery_charge,txtItemCount;
+    TextView tvTotalCount, tvMerchantName,txt_delivery_charge,txt_itemtotal,tvChangeAddress;
     ProgressDialog mProgressDialog;
     private static String DistanceAndDuration, Distance, Duration, TotalSecond, FromLat, FromLong,
             MerchantAddress, MerchantId,TotalCharges,GstAmount,ToLat,ToLong,MerchantName;
@@ -78,14 +78,10 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     AlertDialog.Builder builder;
     String totalCharges="0.00";
     CheckOutAdapter myAdapter;
-    LinearLayout lr_back;
-    TextView txt_itemCount;
+    LinearLayout lr_back,LinChangeAddress;
+    TextView txt_itemCount,tvTotalAmount,tvGrandTotal,tvAddress,tvDeliveryCharges;
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,9 +98,8 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
 
         tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
-        tvMerchantName.setText("CART");
 
-        CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
+        tvMerchantName.setText("CART");
 
 
         /*tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
@@ -143,13 +138,19 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         mProgressDialog.setMessage("Please wait, we are saving your data...");
         User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
         //img_editAddress=findViewById(R.id.img_editAddress);
-        txt_itemCount = findViewById(R.id.txt_itemCount);
-
+        txt_itemtotal = findViewById(R.id.txt_itemtotal);
+        tvTotalAmount=findViewById(R.id.tvTotalAmount);
+        tvGrandTotal=findViewById(R.id.tvGrandTotal);
+        tvAddress=findViewById(R.id.tvAddress);
+        tvChangeAddress=findViewById(R.id.tvChangeAddress);
+        LinChangeAddress=findViewById(R.id.LinChangeAddress);
+        tvDeliveryCharges=findViewById(R.id.tvDeliveryCharges);
+        tvDeliveryCharges.setText("0");
+        CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges,tvTotalAmount);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
-
             FromLat = b.getString("FromLat");
             FromLong = b.getString("FromLong");
             MerchantId = b.getString("MerchantId");
@@ -159,6 +160,48 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             TotalCharges = b.getString("TotalCharges");
             GstAmount=b.getString("GstAmount");
         }
+
+        LinChangeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bundle != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChooseDeliveryAddressActivity.class);
+                    intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                    intent.putExtra("MerchantId", bundle.getString("MerchantId"));
+                    intent.putExtra("MerchantName",bundle.getString("MerchantName"));
+                    intent.putExtra("mobilenum", "");
+                    intent.putExtra("FromLat", bundle.getString("FromLat"));
+                    intent.putExtra("FromLong", bundle.getString("FromLong"));
+                    intent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+                    intent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+                    intent.putExtra("GstAmount", bundle.getString("GstAmount"));
+                    intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+                    intent.putExtra("Speciality", bundle.getString("Speciality"));
+                    startActivity(intent);
+                }
+            }
+        });
+        tvChangeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bundle != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChooseDeliveryAddressActivity.class);
+                    intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                    intent.putExtra("MerchantId", bundle.getString("MerchantId"));
+                    intent.putExtra("MerchantName",bundle.getString("MerchantName"));
+                    intent.putExtra("mobilenum", "");
+                    intent.putExtra("FromLat", bundle.getString("FromLat"));
+                    intent.putExtra("FromLong", bundle.getString("FromLong"));
+                    intent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+                    intent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+                    intent.putExtra("GstAmount", bundle.getString("GstAmount"));
+                    intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+                    intent.putExtra("Speciality", bundle.getString("Speciality"));
+                    startActivity(intent);
+                }
+            }
+        });
+
 
 
       /*  lr_back.setOnClickListener(new View.OnClickListener() {
@@ -173,19 +216,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             }
         });*/
 
-
         //customerName.setText("Hey "+user.getUsername()+"!");
         userId = user.getId();
         myAddress = new dbAddress(getApplicationContext());
-
         Cursor res = myAddress.GetAddress();
-
         if(res.getCount()==0){
-
         }
-
         while (res.moveToNext()) {
-            //txt_address.setText(res.getString(2));
+            tvAddress.setText(res.getString(2));
 
             b.putString("Address",   res.getString(2));
             b.putString("Lat",  res.getString(9)  );
@@ -202,6 +240,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         }
 
 
+        CheckOutCart.RateCalculatorAsynchTask runner = new CheckOutCart.RateCalculatorAsynchTask();
+        runner.execute("Merchant", "10 Km", "0 Min");
+
      /*   if (bundle != null) {
          if(!txt_address.getText().equals("")) {
                 //linearLayout.setVisibility(View.VISIBLE);
@@ -216,17 +257,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             tvPlaceOrder.setText("Place Order");
         }*/
 
-      /*  CheckOutCart.AsyncTaskRunner1 runner = new CheckOutCart.AsyncTaskRunner1();
+     /*  CheckOutCart.AsyncTaskRunner1 runner = new CheckOutCart.AsyncTaskRunner1();
         String sleepTime = "1";
         runner.execute(sleepTime);*/
 
-        /*String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
+     /*String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
         new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
 */
 
-
-
-    /*    img_editAddress.setOnClickListener(new View.OnClickListener() {
+     /*    img_editAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
@@ -281,42 +320,58 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             }
         });*/
 
-
-
     }
 
-    public  void CartItemFetch(String FromLat, String FromLong, String ToLat, String ToLong,String totalCharges)
+    public  void CartItemFetch(String FromLat, String FromLong, String ToLat, String ToLong,String totalCharges,TextView tvTotalAmount)
     {
         ProgressDialog progressDialog;
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
-
         }
-
+        total = 0.0;
         merchantList.clear();
         while (res.moveToNext()) {
 
             CheckOutItems sellOptions = new CheckOutItems
-                    (res.getString(1),
+                    (
+                            res.getString(1),
                             res.getString(5),
                             res.getString(2),
                             Double.valueOf(res.getString(4)),
                             Integer.valueOf(res.getString(3))
                     );
 
+            total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4))));
             merchantList.add(sellOptions);
-
           /*  myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList, toolbar, total_amount,TotalCharges,
-                    GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount,FromLat,FromLong,ToLat,ToLong,totalCharges,MerchantId);
-*/
-
-            myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList);
-
+                    GstAmount,txt_delivery_charge,txt_subTotal,txtItemCount,FromLat,FromLong,ToLat,ToLong,totalCharges,MerchantId);*/
+            myAdapter = new CheckOutAdapter(CheckOutCart.this, merchantList,tvTotalAmount,tvGrandTotal,txt_itemtotal,tvDeliveryCharges.getText().toString());
             recyclerView.setAdapter(myAdapter);
-
         }
+        tvGrandTotal.setText("₹"+total.toString());
+        txt_itemtotal.setText("₹"+total.toString());
+        tvTotalAmount.setText(res.getCount() + " Items | ₹"+total.toString() );
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (bundle != null) {
+            Intent intent = new Intent(getApplicationContext(), MerchantDescriptionActivity.class);
+            intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+            intent.putExtra("MerchantId", bundle.getString("MerchantId"));
+            intent.putExtra("MerchantName",bundle.getString("MerchantName"));
+            intent.putExtra("mobilenum", "");
+            intent.putExtra("FromLat", bundle.getString("FromLat"));
+            intent.putExtra("FromLong", bundle.getString("FromLong"));
+            intent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+            intent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+            intent.putExtra("GstAmount", bundle.getString("GstAmount"));
+            intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+            intent.putExtra("Speciality", bundle.getString("Speciality"));
+            startActivity(intent);
+        }
+        finish();
+    }
     public void startPayment() {
         /*
           You need to pass current activity in order to let Razorpay create CheckoutActivity
@@ -429,189 +484,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
     }
 
-    public void saveOrderDetails(String razorpayPaymentID) {
 
-        StringBuilder
-                builder = new StringBuilder();
-        ;
-
-        User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
-
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-
-        if (b != null) {
-            FromLong = b.getString("FromLong");
-            FromLat = b.getString("FromLat");
-            MerchantId = b.getString("MerchantId");
-            MerchantAddress=b.getString("MerchantAddress");
-        }
-
-
-        final String pickupAddress = MerchantAddress;
-        final String deliveryAddress = txt_address.getText().toString();
-        final String fromLat = FromLat;
-        final String fromLang = FromLong;
-        final String vehicleType = "Merchant";
-        final String product = "ORDER";
-        final String pickupDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
-        final String pickuptime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        final String cpName = String.valueOf(user.getUsername());
-        final String mobile = user.getMobile().toString();
-        final String alternatemobile = user.getMobile().toString();
-
-        if(ToLat==null &&ToLong==null) {
-            ToLat=bundle.getString("Lat");
-            ToLong=bundle.getString("Long");
-        }
-
-
-        final String ToLong = ToLat;
-        final String ToLat = ToLong;
-        final String totalCharges = calculateTotal().toString();
-        final String ImageUrl = "0";
-        String[] arrOfStr = null;
-
-        Cursor res = myDatabase.GetCart();
-        if (res.getCount() == 0) {
-
-        }
-        builder.append("<Parent>");
-        while (res.moveToNext()) {
-            builder.append("<Assign>");
-            builder.append("<ItemId>" + res.getString(1) + "</ItemId>");
-            builder.append("<Qunatity>" + res.getString(3) + "</Qunatity>");
-            builder.append("<Price>" + res.getString(4) + "</Price>");
-            builder.append("</Assign>");
-        }
-        builder.append("</Parent>");
-
-
-        if (DistanceAndDuration != "" && DistanceAndDuration!=null) {
-            String str = DistanceAndDuration;
-            arrOfStr = str.split(":");
-            if (arrOfStr != null || arrOfStr.length != 0) {
-                Distance = arrOfStr[0];
-                Duration = arrOfStr[1];
-                TotalSecond = arrOfStr[2];
-            }
-        }
-        else {
-            Distance = "8.2 Km";
-            Duration = "20 Min";
-            TotalSecond = "9999";
-        }
-
-        final String objDistance = Distance;
-        final String objDuration = Duration;
-        final String objTotalSecond = TotalSecond;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DETAILS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            mProgressDialog.dismiss();
-                            JSONObject obj = new JSONObject(response);
-
-
-                            if (!obj.getBoolean("error")) {
-
-
-                                // Notification();
-
-                                //dbHelper.GetLastId();
-                                // dbHelper.DeleteRecord(dbHelper.GetLastId());
-                                Intent intent = new Intent(CheckOutCart.this, OrderSuccessfullyPlaced.class);
-                                intent.putExtra("DeliveryId", obj.getString("DeliveryId"));
-                                startActivity(intent);
-
-
-                                // startActivity(new Intent(getApplicationContext(), OrderSuccessfullyPlaced.class));
-                            } else {
-
-                                Alertbuilder.setMessage("Already order placed")
-                                        .setCancelable(false)
-
-                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Action for 'NO' Button
-                                                dialog.cancel();
-
-                                            }
-                                        });
-
-                                AlertDialog alert = Alertbuilder.create();
-                                alert.setTitle("Already order placed");
-                                alert.show();
-
-
-                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("ERROR", error.getMessage());
-                        Alertbuilder.setMessage("Already order placed")
-                                .setCancelable(false)
-
-                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //  Action for 'NO' Button
-                                        dialog.cancel();
-
-                                    }
-                                });
-
-                        AlertDialog alert = Alertbuilder.create();
-                        alert.setTitle("Already order placed");
-                        alert.show();
-
-                       // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("DeliveryId", "0");
-                params.put("CustomerId", String.valueOf(userId));
-                params.put("vehicleType", vehicleType);
-                params.put("pickupAddress", pickupAddress);
-                params.put("deliveryAddress", deliveryAddress);
-                params.put("fromLat", fromLat);
-                params.put("fromLang", fromLang);
-                params.put("product", product);
-                params.put("pickupDate", pickupDate);
-                params.put("pickuptime", pickuptime);
-                params.put("cpName", cpName);
-                params.put("mobile", mobile);
-                params.put("alternatemobile", alternatemobile);
-                params.put("paymenttype", "1");
-                params.put("ToLong", ToLong);
-                params.put("ToLat", ToLat);
-                params.put("Distance", objDistance);
-                params.put("Duration", objDuration);
-                params.put("TotalSecond", objTotalSecond);
-                params.put("TransactionId", razorpayPaymentID);
-                params.put("DeliveryTypeId", "2");
-                params.put("TotalCharges", totalCharges);
-                params.put("MerchantId", MerchantId);
-                params.put("ImageUrl", ImageUrl);
-                params.put("OrderedXml", builder.toString());
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-    }
 
     @Override
     public void onTaskCompleted(String... values) {
@@ -791,7 +664,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                             JSONArray obj = new JSONArray(response);
 
                             if(obj.length()==0){
-                                builder.setMessage("Invalid response from server please try again")
+                                Alertbuilder.setMessage("Invalid response from server please try again")
                                         .setCancelable(false)
 
                                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -802,7 +675,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                                             }
                                         });
 
-                                AlertDialog alert = builder.create();
+                                AlertDialog alert = Alertbuilder.create();
                                 alert.setTitle("Invalid response");
                                 alert.show();
                                 return;
@@ -815,18 +688,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
                                 if (!userJson.getBoolean("error")) {
 
-
-
                                     totalCharges=userJson.getString("TotalCharges");
-
-                                    CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
+                                    tvDeliveryCharges.setText("₹"+totalCharges);
+                                  //  CartItemFetch(FromLat,FromLong,ToLat,ToLong,totalCharges);
                                     //myAdapter.notifyDataSetChanged();
-
                                 }
                                 else{
                                     // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
 
-                                    builder.setMessage("Invalid response from server")
+                                    Alertbuilder.setMessage("Invalid response from server")
                                             .setCancelable(false)
 
                                             .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -837,7 +707,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                                                 }
                                             });
 
-                                    AlertDialog alert = builder.create();
+                                    AlertDialog alert = Alertbuilder.create();
                                     alert.setTitle(response.toString());
                                     alert.show();
                                     return;
@@ -1015,5 +885,187 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         return url;
     }
+    public void saveOrderDetails(String razorpayPaymentID) {
 
+        StringBuilder
+                builder = new StringBuilder();
+        ;
+
+        User user = SharedPrefManager.getInstance(CheckOutCart.this).getUser();
+
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            FromLong = b.getString("FromLong");
+            FromLat = b.getString("FromLat");
+            MerchantId = b.getString("MerchantId");
+            MerchantAddress=b.getString("MerchantAddress");
+        }
+
+
+        final String pickupAddress = MerchantAddress;
+        final String deliveryAddress = txt_address.getText().toString();
+        final String fromLat = FromLat;
+        final String fromLang = FromLong;
+        final String vehicleType = "Merchant";
+        final String product = "ORDER";
+        final String pickupDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
+        final String pickuptime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        final String cpName = String.valueOf(user.getUsername());
+        final String mobile = user.getMobile().toString();
+        final String alternatemobile = user.getMobile().toString();
+
+        if(ToLat==null &&ToLong==null) {
+            ToLat=bundle.getString("Lat");
+            ToLong=bundle.getString("Long");
+        }
+
+
+        final String ToLong = ToLat;
+        final String ToLat = ToLong;
+        final String totalCharges = calculateTotal().toString();
+        final String ImageUrl = "0";
+        String[] arrOfStr = null;
+
+        Cursor res = myDatabase.GetCart();
+        if (res.getCount() == 0) {
+
+        }
+        builder.append("<Parent>");
+        while (res.moveToNext()) {
+            builder.append("<Assign>");
+            builder.append("<ItemId>" + res.getString(1) + "</ItemId>");
+            builder.append("<Qunatity>" + res.getString(3) + "</Qunatity>");
+            builder.append("<Price>" + res.getString(4) + "</Price>");
+            builder.append("</Assign>");
+        }
+        builder.append("</Parent>");
+
+
+        if (DistanceAndDuration != "" && DistanceAndDuration!=null) {
+            String str = DistanceAndDuration;
+            arrOfStr = str.split(":");
+            if (arrOfStr != null || arrOfStr.length != 0) {
+                Distance = arrOfStr[0];
+                Duration = arrOfStr[1];
+                TotalSecond = arrOfStr[2];
+            }
+        }
+        else {
+            Distance = "8.2 Km";
+            Duration = "20 Min";
+            TotalSecond = "9999";
+        }
+
+        final String objDistance = Distance;
+        final String objDuration = Duration;
+        final String objTotalSecond = TotalSecond;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DETAILS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            mProgressDialog.dismiss();
+                            JSONObject obj = new JSONObject(response);
+
+
+                            if (!obj.getBoolean("error")) {
+
+
+                                // Notification();
+
+                                //dbHelper.GetLastId();
+                                // dbHelper.DeleteRecord(dbHelper.GetLastId());
+                                Intent intent = new Intent(CheckOutCart.this, OrderSuccessfullyPlaced.class);
+                                intent.putExtra("DeliveryId", obj.getString("DeliveryId"));
+                                startActivity(intent);
+
+
+                                // startActivity(new Intent(getApplicationContext(), OrderSuccessfullyPlaced.class));
+                            } else {
+
+                                Alertbuilder.setMessage("Already order placed")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = Alertbuilder.create();
+                                alert.setTitle("Already order placed");
+                                alert.show();
+
+
+                                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("ERROR", error.getMessage());
+                        Alertbuilder.setMessage("Already order placed")
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = Alertbuilder.create();
+                        alert.setTitle("Already order placed");
+                        alert.show();
+
+                        // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("DeliveryId", "0");
+                params.put("CustomerId", String.valueOf(userId));
+                params.put("vehicleType", vehicleType);
+                params.put("pickupAddress", pickupAddress);
+                params.put("deliveryAddress", deliveryAddress);
+                params.put("fromLat", fromLat);
+                params.put("fromLang", fromLang);
+                params.put("product", product);
+                params.put("pickupDate", pickupDate);
+                params.put("pickuptime", pickuptime);
+                params.put("cpName", cpName);
+                params.put("mobile", mobile);
+                params.put("alternatemobile", alternatemobile);
+                params.put("paymenttype", "1");
+                params.put("ToLong", ToLong);
+                params.put("ToLat", ToLat);
+                params.put("Distance", objDistance);
+                params.put("Duration", objDuration);
+                params.put("TotalSecond", objTotalSecond);
+                params.put("TransactionId", razorpayPaymentID);
+                params.put("DeliveryTypeId", "2");
+                params.put("TotalCharges", totalCharges);
+                params.put("MerchantId", MerchantId);
+                params.put("ImageUrl", ImageUrl);
+                params.put("OrderedXml", builder.toString());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
 }

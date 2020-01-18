@@ -37,6 +37,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     TextView txt_emptyView,tvMerchantCount;
     boolean isLoading = false;
     dbAddress myAddress;
+    DatabaseHelperMerchant myDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +51,13 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         merchantList = new ArrayList<>();
         setTitle("Our Merchants!");
 
+
         myAddress = new dbAddress(getApplicationContext());
 
-
+        myDatabase = new DatabaseHelperMerchant(this);
         shimmerFrameLayout = findViewById(R.id.parentShimmerLayout);
+
+        myDatabase.DeleteRecordAll();
 
         Bundle bundle = getIntent().getExtras();
 
@@ -232,7 +236,15 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
+
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                if ((progressDialog != null) && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+
+            }
+
             // finalResult.setText(result);
         }
 

@@ -31,9 +31,11 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
     TextView tvTotalCount,total_amount,txt_delivery_charge,txt_subTotal,txtItemCount;
     Double TotalAmount,deliveryCharges;
     String DeliveryCharges="40",GstAmount;
-    String FromLat,FromLong,ToLat,ToLong,MerchantId;
+    String FromLat,FromLong,ToLat,ToLong,MerchantId,tvDeliveryCharges;
     private static String DistanceAndDuration,totalChargesfinal;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
+
+    TextView tvTotalAmount,tvGrandTotal,txt_itemtotal;
 
     public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,android.support.v7.widget.Toolbar tool,TextView total_amount,
                            String DeliveryCharges,
@@ -58,10 +60,13 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         this.MerchantId=MerchantId;
     }
 
-    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist) {
+    public CheckOutAdapter(Context mContext, List<CheckOutItems> merchantlist,TextView tvTotalAmount,TextView tvGrandTotal,TextView txt_itemtotal,String tvDeliveryCharges) {
         this.mContext = mContext;
         this.mlist = merchantlist;
-
+        this.tvTotalAmount=tvTotalAmount;
+        this.tvGrandTotal=tvGrandTotal;
+        this.txt_itemtotal=txt_itemtotal;
+        this.tvDeliveryCharges=tvDeliveryCharges;
     }
 
     @NonNull
@@ -81,10 +86,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
         String priceS = String.valueOf(priced);
-
+        holder.price.setText(priceS);
         TotalAmount=0.0;
-
-
 
         //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
 
@@ -101,17 +104,20 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
                         myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()), String.valueOf(minteger));
                         holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
-                        holder.price.setText(priceS);
+                       // holder.price.setText(priceS);
+                        calculateTotal();
 
                     }
                     if (minteger == 0) {
                         myDatabase.DeleteRecord(mlist.get(position).getId());
                         removeItem(position);
                         Toast.makeText(mContext, "DELETED", Toast.LENGTH_SHORT).show();
+                        calculateTotal();
+
                         //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
                         //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                     }
-
+                    calculateTotal();
                    // txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
                     //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
@@ -125,14 +131,17 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
                     CheckOutItems filter = mlist.get(position);
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                    calculateTotal();
                 }
                 if (minteger == 0) {
                     myDatabase.DeleteRecord(mlist.get(position).getId());
                     removeItem(position);
+                    calculateTotal();
                     Toast.makeText(mContext,"DELETED", Toast.LENGTH_SHORT).show();
                     //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
                     //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
                 }
+                calculateTotal();
                 //calculateTotal();
                 //txt_subTotal.setText("₹"+String.valueOf(  df2.format(calculateTotal())));
                 //total_amount.setText("₹"+String.valueOf(df2.format(calculateTotal()+deliveryCharges)));
@@ -164,12 +173,16 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
            // inte.putExtra("GstAmount", GstAmount);
             mContext.startActivity(inte);
         }
-        txtItemCount.setText(res.getCount()+" Items");
+       // txtItemCount.setText(res.getCount()+" Items");
         while (res.moveToNext()) {
 
-            total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4)))+Double.valueOf(totalChargesfinal));
+            total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4))));
 
         }
+
+        this.tvTotalAmount.setText(res.getCount() + " Items | ₹"+total.toString() );
+        this.tvGrandTotal.setText("₹"+total.toString());
+        this.txt_itemtotal.setText("₹"+total.toString());
         return  total;
 
 

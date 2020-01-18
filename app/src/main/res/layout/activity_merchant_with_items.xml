@@ -178,7 +178,8 @@
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:layout_alignParentBottom="true">
-            <TextView android:textSize="15sp"
+            <TextView
+                android:textSize="15sp"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:id="@+id/pri_Txt"

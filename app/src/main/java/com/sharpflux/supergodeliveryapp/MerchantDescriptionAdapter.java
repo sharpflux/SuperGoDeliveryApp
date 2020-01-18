@@ -93,13 +93,17 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
 
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()), String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                    CountItemsInCart(pri_Txt);
                 }
                 if (minteger == 0) {
                     myDatabase.DeleteRecord(mlist.get(position).getId());
+                    CountItemsInCart(pri_Txt);
+                    holder.btnAddCart.setVisibility(view.VISIBLE);
+                    holder.add_cart_linear.setVisibility(View.GONE);
 
                 }
 
-                CountItemsInCart(pri_Txt);
+                //CountItemsInCart(pri_Txt);
             }
 
         });
@@ -110,13 +114,16 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
                 if (minteger >= 0) {
                     myDatabase.UpdateQty(Integer.valueOf(mlist.get(position).getId()),String.valueOf(minteger));
                     holder.cart_product_quantity_tv.setText(String.valueOf(minteger));
+                    CountItemsInCart(pri_Txt);
                 }
                 if (minteger == 0) {
                     myDatabase.DeleteRecord(mlist.get(position).getId());
-
+                    CountItemsInCart(pri_Txt);
+                    holder.btnAddCart.setVisibility(view.VISIBLE);
+                    holder.add_cart_linear.setVisibility(View.GONE);
                 }
 
-                CountItemsInCart(pri_Txt);
+               // CountItemsInCart(pri_Txt);
             }
         });
         holder.btnAddCart.setOnClickListener(new View.OnClickListener() {
@@ -129,14 +136,16 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
                     holder.btnAddCart.setVisibility(view.GONE);
                     holder.add_cart_linear.setVisibility(View.VISIBLE);
                     Toast.makeText(mContext,"Inserted", Toast.LENGTH_SHORT).show();
+                    CountItemsInCart(pri_Txt);
                 }
                 else {
                     myDatabase.UpdateOrder(Integer.valueOf(mlist.get(position).getId()), mlist.get(position).getName(), "1", mlist.get(position).getPrice());
                     holder.btnAddCart.setVisibility(view.GONE);
                     holder.add_cart_linear.setVisibility(View.VISIBLE);
+                    CountItemsInCart(pri_Txt);
                    // Toast.makeText(mContext,"Updated", Toast.LENGTH_SHORT).show();
                 }
-                CountItemsInCart(pri_Txt);
+               // CountItemsInCart(pri_Txt);
             }
         });
     }

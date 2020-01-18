@@ -92,10 +92,17 @@ public class ChooseDeliveryBottomSheetDialog extends BottomSheetDialogFragment {
                 i.putExtra("DeliveryLandMark", txtLandMark.getText().toString());
                 i.putExtra("ToLat", getArguments().getString("Lat"));
                 i.putExtra("ToLong", getArguments().getString("Long"));
+                i.putExtra("MerchantTypeId", getArguments().getString("MerchantId"));
+                i.putExtra("MerchantId", getArguments().getString("MerchantId"));
+                i.putExtra("MerchantName",getArguments().getString("MerchantName"));
+                i.putExtra("mobilenum", "");
                 i.putExtra("FromLat", getArguments().getString("FromLat"));
                 i.putExtra("FromLong", getArguments().getString("FromLong"));
-                i.putExtra("MerchantId", getArguments().getString("MerchantId"));
                 i.putExtra("MerchantAddress", getArguments().getString("MerchantAddress"));
+                i.putExtra("TotalCharges", getArguments().getString("TotalCharges"));
+                i.putExtra("GstAmount", getArguments().getString("GstAmount"));
+                i.putExtra("ImageUrl", getArguments().getString("ImageUrl"));
+                i.putExtra("Speciality", getArguments().getString("Speciality"));
                 startActivity(i);
             }
         });

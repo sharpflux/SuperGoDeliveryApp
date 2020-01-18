@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:layout_marginBottom="40dp"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.AppBarLayout
@@ -40,6 +41,7 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="35dp"
             app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
@@ -80,7 +82,7 @@
                     android:layerType="software"
                     app:srcCompat="@drawable/dotted" />
 
-                <TextView
+               <!-- <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="21.7dp"
@@ -94,9 +96,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="1.3dp"
                     android:layout_marginTop="21.8dp"
-                    android:background="@color/black" />
+                    android:background="@color/black" />-->
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="21.8dp"
@@ -124,12 +126,12 @@
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/right_arrow" />
                 </LinearLayout>
-
-                <View
+-->
+                <!-- <View
                     android:layout_width="match_parent"
                     android:layout_height="1.3dp"
                     android:layout_marginTop="21.8dp"
-                    android:background="@color/black" />
+                    android:background="@color/black" />-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,7 +160,7 @@
                         android:textSize="13.3sp" />
 
                     <TextView
-                        android:id="@+id/txt_itemCount"
+                        android:id="@+id/txt_itemtotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfpro_display_medium"
@@ -168,6 +170,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -215,6 +218,7 @@
                         android:textSize="13.3sp" />
 
                     <TextView
+                        android:id="@+id/tvDeliveryCharges"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfpro_display_medium"
@@ -246,6 +250,7 @@
                         android:textSize="13.3sp" />
 
                     <TextView
+                        android:id="@+id/tvGrandTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfpro_display_semibold"
@@ -265,18 +270,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Delivery Address"
                     android:textColor="@color/black"
                     android:textSize="13.3sp" />
 
                 <LinearLayout
+                    android:id="@+id/LinChangeAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15.3dp"
                     android:orientation="horizontal">
 
-                    <FrameLayout
+               <!--     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -286,7 +293,7 @@
                             android:paddingTop="8dp"
                             android:paddingRight="7.5dp">
 
-                            <ImageView
+                          <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:srcCompat="@drawable/work" />
@@ -297,13 +304,18 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             app:srcCompat="@drawable/ic_correct" />
-                    </FrameLayout>
+                    </FrameLayout>-->
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        app:srcCompat="@drawable/ic_correct" />
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -311,11 +323,12 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sfpro_display_medium"
                             android:letterSpacing="0.0525"
-                            android:text="Work"
+                            android:text="Delivery Address"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tvAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -328,6 +341,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvChangeAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24.3dp"
@@ -335,7 +349,7 @@
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:letterSpacing="0.0525"
                     android:text="Change Address"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/color_skyblue"
                     android:textSize="13sp" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -359,28 +373,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:background="@drawable/rectangle_blue"
+            android:background="@color/colorPrimary"
             android:orientation="vertical"
             android:paddingLeft="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6.7dp"
-                android:fontFamily="@font/sfpro_display_medium"
-                android:text="220"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
 
-            <TextView
+            <TextView android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_gravity="left"
+                android:id="@+id/tvTotalAmount"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="16.7dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:layout_marginTop="6.7dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sfpro_display_medium"
-                android:letterSpacing="0.0525"
-                android:paddingBottom="5dp"
-                android:text="view_detailed_bill"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:text="1 Item | ₹220"
+                android:layout_weight="0.8"
+                android:fontFamily="@font/sfpro_display_medium"/>
+
         </LinearLayout>
 
         <TextView

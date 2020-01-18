@@ -81,6 +81,7 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     AlertDialog.Builder builder;
     String FromLat,FromLong,MerchantId,MerchantAddress,TotalCharges,GstAmount;
+    Bundle b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +104,7 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
         mapFragment.getMapAsync(this);
 
         Intent iin = getIntent();
-        Bundle b = iin.getExtras();
+        b = iin.getExtras();
         if(b!=null) {
 
             FromLat=b.getString("FromLat");
@@ -184,16 +185,18 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
                     args.putString("Address",   getAddress(getApplicationContext(),center.latitude,center.longitude).toString());
                     args.putString("Lat",  Double.toString(center.latitude )  );
                     args.putString("Long", Double.toString(center.longitude) );
-                    args.putString("FromLat",  FromLat );
-                    args.putString("FromLong",FromLong );
-                    args.putString("MerchantId",MerchantId );
-                    args.putString("MerchantAddress",   MerchantAddress);
-                    args.putString("TotalCharges",TotalCharges );
-                    args.putString("GstAmount",   GstAmount);
+                    args.putString("MerchantTypeId", b.getString("MerchantTypeId"));
+                    args.putString("MerchantId", b.getString("MerchantId"));
+                    args.putString("MerchantName",b.getString("MerchantName"));
+                    args.putString("mobilenum", "");
+                    args.putString("FromLat", b.getString("FromLat"));
+                    args.putString("FromLong", b.getString("FromLong"));
+                    args.putString("MerchantAddress", b.getString("MerchantAddress"));
+                    args.putString("TotalCharges", b.getString("TotalCharges"));
+                    args.putString("GstAmount", b.getString("GstAmount"));
+                    args.putString("ImageUrl", b.getString("ImageUrl"));
+                    args.putString("Speciality", b.getString("Speciality"));
                     args.putString("ActivityType",   "Merchant" );
-
-
-
                     bottomSheetDialogFragment.setArguments(args);
                     //show it
                     bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
@@ -219,6 +222,27 @@ public class ChooseDeliveryAddressActivity extends FragmentActivity implements O
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (b != null) {
+            Intent intent = new Intent(getApplicationContext(), CheckOutCart.class);
+            intent.putExtra("MerchantTypeId",b.getString("MerchantTypeId"));
+            intent.putExtra("MerchantId", b.getString("MerchantId"));
+            intent.putExtra("MerchantName",b.getString("MerchantName"));
+            intent.putExtra("mobilenum", "");
+            intent.putExtra("FromLat", b.getString("FromLat"));
+            intent.putExtra("FromLong", b.getString("FromLong"));
+            intent.putExtra("MerchantAddress", b.getString("MerchantAddress"));
+            intent.putExtra("TotalCharges", b.getString("TotalCharges"));
+            intent.putExtra("GstAmount", b.getString("GstAmount"));
+            intent.putExtra("ImageUrl", b.getString("ImageUrl"));
+            intent.putExtra("Speciality", b.getString("Speciality"));
+            startActivity(intent);
+        }
+        finish();
     }
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
