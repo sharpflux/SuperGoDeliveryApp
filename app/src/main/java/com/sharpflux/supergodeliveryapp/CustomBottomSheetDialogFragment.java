@@ -2,16 +2,21 @@ package com.sharpflux.supergodeliveryapp;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +24,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
@@ -37,6 +55,8 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
     public static String FlatNo;
     public static String LandMark2;
     DatabaseHelper myDatabase;
+    AlertDialog.Builder builder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 
@@ -46,6 +66,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
          confirmLocationButton = (Button)v.findViewById(R.id.btnConfirmAddress);
          txtflatNoHouse = (EditText) v.findViewById(R.id.txtflatNoHouse);
          txtLandMark = (EditText) v.findViewById(R.id.txtLandMark);
+          builder = new AlertDialog.Builder(getContext());
          LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver,
                 new IntentFilter("maps-get-delivery"));
 
@@ -73,62 +94,60 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 }
 
 
-
               if (getArguments() != null) {
 
-                  if(getArguments().getString("ActivityType").toString().equals("0")) {
-                      Intent i = new Intent(getContext(), StepperIndicatorActivity.class);
-                      i.putExtra("Address", getArguments().getString("Address").toString());
-                      i.putExtra("FlatNo", txtflatNoHouse.getText().toString());
-                      i.putExtra("LandMark", txtLandMark.getText().toString());
-                      i.putExtra("FromLat", getArguments().getString("Lat"));
-                      i.putExtra("FromLong", getArguments().getString("Long"));
-                      i.putExtra("ActivityType", getArguments().getString("ActivityType").toString());
+                      if (getArguments().getString("ActivityType").toString().equals("0")) {
+                          Intent i = new Intent(getContext(), StepperIndicatorActivity.class);
+                          i.putExtra("Address", getArguments().getString("Address").toString());
+                          i.putExtra("FlatNo", txtflatNoHouse.getText().toString());
+                          i.putExtra("LandMark", txtLandMark.getText().toString());
+                          i.putExtra("FromLat", getArguments().getString("Lat"));
+                          i.putExtra("FromLong", getArguments().getString("Long"));
+                          i.putExtra("ActivityType", getArguments().getString("ActivityType").toString());
 
-                      i.putExtra("DeliveryAddress", DeliveryAddress);
-                      i.putExtra("DeliveryFlatNo",getArguments().getString("DeliveryFlatNo"));
-                      i.putExtra("DeliveryLandMark", getArguments().getString("DeliveryLandMark"));
-                      i.putExtra("ToLat", getArguments().getString("ToLat"));
-                      i.putExtra("ToLong", getArguments().getString("ToLong"));
-
-
-                      String PickUpAddress= txtflatNoHouse.getText().toString()+", "+txtLandMark.getText().toString()+", "+getArguments().getString("Address").toString();
-                      if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" )
-                        myDatabase.UpdatePickupAddress(myDatabase.GetLastId(),PickUpAddress,getArguments().getString("Lat"),getArguments().getString("Long"));
+                          i.putExtra("DeliveryAddress", DeliveryAddress);
+                          i.putExtra("DeliveryFlatNo", getArguments().getString("DeliveryFlatNo"));
+                          i.putExtra("DeliveryLandMark", getArguments().getString("DeliveryLandMark"));
+                          i.putExtra("ToLat", getArguments().getString("ToLat"));
+                          i.putExtra("ToLong", getArguments().getString("ToLong"));
 
 
-                      startActivity(i);
+                          String PickUpAddress = txtflatNoHouse.getText().toString() + ", " + txtLandMark.getText().toString() + ", " + getArguments().getString("Address").toString();
+                          if (myDatabase.GetLastId() != "" && myDatabase.GetLastId() != "0")
+                              myDatabase.UpdatePickupAddress(myDatabase.GetLastId(), PickUpAddress, getArguments().getString("Lat"), getArguments().getString("Long"));
+
+
+                          startActivity(i);
+                      } else {
+                          Intent i = new Intent(getContext(), StepperIndicatorActivity.class);
+                          i.putExtra("PickupAddress", PickupAddress);
+                          i.putExtra("PickupFlatNo", txtflatNoHouse.getText().toString());
+                          i.putExtra("PickupLandMark", txtLandMark.getText().toString());
+                          i.putExtra("FromLat", FromLat);
+                          i.putExtra("FromLong", FromLong);
+                          i.putExtra("Vehicle", Vehicle);
+                          i.putExtra("Product", Product);
+                          i.putExtra("ActivityType", getArguments().getString("ActivityType").toString());
+                          i.putExtra("DeliveryAddress", getArguments().getString("Address").toString());
+                          i.putExtra("DeliveryFlatNo", txtflatNoHouse.getText().toString());
+                          i.putExtra("DeliveryLandMark", txtLandMark.getText().toString());
+                          i.putExtra("ToLat", getArguments().getString("Lat"));
+                          i.putExtra("ToLong", getArguments().getString("Long"));
+                          i.putExtra("FlatNo", FlatNo);
+                          i.putExtra("LandMark", LandMark2);
+
+
+                          String DropAddress = txtflatNoHouse.getText().toString() + ", " + txtLandMark.getText().toString() + ", " + getArguments().getString("Address").toString();
+                          if (myDatabase.GetLastId() != "" && myDatabase.GetLastId() != "0")
+                              myDatabase.UpdateDeliveryAddress(myDatabase.GetLastId(), DropAddress, getArguments().getString("Lat"), getArguments().getString("Long"));
+
+
+                          startActivity(i);
+                      }
+                  } else {
+
                   }
-                  else {
-                      Intent i = new Intent(getContext(), StepperIndicatorActivity.class);
-                      i.putExtra("PickupAddress", PickupAddress);
-                      i.putExtra("PickupFlatNo", txtflatNoHouse.getText().toString());
-                      i.putExtra("PickupLandMark",txtLandMark.getText().toString());
-                      i.putExtra("FromLat",  FromLat);
-                      i.putExtra("FromLong",  FromLong);
-                      i.putExtra("Vehicle",  Vehicle);
-                      i.putExtra("Product",  Product);
-                      i.putExtra("ActivityType", getArguments().getString("ActivityType").toString());
-                      i.putExtra("DeliveryAddress", getArguments().getString("Address").toString());
-                      i.putExtra("DeliveryFlatNo", txtflatNoHouse.getText().toString());
-                      i.putExtra("DeliveryLandMark", txtLandMark.getText().toString());
-                      i.putExtra("ToLat", getArguments().getString("Lat"));
-                      i.putExtra("ToLong", getArguments().getString("Long"));
-                      i.putExtra("FlatNo", FlatNo);
-                      i.putExtra("LandMark", LandMark2);
 
-
-                      String DropAddress= txtflatNoHouse.getText().toString()+", "+txtLandMark.getText().toString()+", "+getArguments().getString("Address").toString();
-                      if(myDatabase.GetLastId()!="" && myDatabase.GetLastId()!="0" )
-                         myDatabase.UpdateDeliveryAddress(myDatabase.GetLastId(),DropAddress,getArguments().getString("Lat"),getArguments().getString("Long"));
-
-
-                      startActivity(i);
-                  }
-              }
-                else {
-
-                }
 
             }
         });
@@ -218,5 +237,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
             }
         }
     }
+
+
 
 }

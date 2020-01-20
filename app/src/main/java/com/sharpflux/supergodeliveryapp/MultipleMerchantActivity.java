@@ -38,6 +38,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     boolean isLoading = false;
     dbAddress myAddress;
     DatabaseHelperMerchant myDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         setTitle("Our Merchants!");
+
 
 
         myAddress = new dbAddress(getApplicationContext());

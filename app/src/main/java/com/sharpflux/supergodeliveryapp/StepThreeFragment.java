@@ -155,7 +155,6 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
         txtKm= view.findViewById(R.id.txtKm);
         txtPaybleAmountKm= view.findViewById(R.id.txtPaybleAmountKm);
         txtPaybleAmount= view.findViewById(R.id.txtPaybleAmount);
-
         gstlabel= view.findViewById(R.id.gstlabel);
         txtFixCharges= view.findViewById(R.id.txtFixCharges);
         txtPerMinCharges= view.findViewById(R.id.txtPerMinCharges);
@@ -175,11 +174,8 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
                 while (res.moveToNext()) {
                     String url = getRequestUrl(res.getString(2) + "," +res.getString(3),res.getString(5)+ "," + res.getString(6));
                     new DistanceAndDuration(this).execute(url);
-
                 }
             }
-
-
         }
     }
 
@@ -207,17 +203,21 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+            if ((progressDialog != null) && !progressDialog.isShowing()) {
+                progressDialog = ProgressDialog.show(getContext(),
+                        "Loading...",
+                        "Wait for result..");
+            }
         }
 
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "Wait for result..");
+            if ((progressDialog != null) && !progressDialog.isShowing()) {
+                progressDialog = ProgressDialog.show(getContext(),
+                        "Loading...",
+                        "Wait for result..");
+            }
         }
 
 
@@ -330,17 +330,19 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
 
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "Wait for result..");
+            if ((progressDialog != null) && !progressDialog.isShowing()) {
+                progressDialog = ProgressDialog.show(getContext(),
+                        "Loading...",
+                        "Wait for result..");
+            }
         }
 
 
@@ -349,7 +351,6 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
             // finalResult.setText(text[0]);
 
         }
-
     }
     @Override
     public void onTaskCompleted(String... values) {
@@ -465,57 +466,42 @@ public class StepThreeFragment extends Fragment implements View.OnClickListener,
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnStepThreeListener {
         void onBackPressed(Fragment fragment);
         void onNextPressed(Fragment fragment);
     }
     private String getRequestUrl(String fromLatLong,String toLatLong) {
-        //Value of origin
-   /*  String str_org = "origin=" + origin.latitude +","+origin.longitude;
-     //Value of destination
-     String str_dest = "destination=" + dest.latitude+","+dest.longitude;*/
+        String url="";
+        if(fromLatLong!=null && fromLatLong!="" && toLatLong!=null && toLatLong!="") {
+            String sensor = "sensor=false";
+            String mode = "mode=driving";
+            String key = "key=AIzaSyBDl1LtAS21s-0JkYMEC0JgMLKf5jyJqi8";
+            String output = "json";
+            String[] latlong = fromLatLong.split(",");
+            double latitude = Double.parseDouble(latlong[0]);
+            double longitude = Double.parseDouble(latlong[1]);
+            LatLng location = new LatLng(latitude, longitude);
+            String[] latlong2 = toLatLong.split(",");
+            latitude = Double.parseDouble(latlong2[0]);
+            longitude = Double.parseDouble(latlong2[1]);
+            LatLng location2 = new LatLng(latitude, longitude);
+            url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + latlong[0] + "," + latlong[1] + "&destination=" + latlong2[0] + "," + latlong2[1] + "&travelmode=driving&sensor=false&key=AIzaSyD3lPCpXWKTSMLC4wCL4rXmatN3f9M4lt4";
+        }
+        else {
+            builder.setMessage("Invalid Address supplied")
+                    .setCancelable(false)
 
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {//  Action for 'NO' Button
+                            dialog.cancel();
+                        }
+                    });
 
-        // String str_org = "origin=" + origin.latitude +","+origin.longitude;
-        //Value of destination
-//     String str_dest = "destination=" + dest.latitude+","+dest.longitude;
-
-        //Set value enable the sensor
-        String sensor = "sensor=false";
-        //Mode for find direction
-        String mode = "mode=driving";
-
-        String key="key=AIzaSyBDl1LtAS21s-0JkYMEC0JgMLKf5jyJqi8";
-        //Build the full param
-        //  String param = str_org +"&" + str_dest + "&" +sensor+"&" +mode+"&" +key;
-        //Output format
-        String output = "json";
-        //Create url to request
-        // String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
-
-        String[] latlong =  fromLatLong.split(",");
-
-        double latitude = Double.parseDouble(latlong[0]);
-        double longitude = Double.parseDouble(latlong[1]);
-        LatLng location = new LatLng(latitude, longitude);
-
-
-        String[] latlong2 =  toLatLong.split(",");
-        latitude = Double.parseDouble(latlong2[0]);
-        longitude = Double.parseDouble(latlong2[1]);
-        LatLng location2 = new LatLng(latitude, longitude);
-        String url="https://maps.googleapis.com/maps/api/directions/json?origin="+latlong[0]+","+latlong[1]+"&destination="+latlong2[0]+","+latlong2[1]+"&travelmode=driving&sensor=false&key=AIzaSyD3lPCpXWKTSMLC4wCL4rXmatN3f9M4lt4";
-
+            AlertDialog alert = builder.create();
+            alert.setTitle("Invalid Address");
+            alert.show();
+        }
         return url;
     }
 }

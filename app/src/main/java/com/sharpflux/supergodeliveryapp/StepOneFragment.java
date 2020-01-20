@@ -231,13 +231,10 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         backBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), MapsActivity.class);
+                Intent i = new Intent(getContext(), ChooseActionActivity.class);
                 startActivity(i);
             }
         });
-
-
-
         nextBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,7 +243,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 // Toast.makeText(getContext(), "Hello From Interface Clicl :::::"+textviewPickup.getText().toString().trim(), Toast.LENGTH_SHORT).show();
             }
         });
-
         textviewPickup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,7 +269,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
         editTextdeliveryaddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,9 +290,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
-
-
         chkEbike.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -405,7 +397,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
         EnableRuntimePermission();
         btn_productimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -481,8 +472,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-
         Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
         Canvas canvas = new Canvas(newBitmap);
         canvas.drawColor(Color.WHITE);
@@ -491,9 +480,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
         newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
         ImageUrl = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
 
-
-        /*thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);*/
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -516,103 +502,6 @@ public class StepOneFragment extends Fragment implements View.OnClickListener {
 
     }
 
-/*    private void SelecteImages(){
-
-        final CharSequence[] items={"Camera","Cancel"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-        builder.setTitle("Add Image");
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("Camera")){
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-
-                }
-
-               *//* else if(items[i].equals("Gallary")){
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }
-*//*
-                else if(items[i].equals("Cancel"))
-                {
-                    hideImageTv.clearComposingText();
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, requestCode,data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-        }
-
-    }
-
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
-        if (data != null) {
-            try {
-                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
-                ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-                bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-                File destination = new File(Environment.getExternalStorageDirectory(),
-                        System.currentTimeMillis() + ".jpg");
-
-                FileOutputStream fo;
-
-                try {
-                    destination.createNewFile();
-                    fo = new FileOutputStream(destination);
-                    fo.write(bytes.toByteArray());
-                    fo.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        product_imageView.setImageBitmap(bm);
-    }
-
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
-
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-        product_imageView.setImageBitmap(imageBitmap);
-    }*/
 
     public void EnableRuntimePermission(){
 

@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission
         android:name="org.apache.http.legacy"
         android:required="false" />
@@ -103,8 +105,10 @@
             android:parentActivityName=".ChooseActionActivity" />
         <activity
             android:name=".OrderSuccessfullyPlaced"
+            android:noHistory="true"
             android:label="Order Placed"
             android:parentActivityName=".ChooseActionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/DarkAppTheme" />
         <activity
             android:name=".SendPlaceOrderActivity"

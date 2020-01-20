@@ -3,6 +3,7 @@ package com.sharpflux.supergodeliveryapp;
 import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +31,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -54,10 +61,16 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 //https://droidmentor.com/get-the-current-location-in-android/
@@ -65,8 +78,7 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener
-{
+        LocationListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -83,6 +95,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String Activityname;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     AlertDialog.Builder builder;
+    public static boolean IsServiceArea;
+    LatLng center;
+    Bundle args;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,31 +106,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        imageView=(ImageView)findViewById(R.id.imageView);
-        btnProcess=(Button) findViewById(R.id.btnProcess);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        btnProcess = (Button) findViewById(R.id.btnProcess);
 
-        Intent iin= getIntent();
+        Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
         FirebaseMessaging.getInstance().subscribeToTopic("weather")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    String subs="";
+                    String subs = "";
+
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if (!task.isSuccessful()) {
-                            subs="Sucess";
+                            subs = "Sucess";
                         }
 
-                       // Toast.makeText(MapsActivity.this, subs, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MapsActivity.this, subs, Toast.LENGTH_SHORT).show();
                     }
                 });
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MapsActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MapsActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String mToken = instanceIdResult.getToken();
-                Log.e("Token",mToken);
-              //  Toast.makeText(getApplicationContext(), "Token : " + mToken, Toast.LENGTH_LONG).show();
+                Log.e("Token", mToken);
+                //  Toast.makeText(getApplicationContext(), "Token : " + mToken, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -132,11 +149,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     }
                 });
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MapsActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MapsActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String mToken = instanceIdResult.getToken();
-                Log.e("Token",mToken);
+                Log.e("Token", mToken);
             }
         });
 
@@ -169,12 +186,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sendNotification(registrationToken);
 
 
-        if(b!=null)
-        {
-            Activityname =(String) b.get("ActivityType");
-        }
-        else {
-            Activityname="0";
+        if (b != null) {
+            Activityname = (String) b.get("ActivityType");
+        } else {
+            Activityname = "0";
         }
 
 
@@ -200,9 +215,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-       // autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        // autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -242,23 +257,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-                LatLng center=mMap.getCameraPosition().target;
-                //Initializing a bottom sheet
-                BottomSheetDialogFragment bottomSheetDialogFragment = new CustomBottomSheetDialogFragment();
-                bottomSheetDialogFragment.setCancelable(false);
-                if(center.latitude!=0.0 &&center.longitude!=0.0){
-                    Bundle args = new Bundle();
-                    Log.e("LATI",String.valueOf(center.latitude));
-                    args.putString("Address",   getAddress(getApplicationContext(),center.latitude,center.longitude).toString());
-                    args.putString("Lat",  Double.toString(center.latitude )  );
-                    args.putString("Long", Double.toString(center.longitude) );
-                    args.putString("ActivityType",   Activityname.toString() );
-                    bottomSheetDialogFragment.setArguments(args);
-                    //show it
-                    bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-                }
-                else
-                {
+                center = mMap.getCameraPosition().target;
+
+                if (center.latitude != 0.0 && center.longitude != 0.0) {
+                    args = new Bundle();
+                    Log.e("LATI", String.valueOf(center.latitude));
+                    MapsActivity.AsyncTaskRunner runner = new MapsActivity.AsyncTaskRunner();
+                    runner.execute(String.valueOf(center.latitude), String.valueOf(center.longitude));
+
+                } else {
                     builder.setMessage("Please select address first")
                             .setCancelable(false)
 
@@ -279,6 +286,117 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
+    private boolean CheckServiceArea(LatLng latLng, Bundle args) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URLs.URL_CHECKSERVICEAREA + "?ToLat=" + String.valueOf(latLng.latitude) + "&ToLong=" + String.valueOf(latLng.longitude),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+
+                            JSONArray obj = new JSONArray(response);
+                            for (int i = 0; i < obj.length(); i++) {
+
+                                JSONObject userJson = obj.getJSONObject(i);
+                                if (userJson.getBoolean("IsServiceArea")) {
+                                    IsServiceArea = true;
+                                    BottomSheetDialogFragment bottomSheetDialogFragment = new CustomBottomSheetDialogFragment();
+                                    bottomSheetDialogFragment.setCancelable(false);
+                                    args.putString("Address", getAddress(getApplicationContext(), center.latitude, center.longitude).toString());
+                                    args.putString("Lat", Double.toString(center.latitude));
+                                    args.putString("Long", Double.toString(center.longitude));
+                                    args.putString("ActivityType", Activityname.toString());
+                                    bottomSheetDialogFragment.setArguments(args);
+                                    bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+
+                                } else {
+                                    IsServiceArea = false;
+                                    builder.setMessage("We are not providing service to this area")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle("Invalid Address");
+                                    alert.show();
+                                }
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(SellerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //   params.put("ImageUrl", "");
+                //params.put("CategoryName_EN", "");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(MapsActivity.this).addToRequestQueue(stringRequest);
+        return IsServiceArea;
+    }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                CheckServiceArea(center, args);
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(MapsActivity.this,
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -295,6 +413,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -338,6 +457,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnectionSuspended(int i) {
     }
+
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
@@ -345,19 +465,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    int de =0;
+    int de = 0;
+
     @Override
     public void onLocationChanged(Location location) {
         Log.i("called", "onLocationChanged");
 
         btnProcess.setText("P R O C E S S");
         btnProcess.setEnabled(true);
-        btnProcess.setBackgroundResource(R.drawable.btn_plain );
+        btnProcess.setBackgroundResource(R.drawable.btn_plain);
 
         mMap.clear();
-        LatLng center=mMap.getCameraPosition().target;
+        LatLng center = mMap.getCameraPosition().target;
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        if(LOCATION_CHANGE==false){
+        if (LOCATION_CHANGE == false) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 18));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -370,20 +491,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-
         MarkerOptions option = new MarkerOptions();
 
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                LatLng center=mMap.getCameraPosition().target;
+                LatLng center = mMap.getCameraPosition().target;
 
-                if(marker!=null){
+                if (marker != null) {
                     marker.remove();
-                    marker=  mMap.addMarker(new MarkerOptions().position(center).title("New Position"));
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("New Position"));
 
 
-                    Log.e("Lat Long" ,center.toString() );
+                    Log.e("Lat Long", center.toString());
                 }
 
             }
@@ -393,10 +513,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
             @Override
             public void onCameraMoveStarted(int i) {
-                LOCATION_CHANGE=true;
-                LatLng center=mMap.getCameraPosition().target;
+                LOCATION_CHANGE = true;
+                LatLng center = mMap.getCameraPosition().target;
 
-                getAddress(getApplicationContext(),center.latitude,center.longitude);
+                getAddress(getApplicationContext(), center.latitude, center.longitude);
             }
         });
 
@@ -460,11 +580,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -486,12 +608,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     // Get Address from latitude and longitude //
-    public String getAddress(Context ctx, double lat,double lng){
-        String fullAdd=null;
-        try{
-            Geocoder geocoder= new Geocoder(ctx, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(lat,lng,1);
-            if(addresses.size()>0){
+    public String getAddress(Context ctx, double lat, double lng) {
+        String fullAdd = null;
+        try {
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0) {
                 Address address = addresses.get(0);
                 fullAdd = address.getAddressLine(0);
 
@@ -502,7 +624,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
 
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
@@ -515,7 +637,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnProcess.setBackgroundResource(R.drawable.btn_plain);
         return fullAdd;
     }
-
 
 
 }

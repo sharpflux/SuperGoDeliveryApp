@@ -4,6 +4,7 @@ package com.sharpflux.supergodeliveryapp;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -84,12 +85,13 @@ protected void onCreate(Bundle savedInstanceState) {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
+        builder.setMessage("Do you want to Exit? If you take a back all data will be cleared");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 finish();
+                startActivity(new Intent(getApplicationContext(), ChooseActionActivity.class));
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

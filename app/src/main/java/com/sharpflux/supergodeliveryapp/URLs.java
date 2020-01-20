@@ -21,9 +21,7 @@ public class URLs {
     public static final String URL_DESCIMAGES="http://admin.supergo.in/api/MerchantImageApi/Get_MerchantImagesUrlApi?MerchantId=";
     public static final String URL_ORDERDETAILS="http://admin.supergo.in/api/Customer/GetDeliveries?CustomerId=";
     public static final String URL_RESETPASS="http://admin.supergo.in/api/User/ChangePassword";
-
-
     public  static  final String URL_STATUS="http://api.supergo.in/api/DeliveryLog/InsertDelivery";
-
+    public  static  final String URL_CHECKSERVICEAREA="http://admin.supergo.in/api/ServiceAreaApi/ServiceAreaCheck";
 
 }

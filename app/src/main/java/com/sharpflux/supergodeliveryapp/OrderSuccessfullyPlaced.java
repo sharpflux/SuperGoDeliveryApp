@@ -7,24 +7,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class OrderSuccessfullyPlaced extends AppCompatActivity {
     String DeliveryId;
     Button btntack;
-    TextView tvOrderId;
+    TextView tvOrderId,tvMerchantName;
+    android.support.v7.widget.Toolbar toolbar;
+    LinearLayout lr_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_successfully_placed);
         tvOrderId=findViewById(R.id.tvOrderId);
-       btntack= findViewById(R.id.btntack);
+        btntack= findViewById(R.id.btntack);
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             DeliveryId= extras.getString("DeliveryId");
             tvOrderId.setText("Your Order ID : "+DeliveryId);
         }
+        /*toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+        tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
+        lr_back=toolbar.findViewById(R.id.lr_back);
+        tvMerchantName.setText("Order Placed");*/
 
+ /*       lr_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderSuccessfullyPlaced.this,ChooseActionActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
         DeliveryId="0";
         btntack.setOnClickListener(new View.OnClickListener() {
