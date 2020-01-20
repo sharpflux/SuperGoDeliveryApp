@@ -151,6 +151,7 @@ public class OtpRegisterActivity extends AppCompatActivity {
             // execution of result of Long time consuming operation
             progressDialog.dismiss();
             // finalResult.setText(result);
+            //
         }
 
         @Override
