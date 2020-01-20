@@ -263,6 +263,23 @@ public class OrderFragment extends Fragment {
                                         String sleepTime = "1";
                                         runner.execute(sleepTime);*/
 
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                        builder.setCancelable(false);
+                                        builder.setMessage("Your Order Sucessfully Cancelled!!");
+                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //if user pressed "yes", then he is allowed to exit from application
+
+
+
+
+                                            }
+                                        });
+
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+
 
 
                                     }

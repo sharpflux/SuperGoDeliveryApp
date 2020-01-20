@@ -186,13 +186,13 @@ public class ChooseActionActivity extends AppCompatActivity
             }
         });
 */
-        tv_current_loc.setOnClickListener(new View.OnClickListener() {
+        /*tv_current_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(ChooseActionActivity.this, MapsActivity.class);
                 startActivity(sendIntent);
             }
-        });
+        });*/
 
        /* send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -361,9 +361,9 @@ public class ChooseActionActivity extends AppCompatActivity
 
         // final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.supergo.customer")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sharpflux.supergodeliveryapp&hl=en")));
         } catch (android.content.ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.supergo.customer")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sharpflux.supergodeliveryapp&hl=en")));
         }
     }
 

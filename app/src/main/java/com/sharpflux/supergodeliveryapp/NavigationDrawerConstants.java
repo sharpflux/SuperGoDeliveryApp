@@ -13,7 +13,7 @@ public class NavigationDrawerConstants {
     public final static String TAG_SETTINGS = "Settings";
     public final static String SITE_URL = "http://www.supergo.in/";
     public final static String SHARE_TITLE = "SuperGo Pick and Drop";
-    public final static String SHARE_MESSAGE = "Hey Friend, I have found an awesome app for pick and drop: http://www.supergo.in/";
+    public final static String SHARE_MESSAGE = "Hey Friend, I have found an awesome app for pick and drop: https://play.google.com/store/apps/details?id=com.sharpflux.supergodeliveryapp&hl=en";
     public final static String SHARE_VIA = "Share Via";
     public final static String SHARE_TEXT_TYPE = "text/plain";
 

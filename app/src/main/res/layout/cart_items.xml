@@ -16,12 +16,26 @@
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_nonveg_cart"/>-->
-        <LinearLayout android:orientation="vertical"
+
+
+
+        <ImageView
+            android:id="@+id/img_cartitem"
+            android:layout_width="46.7dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/product_list_rect" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1">
-            <TextView android:textSize="14sp"
+            <TextView
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:id="@+id/tvFirmname"
                 android:layout_width="wrap_content"
@@ -30,7 +44,8 @@
                 android:text="panner_txt"
                 android:fontFamily="@font/sfpro_display_medium"
                 android:letterSpacing="0.0525"/>
-            <LinearLayout android:orientation="horizontal"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp">
@@ -41,7 +56,8 @@
                     android:text="₹"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:letterSpacing="0.0525"/>
-                <TextView android:textSize="13.3sp"
+                <TextView
+                    android:textSize="13.3sp"
                     android:textColor="@color/silver"
                     android:id="@+id/tvprice"
                     android:layout_width="wrap_content"

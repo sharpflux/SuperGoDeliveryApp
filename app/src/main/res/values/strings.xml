@@ -279,7 +279,7 @@ We believe in friendly business because we provide services by themselves is you
     <string name="otp_verification">OTP VERIFICATION</string>
     <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
     <string name="enter_otp_code">Enter OTP Code</string>
-    <string name="verify">verify</string>
+    <string name="verify">Verify</string>
     <string name="resendOtp">Resend OTP</string>
 
 

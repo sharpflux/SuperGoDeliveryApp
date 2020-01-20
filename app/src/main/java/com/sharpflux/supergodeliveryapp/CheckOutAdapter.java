@@ -83,6 +83,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
         String DeliveryCharges="40";
         //Picasso.get().load(mlist.get(position).getImage()).into(holder.mImage);
         holder.mTitle.setText(mlist.get(position).getName());
+        Picasso.get().load(mlist.get(position).getImage()).resize(300, 300)
+                .into(holder.Image);
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
         String priceS = String.valueOf(priced);
@@ -202,7 +204,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapterViewHol
 
 class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView mImage,imgDelete;
+    ImageView mImage,imgDelete,Image;
     TextView mTitle;
     TextView price, cart_product_quantity_tv,total_amount,txtItemCount;
     Button btnAddCart;
@@ -219,6 +221,7 @@ class CheckOutAdapterViewHolder extends RecyclerView.ViewHolder {
         cart_plus_img = (TextView) itemView.findViewById(R.id.cart_plus_img);
         cart_product_quantity_tv = (TextView) itemView.findViewById(R.id.cart_product_quantity_tv);
         mImage = itemView.findViewById(R.id.imageviewMerchant);
+        Image = itemView.findViewById(R.id.img_cartitem);
         mTitle = itemView.findViewById(R.id.tvFirmname);
         price = itemView.findViewById(R.id.tvprice);
         imgDelete=itemView.findViewById(R.id.imgDelete);

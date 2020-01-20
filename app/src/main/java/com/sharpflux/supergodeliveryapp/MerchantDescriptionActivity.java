@@ -352,7 +352,9 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                                                 (userJson.getString("ItemId"),
                                                         "http://admin.supergo.in/" + userJson.getString("ImgUrl"),
                                                         userJson.getString("ItemName"),
-                                                        userJson.getDouble("Price"));
+                                                        userJson.getDouble("Price"),
+                                                        userJson.getString("MeasurementName"),
+                                                        userJson.getString("MeasurementId"));
 
                                 merchantList.add(sellOptions);
 

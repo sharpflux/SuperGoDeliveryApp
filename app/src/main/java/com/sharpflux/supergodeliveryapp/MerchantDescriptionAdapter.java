@@ -64,7 +64,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
                 total=total + ((Integer.valueOf(res.getString(3)) * Double.valueOf(res.getString(4))));
             }
             tvTotalCount.setText(res.getCount() + " Items");
-            pri_Txt.setText(res.getCount() + " Items | ₹"+total.toString() );
+            pri_Txt.setText(res.getCount() + " Items | ₹"+total.toString());
             btnCheckOut.setVisibility(View.VISIBLE);
             linearCheckOut.setVisibility(View.VISIBLE);
         }
@@ -79,7 +79,11 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         myDatabase = new DatabaseHelperMerchant(mContext);
         double priced = mlist.get(position).getPrice();
         String priceS = String.valueOf(priced);
-        holder.price.setText("₹" + priceS);
+        holder.price.setText("₹" + priceS );
+        holder.txt_measure.setText(" /"+mlist.get(position).getMeasurementName());
+
+
+
         btnCheckOut.setVisibility(View.GONE);
         linearCheckOut.setVisibility(View.GONE);
         holder.cart_product_quantity_tv.setText("1");
@@ -167,7 +171,7 @@ class MerchantDescriptionViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mImage;
     TextView mTitle;
-    TextView price, cart_product_quantity_tv,pri_Txt;
+    TextView price, cart_product_quantity_tv,pri_Txt,txt_measure;
     TextView btnAddCart;
     ItemClickListener clickListener;
     private List<Description> mlist;
@@ -184,6 +188,7 @@ class MerchantDescriptionViewHolder extends RecyclerView.ViewHolder {
         mTitle = itemView.findViewById(R.id.tvFirmname);
         pri_Txt=itemView.findViewById(R.id.pri_Txt);
         price = itemView.findViewById(R.id.tvprice);
+        txt_measure = itemView.findViewById(R.id.txt_measure);
         btnAddCart = itemView.findViewById(R.id.btnAddCart);
         add_cart_linear=itemView.findViewById(R.id.add_cart_linear);
 
