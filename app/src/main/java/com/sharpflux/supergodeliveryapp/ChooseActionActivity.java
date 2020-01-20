@@ -132,6 +132,52 @@ public class ChooseActionActivity extends AppCompatActivity
         myDatabaseOrder.GetLastId();
         myDatabaseOrder.DeleteRecord(myDatabaseOrder.GetLastId());
 
+
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    String subs="";
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()) {
+                            subs="Sucess";
+                        }
+
+                        // Toast.makeText(MapsActivity.this, subs, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( ChooseActionActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String mToken = instanceIdResult.getToken();
+                Log.e("Token",mToken);
+                //  Toast.makeText(getApplicationContext(), "Token : " + mToken, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(user.getId()))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()) {
+
+                        }
+
+                    }
+                });
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( ChooseActionActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String mToken = instanceIdResult.getToken();
+                Log.e("Token",mToken);
+            }
+        });
+
+
+
       /*  tv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

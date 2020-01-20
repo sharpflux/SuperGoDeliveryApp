@@ -130,9 +130,11 @@ public class CustomerRegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                    progressDialog = ProgressDialog.show(CustomerRegisterActivity.this,
-                            "Loading...",
-                            "Wait for result..");
+                    if ((progressDialog != null) && progressDialog.isShowing()) {
+                        progressDialog = ProgressDialog.show(CustomerRegisterActivity.this,
+                                "Loading...",
+                                "Wait for result..");
+                    }
                 }
 
 
