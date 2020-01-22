@@ -20,7 +20,7 @@
             android:id="@+id/img_back_desc"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/ic_left_arrow" />
+            android:src="@drawable/backwhite" />
     </LinearLayout>
 
     <LinearLayout

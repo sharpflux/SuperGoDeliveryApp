@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "447612344786-fbgcnjp6v565muc7hhllnv05vt00ra5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharpflux.deliveryboy2",
+            "certificate_hash": "8f90442766c7704399c80e8a4c048aac9d15a722"
+          }
+        },
+        {
           "client_id": "447612344786-m77p907kmtg6vig40rajjrsbtc1hrt7o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

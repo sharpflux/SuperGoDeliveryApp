@@ -362,12 +362,13 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
+        builder.setMessage("Do you want to Exit? If you take a back all data will be cleared");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 finish();
+                startActivity(new Intent(getApplicationContext(), ChooseActionActivity.class));
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -470,7 +471,10 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                progressDialog.dismiss();
+                if ((progressDialog != null) && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+
             }
         }).start();
         saveOrderDetails(s);

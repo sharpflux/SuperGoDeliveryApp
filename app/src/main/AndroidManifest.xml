@@ -132,7 +132,7 @@
         -->
         <activity
             android:name=".MerchantListActivity" android:noHistory="true"
-            android:parentActivityName=".MultipleMerchantActivity"
+            android:parentActivityName=".ChooseActionActivity"
             android:theme="@style/DarkAppTheme" />
 
         <meta-data
@@ -145,7 +145,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChooseActionActivity"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             />
         <activity
@@ -160,6 +159,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ActivityFairDetails" />
         <activity
+            android:noHistory="true"
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>

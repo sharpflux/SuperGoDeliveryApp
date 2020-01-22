@@ -8,23 +8,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -49,16 +45,16 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     private int dotscount;
     private ArrayList<ImageModel> sliderImg;
     private ImageView[] dots;
-    LinearLayout btnCheckOut,linearCheckOut;
-    String merchantId = "", mobilenum = "",MerchantTypeId,MerchantName;
+    LinearLayout btnCheckOut, linearCheckOut;
+    String merchantId = "", mobilenum = "", MerchantTypeId, MerchantName;
     Bundle bundle;
     RecyclerView recyclerView;
     DatabaseHelperMerchant myDatabase;
-    TextView tvTotalCount,tvMerchantName,tvMerchantName2,tvSpeciality,pri_Txt;
+    TextView tvTotalCount, tvMerchantName, tvMerchantName2, tvSpeciality, pri_Txt;
     android.support.v7.widget.Toolbar toolbar;
     AlertDialog.Builder builder;
     AlertDialog.Builder builder1;
-    ImageView img_back_desc,img_cart_desc,img_dot,imgMerchant;
+    ImageView img_back_desc, img_cart_desc, img_dot, imgMerchant;
     MerchantDescriptionAdapter myAdapter;
     boolean isLoading = false;
 
@@ -67,18 +63,18 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_with_items);
-        tvMerchantName2=findViewById(R.id.tvMerchantName2);
-        imgMerchant=findViewById(R.id.imgMerchant);
-        tvSpeciality=findViewById(R.id.tvSpeciality);
-        pri_Txt=findViewById(R.id.pri_Txt);
+        tvMerchantName2 = findViewById(R.id.tvMerchantName2);
+        imgMerchant = findViewById(R.id.imgMerchant);
+        tvSpeciality = findViewById(R.id.tvSpeciality);
+        pri_Txt = findViewById(R.id.pri_Txt);
 
         //viewPager = (ViewPager) findViewById(R.id.viewPager);
         //SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         btnCheckOut = findViewById(R.id.btnCheckOut);
-        linearCheckOut= findViewById(R.id.linearCheckOut);
-       //btnAddCart = findViewById(R.id.btnAddCart);
+        linearCheckOut = findViewById(R.id.linearCheckOut);
+        //btnAddCart = findViewById(R.id.btnAddCart);
         recyclerView = findViewById(R.id.rvMenuList);
-       // sliderImg = new ArrayList<ImageModel>();
+        // sliderImg = new ArrayList<ImageModel>();
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
@@ -86,30 +82,30 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
         tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
         //tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
-        img_back_desc=toolbar.findViewById(R.id.img_back_desc);
-        img_cart_desc=toolbar.findViewById(R.id.img_cart_desc);
-        img_dot=toolbar.findViewById(R.id.img_dot);
+        img_back_desc = toolbar.findViewById(R.id.img_back_desc);
+        img_cart_desc = toolbar.findViewById(R.id.img_cart_desc);
+        img_dot = toolbar.findViewById(R.id.img_dot);
         builder = new AlertDialog.Builder(this);
         builder1 = new AlertDialog.Builder(this);
         bundle = getIntent().getExtras();
         btnCheckOut.setVisibility(View.GONE);
         linearCheckOut.setVisibility(View.GONE);
         if (bundle != null) {
-            MerchantTypeId=bundle.getString("MerchantTypeId");
+            MerchantTypeId = bundle.getString("MerchantTypeId");
             merchantId = bundle.getString("MerchantId");
             mobilenum = bundle.getString("mobilenum");
             tvMerchantName2.setText(bundle.getString("MerchantName"));
             tvSpeciality.setText(bundle.getString("Speciality"));
             //Picasso.get().load(bundle.getString("ImageUrl")) .resize(800,800).centerCrop().into(imgMerchant);
-            Picasso.get().load(bundle.getString("ImageUrl")) .fit().centerInside().into(imgMerchant);
+            Picasso.get().load(bundle.getString("ImageUrl")).fit().centerInside().into(imgMerchant);
             //Picasso.get().load(bundle.getString("ImageUrl")).fit().into(imgMerchant);
 
         }
 
-      //  CountItemsInCart();
+        //  CountItemsInCart();
         //call recycler data
 
-        /*      img_back_desc.setOnClickListener(new View.OnClickListener() {
+            img_back_desc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Cursor res = myDatabase.GetCart();
@@ -169,7 +165,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
 
-                img_cart_desc.setOnClickListener(new View.OnClickListener() {
+        /*          img_cart_desc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -214,11 +210,11 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                 if (bundle != null) {
                     merchantId = bundle.getString("MerchantId");
                     mobilenum = bundle.getString("mobilenum");
-                   // tvMerchantName.setText(bundle.getString("MerchantName"));
+                    // tvMerchantName.setText(bundle.getString("MerchantName"));
                     Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
                     fintent.putExtra("MerchantTypeId", MerchantTypeId.toString());
                     fintent.putExtra("MerchantId", bundle.getString("MerchantId"));
-                    fintent.putExtra("MerchantName",bundle.getString("MerchantName"));
+                    fintent.putExtra("MerchantName", bundle.getString("MerchantName"));
                     fintent.putExtra("mobilenum", mobilenum.toString());
                     fintent.putExtra("FromLat", bundle.getString("FromLat"));
                     fintent.putExtra("FromLong", bundle.getString("FromLong"));
@@ -293,11 +289,10 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
 
     private void initAdapter() {
-        myAdapter= new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar,img_dot,btnCheckOut,pri_Txt,linearCheckOut);
+        myAdapter = new MerchantDescriptionAdapter(MerchantDescriptionActivity.this, merchantList, toolbar, img_dot, btnCheckOut, pri_Txt, linearCheckOut);
         recyclerView.setAdapter(myAdapter);
         //myAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override
@@ -556,10 +551,10 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
         Cursor res = myDatabase.GetCart();
         if (res.getCount() == 0) {
 
-           /* Intent i = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
+            Intent i = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
             i.putExtra("MerchantTypeId", MerchantTypeId);
-            startActivity(i);*/
-           finish();
+            startActivity(i);
+            finish();
 
         } else {
 
@@ -577,6 +572,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MultipleMerchantActivity.class);
                     intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
                     startActivity(intent);
+                    finish();
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

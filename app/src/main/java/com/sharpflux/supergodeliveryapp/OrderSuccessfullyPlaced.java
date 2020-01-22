@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class OrderSuccessfullyPlaced extends AppCompatActivity {
     String DeliveryId;
-    Button btntack;
+    LinearLayout TrackOrder,back_linear;
     TextView tvOrderId,tvMerchantName;
     android.support.v7.widget.Toolbar toolbar;
     LinearLayout lr_back;
@@ -21,7 +21,8 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_successfully_placed);
         tvOrderId=findViewById(R.id.tvOrderId);
-        btntack= findViewById(R.id.btntack);
+        TrackOrder= findViewById(R.id.TrackOrder);
+        back_linear= findViewById(R.id.back_linear);
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             DeliveryId= extras.getString("DeliveryId");
@@ -41,7 +42,7 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
         });*/
 
         DeliveryId="0";
-        btntack.setOnClickListener(new View.OnClickListener() {
+        TrackOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -50,11 +51,17 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
                     DeliveryId= extras.getString("DeliveryId");
                 }
 
-
                 Intent intent = new Intent(OrderSuccessfullyPlaced.this,TrackDeliveryBoy.class);
                 intent.putExtra("DeliveryId",DeliveryId);
                 intent.putExtra("InsertTime","");
                 intent.putExtra("Total","");
+                startActivity(intent);
+            }
+        });
+        back_linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderSuccessfullyPlaced.this,ChooseActionActivity.class);
                 startActivity(intent);
             }
         });

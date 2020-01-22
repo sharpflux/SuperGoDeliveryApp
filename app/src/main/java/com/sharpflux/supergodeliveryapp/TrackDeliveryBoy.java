@@ -1,7 +1,9 @@
 package com.sharpflux.supergodeliveryapp;
 
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -93,7 +95,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
     private Double startLatitude;
     private Double startLongitude;
     TextView tvdeliveryBoyName, tvContact,distanceDuration;
-    ImageView imgcall;
+    ImageView imgcall,img_back_desc;
     public  static  String FromLocation,ToLocation,DriverLoactionLatLong;
     LinearLayout mainLayout ;
     android.support.v7.widget.Toolbar toolbar;
@@ -111,7 +113,10 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
 
         toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
         OrderId = toolbar.findViewById(R.id.OrderId);
+        img_back_desc= toolbar.findViewById(R.id.img_back_desc);
+
         tvDeliveryDecription = toolbar.findViewById(R.id.tvDeliveryDecription);
+
        // tvContact = findViewById(R.id.tvContact);
        // distanceDuration=findViewById(R.id.distanceDuration);
         handler = new Handler();
@@ -128,17 +133,14 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         mainLayout.removeAllViews();
         mainLayout.addView(layout);
 
-        /*button2 = findViewById(R.id.btnAddMarker);
-        button2.setOnClickListener(new View.OnClickListener() {
+        img_back_desc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startGettingOnlineDataFromCar();
+            public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
+                    startActivity(i);
             }
-        });*/
 
-
-
-
+        });
 
     }
     void staticPolyLine() {

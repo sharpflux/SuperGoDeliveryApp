@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingBottom="22.5dp"
+    android:paddingBottom="10.5dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <LinearLayout
@@ -190,9 +190,4 @@
         android:layout_marginTop="25.5dp"
         android:background="@color/viewline" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="25.5dp"
-        android:background="@color/viewline" />
 </LinearLayout>

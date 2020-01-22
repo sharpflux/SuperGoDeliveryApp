@@ -91,9 +91,60 @@
             android:text="We are finding delivery person for you. You will get the noficaition once delivery person accept the delivery"
             android:textAlignment="center"
             android:textColor="@color/silver"
-            android:textSize="20.3sp" />
+            android:textSize="15.3sp" />
     </LinearLayout>
+
+
     <LinearLayout
+        android:id="@+id/back_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_skyblue"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/TrackOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="15dp">
+
+
+            <TextView
+                android:id="@+id/tvTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="6.7dp"
+                android:layout_weight="0.8"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:paddingLeft="16.7dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="TRACK ORDER"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPlaceOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/color_skyblue"
+            android:fontFamily="@font/sfpro_display_medium"
+            android:text="GO TO HOME"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+  <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -114,7 +165,7 @@
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>
 

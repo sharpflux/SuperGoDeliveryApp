@@ -101,13 +101,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
         tvMerchantName.setText("CART");
         tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
+        img_back_cart=toolbar.findViewById(R.id.img_back_cart);
 
         /*tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
         total_amount = findViewById(R.id.total_amount);
         txt_address = findViewById(R.id.txt_address);
         txt_delivery_charge=findViewById(R.id.txt_delivery_charge);
-        img_back_cart=toolbar.findViewById(R.id.img_back_cart);
+
         txt_subTotal=findViewById(R.id.txt_subTotal);
         txtItemCount=findViewById(R.id.txtItemCount);
         lr_back = findViewById(R.id.lr_back);*/
@@ -205,7 +206,18 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             }
         });
 
+        img_back_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent i = new Intent(getApplicationContext(),MerchantDescriptionActivity.class);
+                i.putExtra("MerchantId",b.getString("MerchantId"));
+                i.putExtra("MerchantTypeId",b.getString("MerchantTypeId"));
+                i.putExtra("MerchantName",b.getString("MerchantName"));
+                i.putExtra("ImageUrl",b.getString("ImageUrl"));
+                startActivity(i);
+            }
+        });
 
       /*  lr_back.setOnClickListener(new View.OnClickListener() {
             @Override
