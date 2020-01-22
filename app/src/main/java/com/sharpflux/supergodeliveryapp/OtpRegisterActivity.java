@@ -47,7 +47,7 @@ public class OtpRegisterActivity extends AppCompatActivity {
         verifyButton = findViewById(R.id.verifyButton);
         resendOtpTv = findViewById(R.id.resendOtpTv);
         enterOTPCodeEt = findViewById(R.id.enterOTPCodeEt);
-        tv_timer1 = findViewById(R.id.tv_timer1);
+        tv_timer1 = findViewById(R.id.tv_timerOtp);
 
         myCountDownTimer1 = new MyCountDownTimer1(59000, 1000);
         myCountDownTimer1.start();
