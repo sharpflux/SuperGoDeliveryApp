@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +83,9 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     CheckOutAdapter myAdapter;
     LinearLayout lr_back,LinChangeAddress;
     TextView txt_itemCount,tvTotalAmount,tvGrandTotal,tvAddress,tvDeliveryCharges,tvPlaceOrder;
-
+    RadioGroup rg_payment;
+    RadioButton rb_online,rb_cod;
+    Integer PaymentMethodid=0;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @Override
@@ -102,6 +106,10 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         tvMerchantName.setText("CART");
         tvPlaceOrder = findViewById(R.id.tvPlaceOrder);
         img_back_cart=toolbar.findViewById(R.id.img_back_cart);
+
+        rg_payment=findViewById(R.id.rg_payment);
+        rb_online=findViewById(R.id.rb_online);
+        rb_cod=findViewById(R.id.rb_cod);
 
         /*tvTotalCount = toolbar.findViewById(R.id.tvTotalCount);
 
@@ -206,6 +214,31 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             }
         });
 
+        rg_payment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                switch(checkedId)
+                {
+                    case R.id.rb_online:
+                        PaymentMethodid =1;
+                        Toast.makeText(getApplicationContext(),
+                                "Online",
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.rb_cod:
+                        PaymentMethodid =4;
+                        Toast.makeText(getApplicationContext(),
+                                "COD",
+                                Toast.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+        });
+
+
         img_back_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -295,6 +328,23 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             @Override
             public void onClick(View view) {
 
+
+
+
+
+
+                 /*   if (!rb_online.isChecked() || !rb_cod.isChecked()) {
+                        *//*rb_online.setError("please select Payment Method");
+                        rb_online.requestFocus();
+                        rb_cod.setError("please select Payment Method");
+                        rb_cod.requestFocus();*//*
+                        Toast.makeText(getApplicationContext(),"please select Payment Method",Toast.LENGTH_SHORT).show();
+                    }
+
+*/
+
+
+
                 if (bundle != null) {
                     if(!tvAddress.getText().equals(""))  {
                         if(ToLat==null &&ToLong==null) {
@@ -305,12 +355,15 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                         mProgressDialog.setTitle("Placing Order");
                         // Progress dialog message
                         mProgressDialog.setMessage("Please wait, we are saving your data...");
-
-                        String url = getRequestUrl(FromLat+ "," +  FromLong, ToLat + "," + ToLong);
-                        new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
-                        //startPayment();
-                        AsyncTaskRunner runner = new AsyncTaskRunner();
-                        runner.execute("95235952");
+                        if(PaymentMethodid==1) {
+                            startPayment();
+                        }
+                        else {
+                            String url = getRequestUrl(FromLat + "," + FromLong, ToLat + "," + ToLong);
+                            new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
+                            AsyncTaskRunner runner = new AsyncTaskRunner();
+                            runner.execute("95235952");
+                        }
 
                     } else {
                         Intent fintent = new Intent(CheckOutCart.this, ChooseDeliveryAddressActivity.class);
@@ -412,7 +465,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
         User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         final Checkout co = new Checkout();
         try {
-            String str = total_amount.getText().toString();
+            String str = tvGrandTotal.getText().toString();
             String[] arrOfStr = str.split("₹", 2);
             JSONObject options = new JSONObject();
             options.put("name", "Super Go");
@@ -1071,7 +1124,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                 params.put("cpName", cpName);
                 params.put("mobile", mobile);
                 params.put("alternatemobile", alternatemobile);
-                params.put("paymenttype", "1");
+                params.put("paymenttype", String.valueOf(PaymentMethodid));
                 params.put("ToLong", ToLong);
                 params.put("ToLat", ToLat);
                 params.put("Distance", objDistance);
