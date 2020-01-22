@@ -67,7 +67,7 @@
 
 
         <activity android:name=".CheckOutCart"
-            android:noHistory="true" />
+            />
         <activity android:name=".OtpActivity"
             android:noHistory="true"/>
         <activity android:name=".OtpRegisterActivity"

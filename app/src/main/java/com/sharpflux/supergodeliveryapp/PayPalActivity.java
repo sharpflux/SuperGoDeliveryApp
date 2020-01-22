@@ -113,7 +113,10 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                 progressDialog.setMessage("Saving your data..."); // Setting Message
                 //progressDialog.setTitle("ProgressDialog"); // Setting Title
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-                progressDialog.show(); // Display Progress Dialog
+                // Display Progress Dialog
+                if ((progressDialog != null) && progressDialog.isShowing()) {
+                    progressDialog.show();
+                }
                 progressDialog.setCancelable(false);
                 new Thread(new Runnable() {
                     public void run() {
@@ -122,7 +125,9 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        progressDialog.dismiss();
+                        if ((progressDialog != null) && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                     }
                 }).start();
                 saveOrderDetails("0");
@@ -224,9 +229,6 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
             Intent iin = getIntent();
             Bundle b = iin.getExtras();
-
-
-
             final String pickupAddress = b.getString("PickupAddress");
             final String deliveryAddress = b.getString("DeliveryAddress");
             final String fromLat = b.getString("FromLat");
@@ -271,7 +273,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
 
                                    // Notification();
-
+                                    finish();
                                     myDatabase.GetLastId();
                                     myDatabase.DeleteRecord(myDatabase.GetLastId());
                                             Intent intent = new Intent(PayPalActivity.this, OrderSuccessfullyPlaced.class);
@@ -360,7 +362,8 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        finish();
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Do you want to Exit? If you take a back all data will be cleared");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -379,7 +382,7 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
             }
         });
         AlertDialog alert = builder.create();
-        alert.show();
+        alert.show();*/
     }
 
     private String requestDirection(String reqUrl) throws IOException {
