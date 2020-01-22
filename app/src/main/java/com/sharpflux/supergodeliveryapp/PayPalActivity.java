@@ -116,8 +116,9 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
                 // Display Progress Dialog
                 if ((progressDialog != null) && progressDialog.isShowing()) {
                     progressDialog.show();
+                    progressDialog.setCancelable(false);
                 }
-                progressDialog.setCancelable(false);
+
                 new Thread(new Runnable() {
                     public void run() {
                         try {
@@ -273,14 +274,13 @@ public class PayPalActivity extends AppCompatActivity implements OnTaskCompleted
 
 
                                    // Notification();
-                                    finish();
+                                   //
                                     myDatabase.GetLastId();
                                     myDatabase.DeleteRecord(myDatabase.GetLastId());
                                             Intent intent = new Intent(PayPalActivity.this, OrderSuccessfullyPlaced.class);
                                             intent.putExtra("DeliveryId",obj.getString("DeliveryId"));
                                             startActivity(intent);
-
-
+                                            finish();
 
 
                                    // startActivity(new Intent(getApplicationContext(), OrderSuccessfullyPlaced.class));

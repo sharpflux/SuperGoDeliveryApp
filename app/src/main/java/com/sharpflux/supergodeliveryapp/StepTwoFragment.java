@@ -310,8 +310,8 @@ public class StepTwoFragment extends Fragment implements View.OnClickListener, S
         linReciever.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactPersmission();
-                startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
+                //ContactPersmission();
+                //startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
             }
         });
     }
