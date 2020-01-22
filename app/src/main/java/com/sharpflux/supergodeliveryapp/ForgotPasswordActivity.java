@@ -65,6 +65,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                                 Intent in = new Intent(ForgotPasswordActivity.this,OtpActivity.class);
                                 in.putExtra("otp",obj.getString("OTP"));
+                                in.putExtra("MobileNo",etMobileNo.getText().toString());
                                 in.putExtra("UserId",obj.getInt("UserId"));
                                 startActivity(in);
 
@@ -131,8 +132,25 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),CustomerLoginActivity.class);
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+               Intent intent = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+               startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

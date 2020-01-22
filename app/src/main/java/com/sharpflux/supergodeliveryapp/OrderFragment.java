@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements BackButtonListener {
 
     int userId;
 
@@ -103,6 +103,7 @@ public class OrderFragment extends Fragment {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 String sleepTime = "1";
                 runner.execute(sleepTime);
+
                 swipeRefreshLayout.setRefreshing(false);
 
             }
@@ -124,7 +125,7 @@ public class OrderFragment extends Fragment {
                         try {
                             //converting the string to json array object
                             JSONArray array = new JSONArray(response);
-
+                            productList.clear();
                             //traversing through all the object
                             for (int i = 0; i < array.length(); i++) {
 
@@ -177,6 +178,11 @@ public class OrderFragment extends Fragment {
         Volley.newRequestQueue(getContext()).add(stringRequest);
 
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
