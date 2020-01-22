@@ -278,6 +278,13 @@ public class OtpRegisterActivity extends AppCompatActivity {
                             //if no error in response
                             if (!obj.getBoolean("error")) {
                                 otp = obj.getString("OTP");
+
+                                myCountDownTimer2 = new MyCountDownTimer2(59000, 1000);
+                                myCountDownTimer2.start();
+
+                                myCountDownTimer2.onFinish();
+
+
                             } else {
                                 builder.setMessage(obj.getString("message"))
                                         .setCancelable(false)
@@ -348,6 +355,7 @@ public class OtpRegisterActivity extends AppCompatActivity {
             long sec = (millisUntilFinished / 1000) % 60;
 
             tv_timer1.setText(f.format(min) + ":" + f.format(sec));
+            resendOtpTv.setVisibility(View.GONE);
             // f.format(hour)
 
         }

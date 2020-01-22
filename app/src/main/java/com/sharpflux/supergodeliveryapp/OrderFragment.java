@@ -325,4 +325,6 @@ public class OrderFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
+
+
 }

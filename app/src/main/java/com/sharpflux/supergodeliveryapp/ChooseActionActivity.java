@@ -370,7 +370,10 @@ public class ChooseActionActivity extends AppCompatActivity
     private void displaySelectedFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+
     }
 
     public String getAddress(Context ctx, double lat, double lng){

@@ -159,4 +159,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+        startActivity(intent);
+    }
+
 }

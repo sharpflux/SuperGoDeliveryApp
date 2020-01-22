@@ -49,7 +49,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         final String mobNo =  etMobileNo.getText().toString();
 
         if (!CommonUtils.isValidPhone(mobNo)) {
-            etMobileNo.setError("Invalid Mobile number");
+            etMobileNo.setError("Please enter Mobile number");
             return;
         }
         //if everything is fine
@@ -119,12 +119,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("OTPMobileNo", mobNo);
-                params.put("OTPType", "OTP");
+                params.put("OTPMobileNo", etMobileNo.getText().toString());
+                params.put("OTPType", "FORGOT");
                 return params;
             }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+        startActivity(intent);
     }
 }

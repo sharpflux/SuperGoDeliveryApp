@@ -27,24 +27,28 @@ import java.util.Map;
 public class OtpActivity extends AppCompatActivity {
     Bundle bundle;
     private EditText enterOTPCodeEt;
-    private TextView verifyButton,tv_timer,resendOtpTv;
+    private TextView verifyButton,tv_timerOtp,resendOtpTv;
     String otp = "", enteredOtp = "";
     Integer UserId;
     AlertDialog.Builder builder;
-    OtpActivity.MyCountDownTimerm myCountDownTimer1;
-    OtpActivity.MyCountDownTimer2 myCountDownTimer2;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
         verifyButton = findViewById(R.id.verifyButton);
-       // tv_timer = findViewById(R.id.tv_timer);
+        tv_timerOtp = findViewById(R.id.tv_timerOtp);
         resendOtpTv = findViewById(R.id.resendOtpTv);
 
         enterOTPCodeEt = findViewById(R.id.enterOTPCodeEt);
         builder = new AlertDialog.Builder(this);
         bundle = getIntent().getExtras();
+
+
+
 
         if (bundle != null) {
             otp = bundle.getString("otp");
@@ -81,9 +85,8 @@ public class OtpActivity extends AppCompatActivity {
                         AlertDialog alert = builder.create();
                         alert.setTitle("Enter valid otp");
                         alert.show();
-                        //
-                        //
-                    }
+
+                }
                 }
             });
 
@@ -93,7 +96,7 @@ public class OtpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //RegenerateOTP(bundle.getString("MobileNo"));
 
-                myCountDownTimer1.onFinish();
+                //myCountDownTimer2.onFinish();
                 RegenerateOTP(bundle.getString("MobileNo"));
 
 
@@ -171,63 +174,6 @@ public class OtpActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public class MyCountDownTimerm extends CountDownTimer {
-        //public int counter=59;
-        public MyCountDownTimerm(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-
-            NumberFormat f = new DecimalFormat("00");
-            long hour = (millisUntilFinished / 3600000) % 24;
-            long min = (millisUntilFinished / 60000) % 60;
-            long sec = (millisUntilFinished / 1000) % 60;
-
-            tv_timer.setText(f.format(min) + ":" + f.format(sec));
-            // f.format(hour)
-
-        }
-
-        @Override
-        public void onFinish() {
-            tv_timer.setText("");
-            resendOtpTv.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    public class MyCountDownTimer2 extends CountDownTimer {
-        public int counter=59;
-        public MyCountDownTimer2(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-
-            NumberFormat f = new DecimalFormat("00");
-            long hour = (millisUntilFinished / 3600000) % 24;
-            long min = (millisUntilFinished / 60000) % 60;
-            long sec = (millisUntilFinished / 1000) % 60;
-
-            tv_timer.setText(f.format(min) + ":" + f.format(sec));
-            resendOtpTv.setVisibility(View.GONE);
-
-        }
-
-        @Override
-        public void onFinish() {
-            tv_timer.setText("");
-
-            resendOtpTv.setVisibility(View.VISIBLE);
-
-        }
-
-    }
 
 
 }

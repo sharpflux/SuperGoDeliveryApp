@@ -37,13 +37,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MerchantDescriptionActivity" android:noHistory="true"
+            android:name=".MerchantDescriptionActivity"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
             android:name=".MultipleMerchantActivity"
-            android:parentActivityName=".ChooseActionActivity"         android:noHistory="true"
-
+            android:parentActivityName=".ChooseActionActivity"
+            android:noHistory="true"
             android:theme="@style/DarkAppTheme" />
         <!--
           <service android:name=".FirebaseMessagingServices">
@@ -65,10 +66,14 @@
             android:theme="@style/DarkAppTheme" />
 
 
-        <activity android:name=".CheckOutCart" android:noHistory="true" />
-        <activity android:name=".OtpActivity" />
-        <activity android:name=".OtpRegisterActivity" />
-        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".CheckOutCart"
+            android:noHistory="true" />
+        <activity android:name=".OtpActivity"
+            android:noHistory="true"/>
+        <activity android:name=".OtpRegisterActivity"
+            android:noHistory="true"/>
+        <activity android:name=".ResetPasswordActivity"
+            android:noHistory="true"/>
         <activity android:name=".ActivityTrack" />
         <activity android:name=".TrackDeliveryBoy"  />
           <!--  android:label="Track Order"
@@ -86,6 +91,7 @@
             android:theme="@style/DarkAppTheme" />
         <activity
             android:name=".ForgotPasswordActivity"
+            android:noHistory="true"
             android:parentActivityName=".CustomerLoginActivity"
             android:theme="@style/DarkAppTheme" />
         <activity
@@ -135,13 +141,16 @@
 
         <activity
             android:name=".CustomerRegisterActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChooseActionActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".CustomerLoginActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WelcomeActivity"

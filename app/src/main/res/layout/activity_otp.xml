@@ -89,17 +89,21 @@
         android:id="@+id/resendOtpTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="@string/resendOtp"
-        android:textColor="@color/white"
-        android:textSize="14dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
-        android:visibility="gone"
-      />
+        android:gravity="center"
+        android:padding="08dp"
+        android:text="Resend OTP"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:visibility="gone"/>
+
 
     <TextView
-        android:id="@+id/tv_timer1"
+        android:id="@+id/tv_timerOtp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

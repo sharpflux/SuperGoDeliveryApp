@@ -229,7 +229,7 @@ public class CustomerRegisterActivity extends AppCompatActivity {
                                 startActivity(in);
                             } else {
 
-                                builder.setMessage("Invalid User")
+                                builder.setMessage("User already Exist")
                                         .setCancelable(false)
 
                                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -282,5 +282,13 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+        startActivity(intent);
     }
 }
