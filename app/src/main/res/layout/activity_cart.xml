@@ -400,15 +400,16 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:layout_marginBottom="10dp"
-
-                            android:text="Cash on Delivery" />
+                            android:text="Online"
+                             />
 
                         <RadioButton
                             android:id="@+id/rb_cod"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
-                            android:text="Online" />
+                            android:text="Cash on Delivery"
+                            />
 
                     </RadioGroup>
 
