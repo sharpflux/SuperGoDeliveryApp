@@ -329,19 +329,14 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             public void onClick(View view) {
 
 
-
-
-
-
-                 /*   if (!rb_online.isChecked() || !rb_cod.isChecked()) {
-                        *//*rb_online.setError("please select Payment Method");
+                if (!(rb_online.isChecked() || rb_cod.isChecked())) {
+                        rb_online.setError("please select Payment Method");
                         rb_online.requestFocus();
                         rb_cod.setError("please select Payment Method");
-                        rb_cod.requestFocus();*//*
-                        Toast.makeText(getApplicationContext(),"please select Payment Method",Toast.LENGTH_SHORT).show();
-                    }
+                        rb_cod.requestFocus();
+                      //  Toast.makeText(getApplicationContext(),"please select Payment Method",Toast.LENGTH_SHORT).show();
+                }
 
-*/
 
 
 
@@ -423,23 +418,47 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (bundle != null) {
-            Intent intent = new Intent(getApplicationContext(), MerchantDescriptionActivity.class);
-            intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
-            intent.putExtra("MerchantId", bundle.getString("MerchantId"));
-            intent.putExtra("MerchantName",bundle.getString("MerchantName"));
-            intent.putExtra("mobilenum", "");
-            intent.putExtra("FromLat", bundle.getString("FromLat"));
-            intent.putExtra("FromLong", bundle.getString("FromLong"));
-            intent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
-            intent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
-            intent.putExtra("GstAmount", bundle.getString("GstAmount"));
-            intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
-            intent.putExtra("Speciality", bundle.getString("Speciality"));
-            startActivity(intent);
-        }
-        finish();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setMessage("Do you want to leave this page ?");
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    if (bundle != null)
+                    {
+
+                    Intent intent = new Intent(getApplicationContext(), MerchantDescriptionActivity.class);
+                    intent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                    intent.putExtra("MerchantId", bundle.getString("MerchantId"));
+                    intent.putExtra("MerchantName",bundle.getString("MerchantName"));
+                    intent.putExtra("mobilenum", "");
+                    intent.putExtra("FromLat", bundle.getString("FromLat"));
+                    intent.putExtra("FromLong", bundle.getString("FromLong"));
+                    intent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+                    intent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+                    intent.putExtra("GstAmount", bundle.getString("GstAmount"));
+                    intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+                    intent.putExtra("Speciality", bundle.getString("Speciality"));
+                    startActivity(intent);
+                    }
+
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+
+
+                }
+            });
+            builder.show();
+
+
+
+
+
+
+
     }
     public void startPayment() {
         /*

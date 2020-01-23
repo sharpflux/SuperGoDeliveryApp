@@ -54,7 +54,8 @@
                 android:fontFamily="@font/sfpro_display_semibold"
                 android:text="03:33 PM  |  2 Items, Rs 123"
                 android:textColor="@color/quantum_grey50"
-                android:textSize="10.3sp" />
+                android:textSize="10.3sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <TextView

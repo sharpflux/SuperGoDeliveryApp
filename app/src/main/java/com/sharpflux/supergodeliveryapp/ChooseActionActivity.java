@@ -506,6 +506,7 @@ public class ChooseActionActivity extends AppCompatActivity
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 finish();
             }
         });

@@ -265,10 +265,12 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       finish();
+       Intent intent = new Intent(getApplicationContext(),ChooseActionActivity.class);
+       startActivity(intent);
     }
 }
 

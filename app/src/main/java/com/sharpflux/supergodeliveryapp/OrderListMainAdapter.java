@@ -74,11 +74,12 @@ public class OrderListMainAdapter extends RecyclerView.Adapter<OrderListMainAdap
         InsertionTime = product.getInsertionTime();
         DriverStatusId = product.getDeliveryStatusId();
 
-        if(DriverStatusId.equals("6")||DriverStatusId.equals("7")||DriverStatusId.equals("9")){
+        if(DriverStatusId.equals("4")||DriverStatusId.equals("6")||DriverStatusId.equals("7")||DriverStatusId.equals("9")){
             holder.lr_btn.setVisibility(View.INVISIBLE);
 
         }
-        else{ holder.buttonGpsTrack.setOnClickListener(new View.OnClickListener() {
+        else{
+            holder.buttonGpsTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // String str = product.getDeliveryId();

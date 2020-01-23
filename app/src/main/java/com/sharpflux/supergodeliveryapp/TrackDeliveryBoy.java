@@ -101,28 +101,7 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
     LinearLayout mainLayout ;
     android.support.v7.widget.Toolbar toolbar;
     TextView OrderId,tvDeliveryDecription;
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
-                startActivity(i);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -706,5 +685,29 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         String url="https://maps.googleapis.com/maps/api/directions/json?origin="+latlong[0]+","+latlong[1]+"&destination="+latlong2[0]+","+latlong2[1]+"&travelmode=driving&sensor=false&key=AIzaSyD3lPCpXWKTSMLC4wCL4rXmatN3f9M4lt4";
 
         return url;
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
