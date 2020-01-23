@@ -219,6 +219,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
+
                 switch(checkedId)
                 {
                     case R.id.rb_online:
@@ -235,6 +236,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                         break;
 
                 }
+
+
+
+
+
             }
         });
 
@@ -329,13 +335,6 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             public void onClick(View view) {
 
 
-                if (!(rb_online.isChecked() || rb_cod.isChecked())) {
-                        rb_online.setError("please select Payment Method");
-                        rb_online.requestFocus();
-                        rb_cod.setError("please select Payment Method");
-                        rb_cod.requestFocus();
-                      //  Toast.makeText(getApplicationContext(),"please select Payment Method",Toast.LENGTH_SHORT).show();
-                }
 
 
 
@@ -353,11 +352,21 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                         if(PaymentMethodid==1) {
                             startPayment();
                         }
-                        else {
+                        else  if(PaymentMethodid==4) {
                             String url = getRequestUrl(FromLat + "," + FromLong, ToLat + "," + ToLong);
                             new DistanceAndDuration(CheckOutCart.this::onTaskCompleted).execute(url);
                             AsyncTaskRunner runner = new AsyncTaskRunner();
                             runner.execute("95235952");
+                        }
+                        else {
+                            if (!rb_online.isChecked() || rb_cod.isChecked()) {
+                                rb_online.setError("please select Payment Method");
+                                rb_online.requestFocus();
+                                rb_cod.setError("please select Payment Method");
+                                rb_cod.requestFocus();
+                                return;
+                                //  Toast.makeText(getApplicationContext(),"please select Payment Method",Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                     } else {
