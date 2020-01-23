@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
     TextView tvOrderId,tvMerchantName;
     android.support.v7.widget.Toolbar toolbar;
     LinearLayout lr_back;
+    ImageView img_back_cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +30,22 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
             DeliveryId= extras.getString("DeliveryId");
             tvOrderId.setText("Your Order ID : "+DeliveryId);
         }
-        /*toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
-        tvMerchantName=toolbar.findViewById(R.id.tvMerchantName);
-        lr_back=toolbar.findViewById(R.id.lr_back);
-        tvMerchantName.setText("Order Placed");*/
 
+
+        toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+
+        tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
+        tvMerchantName.setText("ORDER PLACED");
+        img_back_cart=toolbar.findViewById(R.id.img_back_cart);
+
+
+        img_back_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
+                startActivity(i);
+            }
+        });
  /*       lr_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

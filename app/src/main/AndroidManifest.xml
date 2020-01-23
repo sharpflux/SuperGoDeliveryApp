@@ -113,8 +113,6 @@
         <activity
             android:name=".OrderSuccessfullyPlaced"
             android:noHistory="true"
-            android:label="Order Placed"
-            android:parentActivityName=".ChooseActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DarkAppTheme" />
         <activity
