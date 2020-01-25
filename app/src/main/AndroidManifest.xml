@@ -43,9 +43,8 @@
             />
         <activity
             android:name=".MultipleMerchantActivity"
-            android:parentActivityName=".ChooseActionActivity"
             android:noHistory="true"
-            android:theme="@style/DarkAppTheme" />
+         />
         <!--
           <service android:name=".FirebaseMessagingServices">
             <intent-filter>
@@ -67,7 +66,6 @@
 
 
         <activity android:name=".CheckOutCart"
-            android:noHistory="true"
             />
         <activity android:name=".OtpActivity"
             android:noHistory="true"/>
@@ -111,10 +109,7 @@
             android:name=".StepperIndicatorActivity"
             android:parentActivityName=".ChooseActionActivity" />
         <activity
-            android:name=".OrderSuccessfullyPlaced"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/DarkAppTheme" />
+            android:name=".OrderSuccessfullyPlaced" />
         <activity
             android:name=".SendPlaceOrderActivity"
             android:label=""
@@ -157,8 +152,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MapsActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ActivityFairDetails" />
         <activity

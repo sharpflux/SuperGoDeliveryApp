@@ -202,33 +202,33 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
             }
         });*/
 
+        if(btnCheckOut!=null) {
+            btnCheckOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    if (bundle != null) {
+                        merchantId = bundle.getString("MerchantId");
+                        mobilenum = bundle.getString("mobilenum");
+                        // tvMerchantName.setText(bundle.getString("MerchantName"));
+                        Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
+                        fintent.putExtra("MerchantTypeId", MerchantTypeId.toString());
+                        fintent.putExtra("MerchantId", bundle.getString("MerchantId"));
+                        fintent.putExtra("MerchantName", bundle.getString("MerchantName"));
+                        fintent.putExtra("mobilenum", mobilenum.toString());
+                        fintent.putExtra("FromLat", bundle.getString("FromLat"));
+                        fintent.putExtra("FromLong", bundle.getString("FromLong"));
+                        fintent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
+                        fintent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
+                        fintent.putExtra("GstAmount", bundle.getString("GstAmount"));
+                        fintent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
+                        fintent.putExtra("Speciality", bundle.getString("Speciality"));
+                        startActivity(fintent);
 
-                if (bundle != null) {
-                    merchantId = bundle.getString("MerchantId");
-                    mobilenum = bundle.getString("mobilenum");
-                    // tvMerchantName.setText(bundle.getString("MerchantName"));
-                    Intent fintent = new Intent(MerchantDescriptionActivity.this, CheckOutCart.class);
-                    fintent.putExtra("MerchantTypeId", MerchantTypeId.toString());
-                    fintent.putExtra("MerchantId", bundle.getString("MerchantId"));
-                    fintent.putExtra("MerchantName", bundle.getString("MerchantName"));
-                    fintent.putExtra("mobilenum", mobilenum.toString());
-                    fintent.putExtra("FromLat", bundle.getString("FromLat"));
-                    fintent.putExtra("FromLong", bundle.getString("FromLong"));
-                    fintent.putExtra("MerchantAddress", bundle.getString("MerchantAddress"));
-                    fintent.putExtra("TotalCharges", bundle.getString("TotalCharges"));
-                    fintent.putExtra("GstAmount", bundle.getString("GstAmount"));
-                    fintent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
-                    fintent.putExtra("Speciality", bundle.getString("Speciality"));
-                    startActivity(fintent);
-
+                    }
                 }
-            }
-        });
-
+            });
+        }
 
         final float startSize = 00; // Size in pixels
         final float endSize = 20;
@@ -272,7 +272,7 @@ public class MerchantDescriptionActivity extends AppCompatActivity {
 
             }
         });*/
-
+        CountItemsInCart();
     }
 
     public void CountItemsInCart() {

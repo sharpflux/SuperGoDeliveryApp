@@ -449,6 +449,7 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
                     intent.putExtra("ImageUrl", bundle.getString("ImageUrl"));
                     intent.putExtra("Speciality", bundle.getString("Speciality"));
                     startActivity(intent);
+                    finish();
                     }
 
                 }
@@ -719,10 +720,11 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
 
         @Override
         protected void onPreExecute() {
-
-            progressDialog3 = ProgressDialog.show(CheckOutCart.this,
+            if ((progressDialog3 != null) && progressDialog3.isShowing()) {
+                progressDialog3 = ProgressDialog.show(CheckOutCart.this,
                         "Loading...",
                         "Wait for result..");
+            }
 
         }
 

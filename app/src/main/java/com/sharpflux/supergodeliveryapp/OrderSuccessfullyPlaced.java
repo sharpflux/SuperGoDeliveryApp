@@ -44,6 +44,7 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
                 startActivity(i);
+                finish();
             }
         });
  /*       lr_back.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +91,7 @@ public class OrderSuccessfullyPlaced extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
                 startActivity(i);
+                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -41,6 +41,7 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         tvTotalCount=tool.findViewById(R.id.tvTotalCount);
         this.pri_Txt=pri_Txt;
         this.linearCheckOut=linearCheckOut;
+
     }
 
     @Override
@@ -87,6 +88,28 @@ public class MerchantDescriptionAdapter extends RecyclerView.Adapter<MerchantDes
         btnCheckOut.setVisibility(View.GONE);
         linearCheckOut.setVisibility(View.GONE);
         holder.cart_product_quantity_tv.setText("1");
+
+        Cursor res = myDatabase.GetCart();
+
+        while (res.moveToNext()) {
+
+            if( mlist.get(position).getId().equals( res.getString(1)))
+            {
+                holder.btnAddCart.setVisibility(View.GONE);
+                holder.add_cart_linear.setVisibility(View.VISIBLE);
+                holder.cart_product_quantity_tv.setText( res.getString(3));
+                CountItemsInCart(pri_Txt);
+            }
+
+        }
+
+
+/*        builder.append("<Assign>");
+        builder.append("<ItemId>" + res.getString(1) + "</ItemId>");
+        builder.append("<Qunatity>" + res.getString(3) + "</Qunatity>");
+        builder.append("<Price>" + res.getString(4) + "</Price>");
+        builder.append("</Assign>");*/
+
         holder.cart_minus_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

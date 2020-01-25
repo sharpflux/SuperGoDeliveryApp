@@ -697,6 +697,8 @@ public class TrackDeliveryBoy extends AppCompatActivity implements OnMapReadyCal
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
+                startActivity(i);
                 finish();
             }
         });

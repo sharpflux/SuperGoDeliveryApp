@@ -3,12 +3,14 @@ package com.sharpflux.supergodeliveryapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -34,11 +36,12 @@ public class MultipleMerchantActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     MultipleMerchantAdapter myAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
-    TextView txt_emptyView,tvMerchantCount;
+    TextView txt_emptyView,tvMerchantCount,tvMerchantName;
     boolean isLoading = false;
     dbAddress myAddress;
     DatabaseHelperMerchant myDatabase;
-
+    android.support.v7.widget.Toolbar toolbar;
+    ImageView img_back_cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         merchantList = new ArrayList<>();
         setTitle("Our Merchants!");
-
+        txt_emptyView.setVisibility(View.GONE);
 
 
         myAddress = new dbAddress(getApplicationContext());
@@ -90,6 +93,21 @@ public class MultipleMerchantActivity extends AppCompatActivity {
             }
         });
 
+        toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolbar);
+
+        tvMerchantName = toolbar.findViewById(R.id.tvMerchantName);
+        tvMerchantName.setText("OUR MERCHANTS");
+        img_back_cart=toolbar.findViewById(R.id.img_back_cart);
+
+        img_back_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(),ChooseActionActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
         //shimmerFrameLayout.startShimmerAnimation();
        // setDynamicFragmentToTabLayout();
 
@@ -125,6 +143,7 @@ public class MultipleMerchantActivity extends AppCompatActivity {
 
 
                             JSONArray obj = new JSONArray(response);
+
                             //if no error in response
                             //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
                             for (int i = 0; i < obj.length(); i++) {
@@ -161,16 +180,16 @@ public class MultipleMerchantActivity extends AppCompatActivity {
                                 merchantList.add(sellOptions);
 
                                 if(myAdapter.getItemCount()==0);{
-                                    txt_emptyView.setVisibility(View.VISIBLE);
+                                    tvMerchantCount.setVisibility(View.GONE);
 
                                 }
-                                txt_emptyView.setVisibility(View.GONE);
-
 
 
                                /* shimmerFrameLayout.stopShimmerAnimation();
                                 shimmerFrameLayout.setVisibility(View.GONE);*/
                             }
+
+
 
                             myAdapter.notifyDataSetChanged();
                             isLoading = false;
