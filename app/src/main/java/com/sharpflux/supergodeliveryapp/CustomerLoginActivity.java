@@ -198,19 +198,21 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             JSONArray obj = new JSONArray(response);
 
                             if(obj.length()==0){
-                                builder.setMessage("Invalid User Name or Password?")
+                                builder.setMessage("Please Sign Up First !!!")
                                         .setCancelable(false)
 
                                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 //  Action for 'NO' Button
-                                                dialog.cancel();
+                                               // dialog.cancel();
+                                                Intent intent = new Intent(getApplicationContext(),CustomerRegisterActivity.class);
+                                                startActivity(intent);
 
                                             }
                                         });
 
                                 AlertDialog alert = builder.create();
-                                alert.setTitle("Invalid User");
+                                alert.setTitle("New User");
                                 alert.show();
                                 return;
                             }

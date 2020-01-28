@@ -334,11 +334,6 @@ public class CheckOutCart extends AppCompatActivity implements PaymentResultList
             @Override
             public void onClick(View view) {
 
-
-
-
-
-
                 if (bundle != null) {
                     if(!tvAddress.getText().equals(""))  {
                         if(ToLat==null &&ToLong==null) {
